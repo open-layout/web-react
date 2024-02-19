@@ -1,5 +1,4 @@
 import LandingPage from './pages/LandingPage'
-import { DynamicIsland } from "./components/DynamicIsland/index";
 
 import {
   Routes,
@@ -20,7 +19,6 @@ return(
       alignItems: "center"
     }}
   >
-    <DynamicIsland />
   </div>
 </div>
 )

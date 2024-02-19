@@ -8,10 +8,8 @@ export default {
 		lato: ['Lato', 'sans-serif']
 		},
 		colors: {
-			olayoutBlue: '#2f3448',
-			olayoutPeach: '#ffd5bd',
-			olayoutBlueLight: '#474f6e',
-			olayoutBlueDark: '#3F4763',
+			code: '#23262d',
+			title: '#6633ef',
 		},	
 		keyframes: {
 			bounce: {
