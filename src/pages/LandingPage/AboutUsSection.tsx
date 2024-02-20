@@ -1,7 +1,7 @@
-import Title from '@/components/Title';
 import Vue from '@/assets/vue.png';
 import React from '@/assets/react.png';
 import Tailwind from '@/assets/tailwind.png';
+import { AboutUsProps } from './interfaces';
 
 const AboutUsContent = [
   {
@@ -18,10 +18,13 @@ const AboutUsContent = [
   },
 ];
 
-const AboutUsSection = () => {
+const AboutUsSection: React.FC<AboutUsProps> = ({ darkMode }) => {
   return (
-    <section className="flex flex-col items-center mt-20 md:mt-96 mb-10 text-white">
-      <Title text="About Us" />
+    <section className="flex flex-col items-center mt-20 md:mt-96 mb-10">
+      <h2 className={`text-3xl ${darkMode ? 'text-white' : 'text-black'}`}>
+        About Us
+      </h2>
+
       <article className="flex flex-col items-center gap-10 md:flex-col md:items-start">
         {AboutUsContent.map((content, index) => (
           <div
@@ -30,7 +33,10 @@ const AboutUsSection = () => {
               index % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'
             }`}>
             <img src={content.img} className="w-60" />
-            <p className="mt-5 md:mt-0 md:ml-5 w-full md:w-[30%] text-xl">
+            <p
+              className={`mt-5 md:mt-0 md:ml-5 w-full md:w-[30%] text-xl ${
+                darkMode ? 'text-white' : 'text-gray-600'
+              }`}>
               {content.text}
             </p>
           </div>

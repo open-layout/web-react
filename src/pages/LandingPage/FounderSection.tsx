@@ -1,13 +1,14 @@
 import React from 'react';
 import PresentationCard from '@/components/ui/presentationCard';
 import { FoundersProps } from './interfaces';
-import Title from '@/components/Title';
 
-const FoundersSection: React.FC<FoundersProps> = ({ userData }) => {
+const FoundersSection: React.FC<FoundersProps> = ({ userData, darkMode }) => {
   console.log('userData:', userData); // Add this line to log userData
   return (
     <section className="grid place-items-center mt-24">
-      <Title text="Founders" />
+      <h2 className={`text-3xl ${darkMode ? 'text-white' : 'text-black'}`}>
+        Founders
+      </h2>
       <div className="flex flex-row flex-wrap justify-around gap-10 my-16">
         {userData.map((user) => (
           <PresentationCard

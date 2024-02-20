@@ -17,6 +17,11 @@ interface PresentationCardProps {
 
 interface FoundersProps {
   userData: UserData[];
+  darkMode: boolean;
 }
 
-export type { UserData, PresentationCardProps, FoundersProps };
+interface AboutUsProps {
+  darkMode: boolean;
+}
+
+export type { UserData, PresentationCardProps, FoundersProps, AboutUsProps };
