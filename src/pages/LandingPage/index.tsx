@@ -52,7 +52,7 @@ function LandingPage() {
       <div className="fixed inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]"></div>
 
       <WelcomeSection />
-      <div className="pt-32 flex flex-row gap-5 justify-center">
+      <div className="lg:pt-32 pt-20 flex flex-row gap-5 justify-center">
         <a
           className="px-8 py-3 bg-white rounded-full shadow-inner-xl font-semibold"
           href="https://docs.openlayout.me/"
