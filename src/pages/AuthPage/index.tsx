@@ -7,6 +7,7 @@ import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import DynamicIsland from "@/components/ui/dynamicIsland";
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useState } from 'react';
+import { width } from '@fortawesome/free-solid-svg-icons/fa0';
 
 function AuthPage() {
   const signIn = useSignIn();
@@ -17,7 +18,12 @@ function AuthPage() {
   const [authProgress, setAuthProgress] = useState(0); // -1 - 3
   const [authPhase, setAuthPhase] = useState('Requesting Access Token...');
   const [authUrl, setAuthUrl] = useState('');
+  const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+  
+  const code = new URLSearchParams(location.search).get('code');
+  if (code) navigate(window.location.pathname) // Clear the URL once we have the code
 
+  
   const get_auth_url = async () => {
     try {
       const response = await fetch(config.api.baseurl + '/auth/geturl');
@@ -47,31 +53,46 @@ function AuthPage() {
     }
   }
 
+  const auth_error = async (message: string) => {
+    setAuthProgress(-1);
+    setAuthPhase(message || 'An error occurred while authenticating with GitHub. Please try again later')
+    navigate(window.location.pathname) // Just in case clear the url again
+    await sleep(3000);
+    setIsAuth(false);
+  }
+
   useState(async () => {
-    const code = new URLSearchParams(location.search).get('code');
+    // const code = new URLSearchParams(location.search).get('code');
     if (code) {
       setIsAuth(true);
 
+      await sleep(1000); // Make it look like we are doing something, this could be done in ms
       setAuthProgress(1);
+
       const result = await get_auth_token(code);
       setAuthProgress(result.success ? 2 : -1);
-      if (!result.success)
-        return setAuthPhase(result.message || 'An error occurred while authenticating with GitHub. Please try again later');
+      if (!result.success) 
+        return auth_error(result.message);
 
       setAuthPhase('Received Auth Token...')
 
+      await sleep(1000);
+
       const res = signIn({ auth: { token: result.token, type: 'Bearer' } });
 
+      await sleep(1000);
+
       setAuthProgress(result.success ? 3 : -1);
+      setAuthProgress(3);
 
       if (!res)
-        return setAuthPhase('An error occurred while logging in in the client. Please try again later');
+        return auth_error('An error occurred while logging in in the client. Please try again later');
       
       setAuthPhase('Successfully logged in... Redirecting...')
 
-      setTimeout(() => {
-        navigate('/dashboard')
-      }, 2000);
+      await sleep(3000);
+
+      navigate('/dashboard')
     }
 
     await get_auth_url();
@@ -99,7 +120,7 @@ function AuthPage() {
                 {!isAuth ? 
                 (
                   <div>
-                        <button onClick={() => window.location.href = authUrl } className={`flex px-6 mx-2 py-4 text-white rounded-xl border-2 transition-all duration-300 delay-75 ${authUrl ? 'bg-green-500 border-green-400 select-auto' : 'bg-gray-600 border-gray-500 cursor-not-allowed'} items-center font-bold hover:scale-105`}>
+                        <button onClick={() => { if(authUrl) window.location.href = authUrl} } className={`flex px-6 mx-2 py-4 text-white rounded-xl border-2 transition-all duration-300 delay-75 ${authUrl ? 'bg-green-500 border-green-400 select-auto' : 'bg-gray-600 border-gray-500 cursor-not-allowed'} items-center font-bold hover:scale-105`}>
                           <img src={github} alt="GitHub Logo" className='flex w-8 mr-2 group-hover:translate-x-44 rotate-full group-hover:rotate-full transition duration-300' />
                           <span className='group-hover:-translate-x-3 transition duration-300'>Authenticate With <span className='transition-all duration-500 group-hover:opacity-0'>GitHub</span></span>
                         </button>
@@ -111,7 +132,7 @@ function AuthPage() {
                     <h1 className={'text-2xl font-extrabold ' + (authProgress >= 0 ? 'text-green-500' : 'text-red-500')}>{authProgress >= 0 ? 'Authenticating...' : 'Error...'}</h1>
                     {/* Progress bar */}
                     <div className={'w-full bg-gray-700/50 border-2 rounded-lg my-2 ' + (authProgress >= 0 ? 'border-green-400' : 'border-red-400')}>
-                        <div className={'w-'+ authProgress +'/3 rounded-lg h-3 ' + (authProgress >= 0 ? 'bg-green-500' : 'bg-red-500')}/>
+                    <div className={'transition-all duration-500 rounded-lg h-3 ' + (authProgress >= 0 ? 'bg-green-500' : 'bg-red-500')} style={{ width: `${authProgress * 33.3333}%` }}/>
                     </div>
                     <p className='text-gray-500 font-bold text-xs'>{authPhase || "You have successfully authenticated with GitHub."}</p>
                   </div>
