@@ -1,12 +1,13 @@
-import CopyButton from '@/components/ui/CopyButton'
-import WelcomeSection from './WelcomeSection';
-import AboutUsSection from './FounderSection';
-import useUserData from './useUserData';
+import CopyButton from "@ui/CopyButton";
+import WelcomeSection from "./WelcomeSection";
+import FounderSection from "./FounderSection";
+import AboutUsSection from "./AboutUsSection";
+import useUserData from "./useUserData";
+import ArrowDown from "@icons/arrow-down.svg";
 
 function LandingPage() {
   const npmCommand = "npx open-layout";
   const userData = useUserData();
-  
 
   return (
     <main>
@@ -24,7 +25,17 @@ function LandingPage() {
         <CopyButton npmCommand={npmCommand} />
       </div>
 
-      <AboutUsSection userData={userData} />
+      <div className="flex justify-center mt-16">
+        <img
+          src={ArrowDown}
+          alt="Go down"
+          className="w-10 glow-white transition-all animate-bounce hover:animate-none"
+        />
+      </div>
+
+      <AboutUsSection />
+
+      <FounderSection userData={userData} />
     </main>
   );
 }

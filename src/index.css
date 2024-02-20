@@ -1,14 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lato&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --olayout-blue: '#2f3448';
-  --olayout-peach: '#ffd5bd';
-  --olayout-blueDark: '#3F4763';
-  --olayout-blueLight: '#474f6e';
+  --olayout-blue: "#2f3448";
+  --olayout-peach: "#ffd5bd";
+  --olayout-blueDark: "#3F4763";
+  --olayout-blueLight: "#474f6e";
 
   font-family: Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -41,5 +41,10 @@ body {
   animation: blink 1s infinite;
 }
 
+.glow-white {
+  filter: drop-shadow(0 0 20px white);
+}
 
-
+.glow-white:hover {
+  filter: drop-shadow(0 0 10px white);
+}
