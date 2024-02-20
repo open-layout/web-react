@@ -6,7 +6,7 @@ const DynamicIsland = () => {
       className="menu-container grid place-items-center"
       style={{ zIndex: 999 }}>
       <div className="fixed top-0 backdrop-blur-md border-gray-700/50 border rounded-full py-1 px-2 mt-3">
-        <div className="flex items-center">
+        <div className="flex items-center select-none">
           <img src={Logo} alt="" className="w-8 p-1" />
           <a href="#" className="ml-1 pr-1">
             OpenLayouts
