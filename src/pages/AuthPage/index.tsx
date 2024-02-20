@@ -1,5 +1,6 @@
 import github from '@icons/github.svg';
 import logo from "@/assets/favicon.svg";
+import banner from "@/assets/banner.svg"
 import config from "@/config";
 
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
@@ -85,7 +86,7 @@ function AuthPage() {
         <div className='flex h-screen'>
             {/* Left Block */}
             <div className='hidden lg:flex w-0 lg:w-2/3 flex-col justify-center items-center'>
-                <h1 className="text-4xl font-bold text-center pt-20 text-white">Welcome to OpenLayout</h1>
+                <img src={banner}/>
             </div>
             
             {/* Login Block */}
