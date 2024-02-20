@@ -1,5 +1,5 @@
 import React from "react";
-import DynamicIsland from "@ui/dynamicIsland";
+import DynamicIsland from "@/components/ui/dynamicIsland";
 
 const WelcomeSection: React.FC = () => {
   return (

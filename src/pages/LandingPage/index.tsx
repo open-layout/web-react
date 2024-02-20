@@ -1,4 +1,4 @@
-import CopyButton from "@ui/CopyButton";
+import CopyButton from "@/components/ui/CopyButton";
 import WelcomeSection from "./WelcomeSection";
 import FounderSection from "./FounderSection";
 import AboutUsSection from "./AboutUsSection";
