@@ -1,4 +1,5 @@
 import LandingPage from './pages/LandingPage/index'
+import AuthPage from './pages/AuthPage/index'
 
 import {
   Routes,
@@ -10,7 +11,7 @@ return(
   <div className="App">
   <Routes>
     <Route path="/" element={<LandingPage />} />
-    {/* <Route path="/login" element={<LoginPage />} /> */}
+    <Route path="/auth" element={<AuthPage />} />
   </Routes>
   <div
     style={{
