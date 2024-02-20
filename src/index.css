@@ -22,6 +22,7 @@
 
 body {
   background-color: var(--olayout-blue);
+  scrollbar-color: white black;
 }
 
 @keyframes blink {
@@ -39,5 +40,6 @@ body {
 .animate-blink {
   animation: blink 1s infinite;
 }
+
 
 

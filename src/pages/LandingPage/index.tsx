@@ -1,12 +1,12 @@
 import CopyButton from '@/components/ui/CopyButton'
 import WelcomeSection from './WelcomeSection';
-import AboutUsSection from './AboutUsSection';
+import AboutUsSection from './FounderSection';
 import useUserData from './useUserData';
 
 function LandingPage() {
-  const npmCommand = "npx openlayout";
-  const usernames = ['imxnoobx', 'azaldevx', 'anglesad'];
-  const userData = useUserData(usernames);
+  const npmCommand = "npx open-layout";
+  const userData = useUserData();
+  
 
   return (
     <main>

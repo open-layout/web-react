@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import IconCopy from "@/assets/icon-copy.svg";
-import IconTick from "@/assets/icon-tick.svg";
+import IconCopy from "@icons/copy.svg";
+import IconTick from "@icons/tick.svg";
 
 interface Props {
   npmCommand: string;
