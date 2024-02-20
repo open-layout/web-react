@@ -1,5 +1,6 @@
 import LandingPage from './pages/LandingPage/index';
 import AuthPage from './pages/AuthPage/index';
+import DashboardPage from './pages/DashboardPage/Dashboard'
 
 import { Routes, Route } from 'react-router-dom';
 
@@ -9,6 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/auth" element={<AuthPage />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
       </Routes>
       <div
         style={{

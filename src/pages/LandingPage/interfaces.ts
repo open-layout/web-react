@@ -14,6 +14,14 @@ interface PresentationCardProps {
   date: string;
   link: string;
 }
+interface TemplatesCardProps {
+  name: string;
+  image: string;
+  description: string;
+  date: string;
+  link: string;
+  languages: string;
+}
 
 interface FoundersProps {
   userData: UserData[];
@@ -24,4 +32,4 @@ interface AboutUsProps {
   darkMode: boolean;
 }
 
-export type { UserData, PresentationCardProps, FoundersProps, AboutUsProps };
+export type { UserData, PresentationCardProps, FoundersProps, AboutUsProps, TemplatesCardProps };
