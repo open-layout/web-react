@@ -3,11 +3,13 @@ import CopyButton from '@/components/ui/CopyButton';
 import WelcomeSection from './WelcomeSection';
 import FounderSection from './FounderSection';
 import AboutUsSection from './AboutUsSection';
+import LoginIcon from '@/assets/login.png'
 import IconSun from '@icons/sun.svg';
 import IconMoon from '@icons/moon.svg';
 import ArrowDownIcon from './ArrowDownIcon';
 import { useState } from 'react';
 import { UserData } from './interfaces';
+import  {Link}  from 'react-router-dom';
 
 function LandingPage() {
   const [userData, setUserData] = useState<UserData[]>([]);
@@ -61,26 +63,29 @@ function LandingPage() {
       {darkMode ? (
         <div className="fixed inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]"></div>
       ) : (
-        <div className="fixed inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#63e_100%)]"></div>
+        <div className="fixed inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#63e_100%)] "></div>
       )}
 
       <a
         className="fixed top-0 right-5 mt-3 px-3 py-1 rounded-full "
         onClick={toggleDarkMode}>
-        <img src={darkMode ? IconSun : IconMoon} alt="" className="w-18" />
+        <img src={darkMode ? IconSun : IconMoon} alt="" className="w-16" />
       </a>
+      <Link to="/auth" className="fixed top-0 right-32 mt-4 rounded-full cursor-pointer">
+        <img src={LoginIcon} alt="" className='w-16'/>
+      </Link>
 
       <WelcomeSection />
 
       <div className="lg:pt-32 pt-20 flex flex-row gap-5 justify-center">
-        <a
+        <Link
           className={`px-8 py-3 ${
             darkMode ? 'bg-white text-black' : 'bg-black text-white'
           } rounded-full shadow-inner-xl font-semibold`}
-          href="https://docs.openlayout.me/"
-          target="_blank">
+          to="/dashboard"
+          >
           Get Started
-        </a>
+        </Link>
         <CopyButton npmCommand={npmCommand} />
       </div>
 

@@ -25,7 +25,7 @@ const AboutUsSection: React.FC<AboutUsProps> = ({ darkMode }) => {
         About Us
       </h2>
 
-      <article className="flex flex-col items-center gap-2  md:flex-col md:items-start">
+      <article className="flex flex-col items-center gap-5  md:flex-col md:items-start">
         {AboutUsContent.map((content, index) => (
           <div
             key={index}
