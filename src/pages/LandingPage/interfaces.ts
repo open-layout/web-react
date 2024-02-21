@@ -32,4 +32,10 @@ interface AboutUsProps {
   darkMode: boolean;
 }
 
-export type { UserData, PresentationCardProps, FoundersProps, AboutUsProps, TemplatesCardProps };
+export type {
+  UserData,
+  PresentationCardProps,
+  FoundersProps,
+  AboutUsProps,
+  TemplatesCardProps,
+};
