@@ -15,7 +15,7 @@ const DynamicIsland: React.FC<DynamicIslandProps> = ({
       className="menu-container grid place-items-center group"
       style={{ zIndex: 9999999 }}>
       <div
-        className={`flex flex-row items-center select-none fixed top-0 backdrop-blur-md border-gray-700/50 border rounded-full py-1 px-2 mt-3 text-white w-40 duration-300 ease-in-out ${
+        className={`flex flex-row items-center select-none fixed top-0 backdrop-blur-md border-gray-700/50 border rounded-full py-1 px-2 mt-3 w-40 duration-300 ease-in-out ${
           isMouseNearDynamicIsland ? 'justify-between w-96' : ''
         }`}>
         <Link to="/" className="ml-1 pr-1 flex flex-row items-center">
@@ -25,9 +25,7 @@ const DynamicIsland: React.FC<DynamicIslandProps> = ({
 
         <div
           className={`duration-200 ease-in-out opacity-0 flex flex-row gap-2 pr-2 ${
-            isMouseNearDynamicIsland
-              ? 'opacity-100 duration-500'
-              : ''
+            isMouseNearDynamicIsland ? 'opacity-100 duration-500' : ''
           }`}>
           <Link to="/">Home</Link>
           <Link to="/templates">Templates</Link>

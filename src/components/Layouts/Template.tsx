@@ -1,5 +1,5 @@
 // TemplatePage.tsx
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useState, useEffect } from 'react';
 import DynamicIsland from '@/components/ui/dynamicIsland';
 
 interface TemplatePageProps {
@@ -11,45 +11,43 @@ const TemplatePage: React.FC<TemplatePageProps> = ({
   children,
   darkMode = true,
 }) => {
-  const [isMouseNearDynamicIsland, setIsMouseNearDynamicIsland] =
-    useState(false);
+  const [isMouseNearDynamicIsland, setIsMouseNearDynamicIsland] = useState(false);
 
-  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
-    const { clientX, clientY } = event;
-    const dynamicIslandRect = document
-      .getElementById('dynamic-island')
-      ?.getBoundingClientRect();
+  useEffect(() => {
+    const handleMouseMove = (event: MouseEvent) => {
+      const distanceFromEdge = 200;
+      const edgeBuffer = 10; // Margen de error para evitar falsos positivos en el borde
 
-    if (dynamicIslandRect) {
-      const dynamicIslandCenterX =
-        dynamicIslandRect.left + dynamicIslandRect.width / 2;
-      const dynamicIslandCenterY =
-        dynamicIslandRect.top + dynamicIslandRect.height / 2;
+      const { clientX, clientY } = event;
 
-      const distance = Math.sqrt(
-        (clientX - dynamicIslandCenterX) ** 2 +
-          (clientY - dynamicIslandCenterY) ** 2
-      );
-
-      if (distance <= 200) {
+      // Comprobar la posición del ratón en relación con el borde del navegador
+      if (
+        clientX <= distanceFromEdge + edgeBuffer ||
+        clientX >= window.innerWidth - (distanceFromEdge + edgeBuffer) ||
+        clientY <= distanceFromEdge + edgeBuffer ||
+        clientY >= window.innerHeight - (distanceFromEdge + edgeBuffer)
+      ) {
         setIsMouseNearDynamicIsland(true);
       } else {
         setIsMouseNearDynamicIsland(false);
       }
-    }
-  };
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
 
   return (
-    <div
-      className={`${darkMode ? 'text-white' : 'text-black'}`}
-      onMouseMove={handleMouseMove}>
+    <div className={`${darkMode ? 'text-white' : 'text-black'}`}>
       {darkMode ? (
         <div className="fixed inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]"></div>
       ) : (
         <div className="fixed inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#63e_100%)] "></div>
       )}
       <DynamicIsland isMouseNearDynamicIsland={isMouseNearDynamicIsland} />
-
       <main>{children}</main>
     </div>
   );
