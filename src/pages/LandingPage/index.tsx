@@ -11,7 +11,6 @@ import IconSun from '@icons/sun.svg';
 import IconMoon from '@icons/moon.svg';
 import ArrowDownIcon from './ArrowDownIcon';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
-import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader'
 import { useEffect, useState } from 'react';
 import { UserData } from './interfaces';
 import { Link } from 'react-router-dom';
@@ -23,7 +22,6 @@ function LandingPage() {
   const [isHovering, setIsHovering] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const isAuthenticated = useIsAuthenticated();
-  const authHeader = useAuthHeader();
 
   const handleMouseEnter = () => {
     setIsHovering(true);

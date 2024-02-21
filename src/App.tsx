@@ -1,6 +1,6 @@
 import LandingPage from './pages/LandingPage/index';
 import AuthPage from './pages/AuthPage/index';
-import DashboardPage from './pages/DashboardPage/Dashboard'
+import DashboardPage from './pages/DashboardPage'
 import RequireAuth from '@auth-kit/react-router/RequireAuth'
 
 import { Routes, Route } from 'react-router-dom';
