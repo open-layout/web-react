@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader'
 
-import DynamicIsland from '@/components/ui/dynamicIsland';
 import TemplatesCard from '@/components/ui/templatesCar';
 import DashboardMenu from '@/components/ui/dashboardmenu';
-import Switch from '@/components/ui/Switch';
+import Layout from '@/components/Layouts/Template';
+
 import config from '@/config';
 
 function dashboard() {
@@ -44,40 +44,32 @@ function dashboard() {
   }, []);
 
   return (
-    
-    <section className="grid place-items-center lg:mt-32 mt-20 px-52">
-        <div className="fixed inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]"></div>
-      <DynamicIsland />
-      <h2 className="text-white text-5xl left-0">
-        Dashboard
-      </h2>
-      <Switch/>
-      <DashboardMenu/>
-      <div className="ml-20 flex flex-row flex-wrap overflow-x-hidden justify-around gap-16 my-16 h-[620px]">
-          
-          <TemplatesCard/>
-          <TemplatesCard/>
-          <TemplatesCard/>
-          <TemplatesCard/>
-          
-          <TemplatesCard/>
-          <TemplatesCard/>
-          <TemplatesCard/>
-          <TemplatesCard/>
-          
-          <TemplatesCard/>
-          <TemplatesCard/>
-          <TemplatesCard/>
-          <TemplatesCard/>
-          
-          <TemplatesCard/>
-          <TemplatesCard/>
-          <TemplatesCard/>
-          
-          
-        
-      </div>
-    </section>
+    <Layout>
+      <section className="lg:mt-32 grid place-content-end">
+        <h2 className="text-white text-5xl left-0 mb-3">Dashboard</h2>
+        <DashboardMenu />
+        <div className="grid grid-cols-3 gap-16 mt-14 mr-10 mb-5">
+          <TemplatesCard />
+          <TemplatesCard />
+          <TemplatesCard />
+          <TemplatesCard />
+
+          <TemplatesCard />
+          <TemplatesCard />
+          <TemplatesCard />
+          <TemplatesCard />
+
+          <TemplatesCard />
+          <TemplatesCard />
+          <TemplatesCard />
+          <TemplatesCard />
+
+          <TemplatesCard />
+          <TemplatesCard />
+          <TemplatesCard />
+        </div>
+      </section>
+    </Layout>
   );
 };
 

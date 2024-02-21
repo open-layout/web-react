@@ -3,6 +3,8 @@ import CopyButton from '@/components/ui/CopyButton';
 import WelcomeSection from './WelcomeSection';
 import FounderSection from './FounderSection';
 import AboutUsSection from './AboutUsSection';
+import Layout from '@/components/Layouts/Template';
+import LoginIcon from '@/assets/login.png';
 import favicon from '@/assets/favicon.svg';
 import faviconyellow from '@/assets/faviconyellow.svg';
 import faviconblue from '@/assets/faviconblue.svg';
@@ -35,14 +37,8 @@ function LandingPage() {
     setShowDropdown(false);
   };
 
-  const images = [
-    favicon,
-    faviconyellow,
-    faviconblue,
-    favicongreen,
-  ];
+  const images = [favicon, faviconyellow, faviconblue, favicongreen];
   const npmCommand = 'npx open-layout';
-
 
   const response = [
     {
@@ -85,7 +81,6 @@ function LandingPage() {
     getRandomIndex();
   }, []);
 
-
   // Función para generar un índice aleatorio y actualizar el estado
   const getRandomIndex = () => {
     const newIndex = Math.floor(Math.random() * images.length);
@@ -96,59 +91,61 @@ function LandingPage() {
   };
 
   return (
-    <main className={darkMode ? 'text-white' : 'text-black'}>
-      {darkMode ? (
-        <div className="fixed inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]"></div>
-      ) : (
-        <div className="fixed inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#63e_100%)] "></div>
-      )}
-
+    <Layout darkMode={darkMode}>
       <a
         className="fixed top-0 left-10 mt-8 px-3 py-1 rounded-full "
         onClick={toggleDarkMode}>
         <img src={darkMode ? IconSun : IconMoon} alt="" className="w-12" />
       </a>
 
-
       {isAuthenticated() ? (
-
         <div>
           <div
-            className='border-2 backdrop-blur-md border-gray-700/50 rounded-xl fixed top-0 right-10 mt-8 p-2 w-16 h-16 flex flex-col items-center group hover:w-40 hover:h-48 duration-500 ease-in-out'
+            className="border-2 backdrop-blur-md border-gray-700/50 rounded-xl fixed top-0 right-10 mt-8 p-2 w-16 h-16 flex flex-col items-center group hover:w-40 hover:h-48 duration-500 ease-in-out"
             onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
+            onMouseLeave={handleMouseLeave}>
             <Link to="/auth" className="rounded-full cursor-pointer block ">
-              <img src={images[randomIndex]} alt="" className='w-10 mb-3' />
+              <img src={images[randomIndex]} alt="" className="w-10 mb-3" />
             </Link>
             {showDropdown && (
               <div className="flex flex-col opacity-100  transition-opacity w-40 h-48 items-center justify-center text-xl rounded-xl">
                 <hr className="border-t border-gray-700/50 w-32 " />
-                <Link to="/dashboard" className="text-white hover:text-gray-300 mt-3">Dashboard</Link>
+                <Link
+                  to="/dashboard"
+                  className="text-white hover:text-gray-300 mt-3">
+                  Dashboard
+                </Link>
                 <hr className="border-t border-gray-700/50 w-32 mt-3" />
-                <Link to="/" className="text-red-500 font-bold hover:text-red-700 mt-3">Log Out</Link>
+                <Link
+                  to="/"
+                  className="text-red-500 font-bold hover:text-red-700 mt-3">
+                  Log Out
+                </Link>
               </div>
             )}
           </div>
-
         </div>
-      ) : (<div>
-        <div
-          className='border-2 backdrop-blur-md border-gray-700/50 rounded-xl fixed top-0 right-10 mt-8 p-2 w-16 h-16 flex flex-col justify-center items-center'
-        >
-          <Link to="/auth" className="rounded-full cursor-pointer block ">
-            <img src={images[randomIndex]} alt="" className='w-10 grayscale' />
-          </Link>
+      ) : (
+        <div>
+          <div className="border-2 backdrop-blur-md border-gray-700/50 rounded-xl fixed top-0 right-10 mt-8 p-2 w-16 h-16 flex flex-col justify-center items-center">
+            <Link to="/auth" className="rounded-full cursor-pointer block ">
+              <img
+                src={images[randomIndex]}
+                alt=""
+                className="w-10 grayscale"
+              />
+            </Link>
+          </div>
         </div>
-      </div>)}
+      )}
       <WelcomeSection />
 
       <div className="lg:pt-32 pt-20 flex flex-row gap-5 justify-center">
         <Link
-          className={`px-8 py-3 ${darkMode ? 'bg-white text-black' : 'bg-black text-white'
-            } rounded-full shadow-inner-xl font-semibold`}
-          to="/dashboard"
-        >
+          className={`px-8 py-3 ${
+            darkMode ? 'bg-white text-black' : 'bg-black text-white'
+          } rounded-full shadow-inner-xl font-semibold`}
+          to="/dashboard">
           Get Started
         </Link>
         <CopyButton npmCommand={npmCommand} />
@@ -161,7 +158,7 @@ function LandingPage() {
       <AboutUsSection darkMode={darkMode} />
 
       <FounderSection userData={userData} darkMode={darkMode} />
-    </main>
+    </Layout>
   );
 }
 
