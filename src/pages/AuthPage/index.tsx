@@ -4,12 +4,13 @@ import banner from "@/assets/banner.svg"
 import config from "@/config";
 
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
 import DynamicIsland from "@/components/ui/dynamicIsland";
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useState } from 'react';
-import { width } from '@fortawesome/free-solid-svg-icons/fa0';
+import { useEffect, useState } from 'react';
 
 function AuthPage() {
+  const isAuthenticated = useIsAuthenticated();
   const signIn = useSignIn();
   const location = useLocation();
   const navigate = useNavigate();
@@ -19,10 +20,6 @@ function AuthPage() {
   const [authPhase, setAuthPhase] = useState('Requesting Access Token...');
   const [authUrl, setAuthUrl] = useState('');
   const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-  
-  const code = new URLSearchParams(location.search).get('code');
-  if (code) navigate(window.location.pathname) // Clear the URL once we have the code
-
   
   const get_auth_url = async () => {
     try {
@@ -60,43 +57,53 @@ function AuthPage() {
     await sleep(3000);
     setIsAuth(false);
   }
-
-  useState(async () => {
-    // const code = new URLSearchParams(location.search).get('code');
-    if (code) {
+  
+  const perform_auth = async (code: string) => {
       setIsAuth(true);
-
+  
       await sleep(1000); // Make it look like we are doing something, this could be done in ms
       setAuthProgress(1);
-
+  
       const result = await get_auth_token(code);
       setAuthProgress(result.success ? 2 : -1);
       if (!result.success) 
         return auth_error(result.message);
-
+  
       setAuthPhase('Received Auth Token...')
-
+  
       await sleep(1000);
-
+  
       const res = signIn({ auth: { token: result.token, type: 'Bearer' } });
-
+  
       await sleep(1000);
-
+  
       setAuthProgress(result.success ? 3 : -1);
       setAuthProgress(3);
-
+  
       if (!res)
         return auth_error('An error occurred while logging in in the client. Please try again later');
       
       setAuthPhase('Successfully logged in... Redirecting...')
-
+  
       await sleep(3000);
-
+  
       navigate('/dashboard')
-    }
 
-    await get_auth_url();
-  });
+      setIsAuth(false);
+  };
+
+  useEffect(() => {
+    if (isAuthenticated())
+      navigate('/dashboard');
+
+    const code = new URLSearchParams(location.search).get('code');
+    navigate(window.location.pathname) // Clear the URL once we have the code
+
+    if (code) 
+      perform_auth(code);
+    
+    get_auth_url();
+  }, []);
 
   return (
     <main>
