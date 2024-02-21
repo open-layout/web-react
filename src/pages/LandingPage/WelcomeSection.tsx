@@ -1,10 +1,8 @@
 import React from 'react';
-import DynamicIsland from '@/components/ui/dynamicIsland';
 
 const WelcomeSection: React.FC = () => {
   return (
     <section className="grid place-items-center lg:mt-60 mt-32">
-      <DynamicIsland />
       <div>
         <h1 className="text-4xl mb-8 text-center justify-center items-center font-poppins sm:text-6xl lg:flex-row flex flex-col">
           Welcome to&nbsp;
