@@ -12,18 +12,18 @@ const DashboardMenu: React.FC<DashboardMenuProps> = () => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
-  const dropdownOptions: string[] = ["author:", "layout:", "category:", "lang:"];
+  const dropdownOptions: string[] = ['author', 'layout', 'category', 'lang'];
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, selectionStart } = event.target;
     setSearchTerm(value);
     setAutocompleteTerm('');
     setSelectedOption(null);
-    
+
     if (value.trim() !== '') {
       const lastWord = value.slice(0, selectionStart).split(' ').pop();
       if (lastWord) {
-        const matchedOption = dropdownOptions.find(option =>
+        const matchedOption = dropdownOptions.find((option) =>
           option.toLowerCase().startsWith(lastWord.toLowerCase())
         );
         if (matchedOption) {
@@ -58,21 +58,27 @@ const DashboardMenu: React.FC<DashboardMenuProps> = () => {
     <nav className="fixed left-10 top-60 menu-container grid place-items-center">
       <div className="flex flex-col items-center bg-gray-700/40 border-gray-700/50 border rounded-md  py-1 px-2 mt-3">
         <div className="flex flex-col items-center select-none text-white gap-5 p-4">
-        <Switch />
+          <Switch />
           <div className="flex flex-row relative">
             <div className="relative flex flex-row gap-2">
               <input
                 ref={searchInputRef}
-                className={`rounded-md w-72 pl-1 bg-code border border-gray-600 hover:border-gray-500 focus:border-gray-400 focus:outline-none transition-colors duration-200 ease-in-out ${selectedOption ? 'border-yellow-400' : ''}`}
+                className={`rounded-md w-72 pl-1 bg-code border border-gray-600 hover:border-gray-500 focus:border-gray-400 focus:outline-none transition-colors duration-200 ease-in-out ${
+                  selectedOption ? 'border-yellow-400' : ''
+                }`}
                 value={searchTerm}
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
               />
-              <img src={IconSearch} className="absolute right-7 top-1/2 transform -translate-y-1/2 w-5 h-6 text-gray-400 cursor-pointer" alt="Search" />
-              <img 
-                src={IconQuestionMark} 
-                alt="Question Mark" 
-                className='w-4 cursor-pointer' 
+              <img
+                src={IconSearch}
+                className="absolute right-7 top-1/2 transform -translate-y-1/2 w-5 h-6 text-gray-400 cursor-pointer"
+                alt="Search"
+              />
+              <img
+                src={IconQuestionMark}
+                alt="Question Mark"
+                className="w-4 cursor-pointer"
                 onClick={handleQuestionMarkClick}
               />
               {autocompleteTerm && (
@@ -86,9 +92,10 @@ const DashboardMenu: React.FC<DashboardMenuProps> = () => {
                 {dropdownOptions.map((option, index) => (
                   <div
                     key={index}
-                    className={`cursor-pointer px-3 my-1 border border-gray-400 mx-1 py-1 bg-title/80 rounded-md hover:bg-title transition-colors duration-200 ease-in-out ${selectedOption === option ? 'bg-black' : ''}`}
-                    onClick={() => handleDropdownItemClick(option)}
-                  >
+                    className={`cursor-pointer px-3 my-1 border border-gray-400 mx-1 py-1 bg-title/80 rounded-md hover:bg-title transition-colors duration-200 ease-in-out ${
+                      selectedOption === option ? 'bg-black' : ''
+                    }`}
+                    onClick={() => handleDropdownItemClick(option)}>
                     {option}
                   </div>
                 ))}

@@ -11,19 +11,20 @@ const TemplatePage: React.FC<TemplatePageProps> = ({
   children,
   darkMode = true,
 }) => {
-  const [isMouseNearDynamicIsland, setIsMouseNearDynamicIsland] = useState(false);
+  const [isMouseNearDynamicIsland, setIsMouseNearDynamicIsland] =
+    useState(false);
 
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
       const distanceFromEdge = 200;
-      const edgeBuffer = 10; // Margen de error para evitar falsos positivos en el borde
+      const edgeBuffer = 10;
 
       const { clientX, clientY } = event;
 
       // Comprobar la posición del ratón en relación con el borde del navegador
       if (
-        clientX <= distanceFromEdge + edgeBuffer ||
-        clientX >= window.innerWidth - (distanceFromEdge + edgeBuffer) ||
+        // clientX <= distanceFromEdge + edgeBuffer ||
+        // clientX >= window.innerWidth - (distanceFromEdge + edgeBuffer) ||
         clientY <= distanceFromEdge + edgeBuffer ||
         clientY >= window.innerHeight - (distanceFromEdge + edgeBuffer)
       ) {
