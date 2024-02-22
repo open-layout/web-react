@@ -7,7 +7,7 @@ import Layout from '@/components/Layouts/Template';
 
 import config from '@/config';
 
-function dashboard() {
+function Dashboard() {
   const authHeader = useAuthHeader();
   const [repositories, setRepositories] = useState([]);
 
@@ -73,4 +73,4 @@ function dashboard() {
   );
 };
 
-export default dashboard;
+export default Dashboard;
