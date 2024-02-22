@@ -20,6 +20,7 @@ const DevelopersSection: React.FC<DevelopersProps> = ({
             description={user.bio}
             image={user.avatar}
             date={user.created_at.split('-')[0]}
+            badges={user.badges}
             link={`https://github.com/${user.username}`}
           />
         ))}

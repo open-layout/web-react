@@ -1,8 +1,12 @@
 export default {
-    name: "OpenLayouts",
+  name: 'OpenLayouts',
 
-    // Api utilities
-    api: {
-        baseurl: "https://api.openlayout.me/v0",
-    },
-}
+  // Api utilities
+  api: {
+    baseurl: 'https://api.openlayout.me/v0',
+    header: 'loquesea',
+  },
+  badges: {
+    fullpath: '@/assets/badges/',
+  },
+};

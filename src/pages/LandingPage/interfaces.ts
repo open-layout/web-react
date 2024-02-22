@@ -5,6 +5,12 @@ interface UserData {
   avatar: string;
   bio: string;
   created_at: string;
+  badges: BadgesData[];
+}
+
+interface BadgesData {
+  id: string;
+  name: string;
 }
 
 interface PresentationCardProps {
@@ -13,6 +19,7 @@ interface PresentationCardProps {
   description: string;
   date: string;
   link: string;
+  badges: BadgesData[];
 }
 interface TemplatesCardProps {
   name: string;

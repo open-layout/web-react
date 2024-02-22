@@ -4,7 +4,6 @@ import WelcomeSection from './WelcomeSection';
 import DevelopersSection from './DevelopersSection';
 import AboutUsSection from './AboutUsSection';
 import Layout from '@/components/Layouts/Template';
-import LoginIcon from '@/assets/login.png';
 import favicon from '@/assets/favicon.svg';
 import faviconyellow from '@/assets/faviconyellow.svg';
 import faviconblue from '@/assets/faviconblue.svg';
@@ -12,16 +11,17 @@ import favicongreen from '@/assets/favicongreen.svg';
 import IconSun from '@icons/sun.svg';
 import IconMoon from '@icons/moon.svg';
 import ArrowDownIcon from './ArrowDownIcon';
-import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import { useEffect, useState } from 'react';
 import { UserData } from './interfaces';
 import { Link } from 'react-router-dom';
+import config from '@/config';
 
 function LandingPage() {
   const [userData, setUserData] = useState<UserData[]>([]);
   const [darkMode, setDarkMode] = useState(true); // Modo oscuro activado por defecto
   const [randomIndex, setRandomIndex] = useState(0);
-  const [isHovering, setIsHovering] = useState(false);
+  const [, setIsHovering] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const isAuthenticated = useIsAuthenticated();
 
@@ -40,35 +40,12 @@ function LandingPage() {
   const images = [favicon, faviconyellow, faviconblue, favicongreen];
   const npmCommand = 'npx open-layout';
 
-  const response = [
-    {
-      username: 'IMXNOOBX',
-      avatar: 'https://avatars.githubusercontent.com/u/69653071?v=4',
-      bio:
-        '• hey hi! hope you have a great day! •ﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠ  \r\n' +
-        '•> Hiii im noob!ﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠﾠ•> If you need help dm me <3',
-      created_at: '2020-08-13T21:26:43Z',
-    },
-    {
-      username: 'AzalDevX',
-      avatar: 'https://avatars.githubusercontent.com/u/98758892?v=4',
-      bio: 'Programming is the art of creating something out of nothing with just a couple of ideas. 🚀',
-      created_at: '2022-01-31T15:11:06Z',
-    },
-    {
-      username: 'AngleSad',
-      avatar: 'https://avatars.githubusercontent.com/u/118389540?v=4',
-      bio: 'Programming is the bridge between imagination and reality, where each line of code is a step towards the materialization of innovative ideas. 🪐',
-      created_at: '2022-04-19T12:45:00Z',
-    },
-  ];
-
   useState(() => {
     const fetchData = async () => {
       try {
-        // fetch()
-        //   .then()
-        setUserData(response);
+        fetch(`${config.api.baseurl}/developers`)
+          .then((data) => data.json())
+          .then((response) => setUserData(response.data));
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
@@ -79,7 +56,7 @@ function LandingPage() {
 
   useEffect(() => {
     getRandomIndex();
-  }, []);
+  });
 
   // Función para generar un índice aleatorio y actualizar el estado
   const getRandomIndex = () => {
@@ -93,7 +70,7 @@ function LandingPage() {
   return (
     <Layout darkMode={darkMode}>
       <a
-        className="fixed top-0 left-10 mt-8 px-3 py-1 rounded-full "
+        className="absolute top-0 left-10 mt-8 px-3 py-1 rounded-full "
         onClick={toggleDarkMode}>
         <img src={darkMode ? IconSun : IconMoon} alt="" className="w-12" />
       </a>
@@ -101,7 +78,7 @@ function LandingPage() {
       {isAuthenticated() ? (
         <div>
           <div
-            className="border-2 backdrop-blur-md border-gray-700/50 rounded-xl fixed top-0 right-10 mt-8 p-2 w-16 h-16 flex flex-col items-center group hover:w-40 hover:h-48 duration-500 ease-in-out"
+            className="border-2 backdrop-blur-md border-gray-700/50 rounded-xl absolute top-0 right-10 mt-8 p-2 w-16 h-16 flex flex-col items-center group hover:w-40 hover:h-48 duration-500 ease-in-out"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}>
             <Link to="/auth" className="rounded-full cursor-pointer block ">
@@ -127,7 +104,7 @@ function LandingPage() {
         </div>
       ) : (
         <div>
-          <div className="border-2 backdrop-blur-md border-gray-700/50 rounded-xl fixed top-0 right-10 mt-8 p-2 w-16 h-16 flex flex-col justify-center items-center">
+          <div className="border-2 backdrop-blur-md border-gray-700/50 rounded-xl absolute top-0 right-10 mt-8 p-2 w-16 h-16 flex flex-col justify-center items-center">
             <Link to="/auth" className="rounded-full cursor-pointer block ">
               <img
                 src={images[randomIndex]}
