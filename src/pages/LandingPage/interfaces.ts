@@ -23,7 +23,7 @@ interface TemplatesCardProps {
   languages: string;
 }
 
-interface FoundersProps {
+interface DevelopersProps {
   userData: UserData[];
   darkMode: boolean;
 }
@@ -35,7 +35,7 @@ interface AboutUsProps {
 export type {
   UserData,
   PresentationCardProps,
-  FoundersProps,
+  DevelopersProps,
   AboutUsProps,
   TemplatesCardProps,
 };

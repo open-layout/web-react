@@ -1,7 +1,7 @@
 // LandingPage.tsx
 import CopyButton from '@/components/ui/CopyButton';
 import WelcomeSection from './WelcomeSection';
-import FounderSection from './FounderSection';
+import DevelopersSection from './DevelopersSection';
 import AboutUsSection from './AboutUsSection';
 import Layout from '@/components/Layouts/Template';
 import LoginIcon from '@/assets/login.png';
@@ -157,7 +157,7 @@ function LandingPage() {
 
       <AboutUsSection darkMode={darkMode} />
 
-      <FounderSection userData={userData} darkMode={darkMode} />
+      <DevelopersSection userData={userData} darkMode={darkMode} />
     </Layout>
   );
 }

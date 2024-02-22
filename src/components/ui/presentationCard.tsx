@@ -9,9 +9,9 @@ const PresentationCard: React.FC<PresentationCardProps> = ({
   date,
 }) => {
   return (
-    <article className="group text-white backdrop-blur-md border border-title px-2 py-4 rounded-xl w-72 h-72 relative flex flex-col gap-4">
+    <article className="group text-white backdrop-blur-md border border-title px-2 py-4 rounded-xl w-72 h-72 relative flex flex-col gap-4 hover:shadow-lg hover:shadow-title transition-shadow duration-300">
       <img
-        className="w-20 rounded-full absolute -top-3 -left-3 border border-title shadow-2xl group-hover:rounded-xl transition-all"
+        className="w-20 rounded-[50px] absolute -top-3 -left-3 border border-title shadow-2xl group-hover:rounded-3xl transition-all"
         src={image}
         alt={`${name}'s pfp`}
       />
