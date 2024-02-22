@@ -8,7 +8,7 @@ const Switch = () => {
   };
 
   return (
-    <label className="flex items-center w-72">
+    <label className="flex items-center justify-center w-72">
       {/* <span className="mr-2">Uploaded</span> */}
       <div className="relative flex items-center cursor-pointer">
         <input type="checkbox" className="hidden" onChange={handleToggle} checked={uploaded} />

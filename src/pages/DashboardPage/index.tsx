@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader'
+import { useEffect, useState } from 'react';
+import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 
 import TemplatesCard from '@/components/ui/templatesCar';
 import DashboardMenu from '@/components/ui/dashboardmenu';
@@ -7,9 +7,9 @@ import Layout from '@/components/Layouts/Template';
 
 import config from '@/config';
 
-function dashboard() {
+function Dashboard() {
   const authHeader = useAuthHeader();
-  const [repositories, setRepositories] = useState([]);
+  const [, setRepositories] = useState([]);
 
   const fetch_repositories = async () => {
     try {
@@ -17,8 +17,8 @@ function dashboard() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': authHeader || ''
-        }
+          Authorization: authHeader || '',
+        },
       });
 
       return await response.json(); // Access the 'url' property from the data object
@@ -26,18 +26,18 @@ function dashboard() {
       console.error('[API] ', error);
       return false;
     }
-  }
+  };
 
   const get_repositories = async () => {
     const response = await fetch_repositories();
 
     if (response.success) {
       setRepositories(response.data);
-      console.log('Repositories:', response.data)
+      console.log('Repositories:', response.data);
     } else {
-      console.log('Error fetching repositories:', response.message)
+      console.log('Error fetching repositories:', response.message);
     }
-  }
+  };
 
   useEffect(() => {
     get_repositories();
@@ -71,6 +71,6 @@ function dashboard() {
       </section>
     </Layout>
   );
-};
+}
 
-export default dashboard;
+export default Dashboard;
