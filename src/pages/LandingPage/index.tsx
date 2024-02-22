@@ -4,7 +4,6 @@ import WelcomeSection from './WelcomeSection';
 import FounderSection from './FounderSection';
 import AboutUsSection from './AboutUsSection';
 import Layout from '@/components/Layouts/Template';
-import LoginIcon from '@/assets/login.png';
 import favicon from '@/assets/favicon.svg';
 import faviconyellow from '@/assets/faviconyellow.svg';
 import faviconblue from '@/assets/faviconblue.svg';
