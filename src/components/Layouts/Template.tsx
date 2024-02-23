@@ -19,23 +19,16 @@ const TemplatePage: React.FC<TemplatePageProps> = ({
       const distanceFromEdge = 200;
       const edgeBuffer = 10;
 
-      const { clientX, clientY } = event;
+      const { clientY } = event;
 
-      // Comprobar la posición del ratón en relación con el borde del navegador
-      if (
-        // clientX <= distanceFromEdge + edgeBuffer ||
-        // clientX >= window.innerWidth - (distanceFromEdge + edgeBuffer) ||
-        clientY <= distanceFromEdge + edgeBuffer ||
-        clientY >= window.innerHeight - (distanceFromEdge + edgeBuffer)
-      ) {
-        setIsMouseNearDynamicIsland(true);
-      } else {
-        setIsMouseNearDynamicIsland(false);
-      }
+      // Check mouse position only relative to the top edge of the browser window
+      setIsMouseNearDynamicIsland(clientY <= distanceFromEdge + edgeBuffer);
     };
 
     document.addEventListener('mousemove', handleMouseMove);
-
+    document.addEventListener('mouseleave', () =>
+      setIsMouseNearDynamicIsland(false)
+    );
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
     };
