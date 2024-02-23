@@ -4,39 +4,54 @@ import pencilicon from '@/assets/icons/pencilicon.svg';
 import { HexColorPicker } from "react-colorful";
 
 interface FormData {
-    firstName: string;
-    lastName: string;
-    email: string;
-    message: string;
+    name: string;
+    description: string;
+    category: string;
+    language: string;
     version: string;
     author: string;
-    colors: string[]; // Especifica que colors es un array de strings
-    requirements: string;
-    ide: string;
-    images: string[]; // Especifica que image es un array de strings o null
+    progLanguage: string;
+    colors?: string[];
+    requirements?: string;
+    ide?: string;
+    images?: string[];
+    linkRepo: string;
+    linkPreview?: string;
+    linkReadme?: string;
+    linkTutorial?: string;
+    linkDocs?: string;
+    linkDev?: string;
+    linkSocials?: string;
 }
 
 const Form = () => {
     const [formData, setFormData] = useState<FormData>({
-        firstName: '',
-        lastName: '',
-        email: '',
-        message: '',
+        name: '',
+        description: '',
+        category: '',
+        language: '',
         version: '',
         author: '',
-        colors: [], // Inicializa colors como un array vacío
+        colors: [],
+        progLanguage: '',
         requirements: '',
         ide: '',
-        images: [], // Inicializa images como un array vacío o null
+        images: [],
+        linkRepo: '',
+        linkPreview: '',
+        linkReadme: '',
+        linkTutorial: '',
+        linkDocs: '',
+        linkDev: '',
+        linkSocials: '',
+
     });
 
     const [imageUrl, setImageUrl] = useState<string>('');
     const [showColorPicker, setShowColorPicker] = useState(false);
     const [selectedColor, setSelectedColor] = useState<string>(''); // Estado para almacenar el color seleccionado
 
-    const handleColorPickerClick = () => {
-        setShowColorPicker(true);
-    };
+
 
     const handleColorChange = (color: string) => {
         setSelectedColor(color);
@@ -52,11 +67,11 @@ const Form = () => {
         const isValidUrl = /^(ftp|http|https):\/\/[^ "]+$/.test(imageUrl);
 
         // Verificar si el número de imágenes es menor que 3 y si la URL es válida
-        if (formData.images.length < 3 && isValidUrl) {
+        if ((formData.images?.length ?? 0) < 3 && isValidUrl) {
             setFormData({
                 ...formData,
-                images: [...formData.images, imageUrl], // Agregar la URL de la imagen al array de imágenes
-                
+                images: [...(formData.images ?? []), imageUrl], // Agregar la URL de la imagen al array de imágenes
+
             });
             console.log(formData.images)
             setImageUrl(''); // Limpiar la URL de la imagen
@@ -64,18 +79,18 @@ const Form = () => {
     };
 
     const handleNextImage = () => {
-        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % formData.images.length);
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % (formData.images?.length ?? 0));
     };
 
     const handlePrevImage = () => {
-        setCurrentImageIndex((prevIndex) => (prevIndex - 1 + formData.images.length) % formData.images.length);
+        setCurrentImageIndex((prevIndex) => (prevIndex - 1 + (formData.images?.length ?? 0)) % (formData.images?.length ?? 0));
     };
 
     const handleColorConfirm = () => {
         if (selectedColor) {
             setFormData({
                 ...formData,
-                colors: [...formData.colors, selectedColor], // Agregar el color seleccionado al array de colores
+                colors: [...(formData.colors ?? []), selectedColor], // Agregar el color seleccionado al array de colores
             });
             setSelectedColor(''); // Limpiar el color seleccionado
             setShowColorPicker(false);
@@ -114,9 +129,9 @@ const Form = () => {
     };
 
     return (
-        <div className="max-w-md mx-auto">
+        <div className="max-w-md mx-auto rounded-lg overflow-hidden shadow-2xl m-4 border-2 border-title  p-4">
             <div className="fixed inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]"></div>
-
+            <form onSubmit={handleSubmit} className="mt-8">
             <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
                 <h2 id="accordion-flush-heading-1">
                     <button
@@ -133,13 +148,13 @@ const Form = () => {
                     </button>
                 </h2>
                 <div id="accordion-flush-body-1" className="hidden" aria-labelledby="accordion-flush-heading-1">
-                    <form onSubmit={handleSubmit} className="mt-8">
-                        <div className="relative">
+                    
+                        <div className="relative mt-4">
                             <label className="block mb-2 text-white">Name</label>
                             <input
                                 type="text"
-                                name="firstName"
-                                value={formData.firstName}
+                                name="name"
+                                value={formData.name}
                                 required
                                 onChange={handleChange}
                                 className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
@@ -150,8 +165,8 @@ const Form = () => {
                         <div className="mt-4 relative">
                             <label className="block mb-2 text-white">Description</label>
                             <textarea
-                                name="message"
-                                value={formData.message}
+                                name="description"
+                                value={formData.description}
                                 onChange={handleChange}
                                 required
                                 className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
@@ -164,9 +179,9 @@ const Form = () => {
                                 <label className="block mb-2 text-white">Version</label>
                                 <input
                                     type="text"
-                                    name="lastName"
+                                    name="version"
                                     required
-                                    value={formData.lastName}
+                                    value={formData.version}
                                     onChange={handleChange}
                                     className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
                                     placeholder='Version'
@@ -176,10 +191,10 @@ const Form = () => {
                             <div className="mt-4 relative">
                                 <label className="block mb-2 text-white">Author</label>
                                 <input
-                                    type="email"
+                                    type="text"
                                     required
-                                    name="email"
-                                    value={formData.email}
+                                    name="author"
+                                    value={formData.author}
                                     onChange={handleChange}
                                     className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
                                     placeholder='Author'
@@ -191,8 +206,8 @@ const Form = () => {
                             <div className="relative w-full">
                                 <label className="block mb-2 text-white">Category</label>
                                 <select
-                                    name="version"
-                                    value={formData.version}
+                                    name="category"
+                                    value={formData.category}
                                     required
                                     onChange={handleChange}
                                     className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
@@ -207,8 +222,8 @@ const Form = () => {
                             <div className="relative w-full">
                                 <label className="block mb-2 text-white">Language</label>
                                 <select
-                                    name="author"
-                                    value={formData.author}
+                                    name="language"
+                                    value={formData.language}
                                     onChange={handleChange}
                                     required
                                     className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
@@ -220,10 +235,10 @@ const Form = () => {
                                 </select>
                             </div>
                             <div className="relative w-full">
-                                <label className="block mb-2 text-white">Programation Lang</label>
+                                <label className="block mb-2 text-white">Prog Lang</label>
                                 <select
-                                    name="prog lang"
-                                    value={formData.version}
+                                    name="progLanguage"
+                                    value={formData.progLanguage}
                                     required
                                     onChange={handleChange}
                                     className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
@@ -241,8 +256,8 @@ const Form = () => {
                             <label className="block mb-2 text-white">Link Repo</label>
                             <input
                                 type="text"
-                                name="firstName"
-                                value={formData.firstName}
+                                name="linkRepo"
+                                value={formData.linkRepo}
                                 required
                                 onChange={handleChange}
                                 className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
@@ -251,7 +266,7 @@ const Form = () => {
                             <img src={pencilicon} className="h-5 w-5 text-gray-400 absolute right-2 top-1/2 transform -translate-y-1/2" />
                         </div>
 
-                    </form>
+                   
                 </div>
                 <h2 id="accordion-flush-heading-2">
                     <button
@@ -269,7 +284,7 @@ const Form = () => {
                 </h2>
                 <div id="accordion-flush-body-2" className="hidden" aria-labelledby="accordion-flush-heading-2">
                     //important here
-                    <form onSubmit={handleSubmit} className="max-w-md mx-auto">
+                   
                         <label htmlFor="color" className="block text-white mb-2">Color Picker</label>
                         <div className="mb-4 flex items-center">
 
@@ -279,7 +294,7 @@ const Form = () => {
                             >
                                 <span className="text-white">+</span>
                             </div>
-                            {formData.colors.map((color, index) => (
+                            {formData.colors?.map((color, index) => (
                                 <div
                                     key={index}
                                     className="w-10 h-10 flex items-center justify-center border border-gray-400 rounded-full mr-3"
@@ -307,11 +322,11 @@ const Form = () => {
                             )}
 
                         </div>
-                        {formData.images.length > 0 && (
+                        {formData.images?.length && formData.images?.length > 0 && (
                             <div className="mt-2 flex justify-between">
                                 <button type="button" onClick={handlePrevImage} className="text-white">&#10094;</button>
                                 <img
-                                    src={formData.images[currentImageIndex]}
+                                    src={formData.images?.[currentImageIndex]}
                                     alt="Preview"
                                     className="block mx-auto"
                                     style={{ maxWidth: '100%', maxHeight: '200px' }}
@@ -341,10 +356,9 @@ const Form = () => {
                         <div className="mb-4 relative">
                             <label htmlFor="requirements" className="block text-white mb-2">Requirements</label>
                             <textarea
-                                name="messagrequirementse"
+                                name="requirements"
                                 value={formData.requirements}
                                 onChange={handleChange}
-                                required
                                 className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
                                 placeholder='Requirements of the repository'
                             />
@@ -355,7 +369,6 @@ const Form = () => {
                             <select
                                 name="ide"
                                 value={formData.ide}
-                                required
                                 onChange={handleChange}
                                 className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
 
@@ -367,7 +380,7 @@ const Form = () => {
                             </select>
                         </div>
 
-                    </form>
+                    
                 </div>
                 <h2 id="accordion-flush-heading-3">
                     <button
@@ -383,15 +396,88 @@ const Form = () => {
                         </svg>
                     </button>
                 </h2>
+
                 <div id="accordion-flush-body-3" className="hidden" aria-labelledby="accordion-flush-heading-3">
+                    
                     // Socials here
+                        <div className="relative">
+                            <label className="block mb-2 text-white">Preview Link</label>
+                            <input
+                                type="text"
+                                name="linkPreview"
+                                value={formData.linkPreview}
+                                onChange={handleChange}
+                                className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
+                                placeholder='Preview Link'
+                            />
+                            <img src={pencilicon} className="h-5 w-5 text-gray-400 absolute right-2 top-1/2 transform -translate-y-1/2" />
+                        </div>
+                        <div className="mt-4 relative">
+                            <label className="block mb-2 text-white">Readme Link</label>
+                            <input
+                                name="linkReadme"
+                                value={formData.linkReadme}
+                                onChange={handleChange}
+                                className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
+                                placeholder='Readme Link'
+                            />
+                            <img src={pencilicon} className="h-5 w-5 text-gray-400 absolute right-2 top-1/2 transform -translate-y-1/2" />
+                        </div>
+                        <div className="relative mt-4">
+                            <label className="block mb-2 text-white">Tutorial Link</label>
+                            <input
+                                type="text"
+                                name="linkTutorial"
+                                value={formData.linkTutorial}
+                                onChange={handleChange}
+                                className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
+                                placeholder='Tutorial Link'
+                            />
+                            <img src={pencilicon} className="h-5 w-5 text-gray-400 absolute right-2 top-1/2 transform -translate-y-1/2" />
+                        </div>
+                        <div className="mt-4 relative">
+                            <label className="block mb-2 text-white">Docs Link</label>
+                            <input
+                                name="linkDocs"
+                                value={formData.linkDocs}
+                                onChange={handleChange}
+                                className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
+                                placeholder='Docs Link'
+                            />
+                            <img src={pencilicon} className="h-5 w-5 text-gray-400 absolute right-2 top-1/2 transform -translate-y-1/2" />
+                        </div>
+                        <div className="relative mt-4">
+                            <label className="block mb-2 text-white">Dev Link</label>
+                            <input
+                                type="text"
+                                name="linkDev"
+                                value={formData.linkDev}
+                                onChange={handleChange}
+                                className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
+                                placeholder='Developer github Link'
+                            />
+                            <img src={pencilicon} className="h-5 w-5 text-gray-400 absolute right-2 top-1/2 transform -translate-y-1/2" />
+                        </div>
+                        <div className="mt-4 relative">
+                            <label className="block mb-2 text-white">Socials Links</label>
+                            <input
+                                name="linkSocials"
+                                value={formData.linkSocials}
+                                onChange={handleChange}
+                                className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
+                                placeholder='Socials'
+                            />
+                            <img src={pencilicon} className="h-5 w-5 text-gray-400 absolute right-2 top-1/2 transform -translate-y-1/2" />
+                        </div>
+                    
                 </div>
             </div>
-            <div className="mt-6">
-                <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded">
+            <div className="flex justify-center mt-6 ">
+                <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded w-40" >
                     Submit
                 </button>
             </div>
+            </form>
         </div>
     );
 };
