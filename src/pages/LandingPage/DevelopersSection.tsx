@@ -6,7 +6,7 @@ const DevelopersSection: React.FC<DevelopersProps> = ({
   userData,
   darkMode,
 }) => {
-  console.log('userData:', userData); // Add this line to log userData
+  // console.log('userData:', userData); // Add this line to log userData
   return (
     <section className="grid place-items-center mt-24">
       <h2 className={`text-3xl ${darkMode ? 'text-white' : 'text-black'}`}>

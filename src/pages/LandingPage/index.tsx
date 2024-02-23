@@ -12,7 +12,7 @@ import IconSun from '@icons/sun.svg';
 import IconMoon from '@icons/moon.svg';
 import ArrowDownIcon from './ArrowDownIcon';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
-import React,{ useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { UserData } from './interfaces';
 import { Link } from 'react-router-dom';

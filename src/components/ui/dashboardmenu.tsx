@@ -12,7 +12,12 @@ const DashboardMenu: React.FC<DashboardMenuProps> = () => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
-  const dropdownOptions: string[] = ['author', 'layout', 'category', 'lang'];
+  const dropdownOptions: string[] = [
+    'author:',
+    'layout:',
+    'category:',
+    'lang:',
+  ];
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, selectionStart } = event.target;
@@ -55,7 +60,7 @@ const DashboardMenu: React.FC<DashboardMenuProps> = () => {
   };
 
   return (
-    <nav className="fixed left-10 top-60 menu-container grid place-items-center">
+    <nav className="2xl:fixed left-10 top-60 menu-container grid place-items-center">
       <div className="flex flex-col items-center bg-gray-700/40 border-gray-700/50 border rounded-md  py-1 px-2 mt-3">
         <div className="flex flex-col items-center select-none text-white gap-5 p-4">
           <Switch />
