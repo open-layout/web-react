@@ -28,10 +28,8 @@ const DynamicIsland: React.FC<DynamicIslandProps> = ({
             isMouseNearDynamicIsland ? 'opacity-100 duration-500' : ''
           }`}>
           <Link to="/">Home</Link>
-          <Link to="/templates">Templates</Link>
-          <a href="https://docs.openlayout.me" target="_blank">
-            Docs
-          </a>
+          <Link to="/layaouts">Templates</Link>
+          <Link to="/form">Docs</Link>
         </div>
       </div>
     </nav>
