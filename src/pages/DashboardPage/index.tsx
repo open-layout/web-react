@@ -9,7 +9,7 @@ import config from '@/config';
 
 function Dashboard() {
   const authHeader = useAuthHeader();
-  const [, setRepositories] = useState([]);
+  const [repositories, setRepositories] = useState([]);
 
   const fetch_repositories = async () => {
     try {
@@ -45,28 +45,14 @@ function Dashboard() {
 
   return (
     <Layout>
-      <section className="lg:mt-32 grid place-content-end">
-        <h2 className="text-white text-5xl left-0 mb-3">Dashboard</h2>
-        <DashboardMenu />
-        <div className="grid grid-cols-3 gap-16 mt-14 mr-10 mb-5">
-          <TemplatesCard />
-          <TemplatesCard />
-          <TemplatesCard />
-          <TemplatesCard />
-
-          <TemplatesCard />
-          <TemplatesCard />
-          <TemplatesCard />
-          <TemplatesCard />
-
-          <TemplatesCard />
-          <TemplatesCard />
-          <TemplatesCard />
-          <TemplatesCard />
-
-          <TemplatesCard />
-          <TemplatesCard />
-          <TemplatesCard />
+      <div className="bg-black h-[100px] fixed z-40 top-0 w-full shadow-lg shadow-black"></div>
+      <section className="lg:mt-32 mb-10 grid place-content-center lg:place-content-end xl:w-[90%]">
+        <h2 className="text-5xl">Dashboard</h2>
+        <div className="grid place-content-center lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-12 mt-14 mr-10 mb-5">
+          <DashboardMenu />
+          {repositories.map((repo) => (
+            <TemplatesCard repo={repo} />
+          ))}
         </div>
       </section>
     </Layout>

@@ -7,7 +7,7 @@ import Layout from '@/components/Layouts/Template';
 import IconSun from '@icons/sun.svg';
 import IconMoon from '@icons/moon.svg';
 import ArrowDownIcon from './ArrowDownIcon';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { UserData } from './interfaces';
 import { Link } from 'react-router-dom';
@@ -33,8 +33,6 @@ function LandingPage() {
 
     fetchData();
   });
-
-
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);

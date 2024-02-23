@@ -12,10 +12,9 @@ const DynamicIsland: React.FC<DynamicIslandProps> = ({
   return (
     <nav
       id="dynamic-island"
-      className="menu-container grid place-items-center group"
-      style={{ zIndex: 9999999 }}>
+      className="menu-container grid place-items-center group">
       <div
-        className={`flex flex-row items-center select-none fixed top-0 backdrop-blur-md border-gray-700/50 border rounded-full py-1 px-2 mt-3 w-40 duration-300 ease-in-out ${
+        className={`flex flex-row items-center select-none fixed z-50 top-0 backdrop-blur-md border-gray-700/50 border rounded-full py-1 px-2 mt-3 w-40 duration-300 ease-in-out ${
           isMouseNearDynamicIsland ? 'justify-between w-96' : ''
         }`}>
         <Link to="/" className="ml-1 pr-1 flex flex-row items-center">
