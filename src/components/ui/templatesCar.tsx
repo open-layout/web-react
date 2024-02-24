@@ -4,7 +4,7 @@ import IconGithub from '@icons/github.svg';
 import IconMarkdown from '@/assets/languages/markdown.svg';
 import IconAdd from '@icons/add.svg';
 
-const TemplatesCard: React.FC<{ repo: any }> = ({ repo }) => {
+const TemplatesCard: React.FC<{ repo: object | any }> = ({ repo }) => {
   const [languageImage, setLanguageImage] = useState<string | null>(null);
   const [showAddButton, setShowAddButton] = useState<boolean>(false);
 
@@ -34,16 +34,26 @@ const TemplatesCard: React.FC<{ repo: any }> = ({ repo }) => {
     }
   }, [repo.language]);
 
+  const sanitize_name = (name: string): string => {
+    return name.replace(/-/g, ' ').replace(/_/g, ' ');
+  }
+
   return (
-    <article className="relative flex w-80 flex-col rounded-xl bg-white/90 bg-clip-border text-gray-700 shadow-md">
+    <article className="relative flex w-80 flex-col rounded-xl bg-zinc-800/40 backdrop-blur-lg text-white shadow-md border-[3px] border-zinc-700/50">
       <div className="flex justify-center relative mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r bg-title">
         <img src={webicon} alt="" className="h-full" />
+        <img
+            src={languageImage || IconMarkdown}
+            className="w-9 h-9 bg-code/70 backdrop-blur-xl m-1 py-1 px-2 rounded-md border border-gray-700"
+            alt={`${repo.language}`}
+            title={`${repo.language || 'Markdown'}`}
+          />
       </div>
       <div className="p-6">
-        <h5 className="mb-2 block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
-          Tailwind card
+        <h5 className="mb-2 block font-sans text-xl font-bold leading-snug tracking-normal text-blue-gray-900 antialiased">
+          {sanitize_name(repo.name) || 'Unknown'}
         </h5>
-        <p className="template-card-description block font-sans text-base font-light leading-relaxed text-inherit antialiased max-h-32 min-h-32 overflow-y-auto border border-gray-400 p-1 rounded-lg bg-gray-400/20">
+        <p className="template-card-description block font-sans text-base font-light leading-relaxed text-inherit antialiased max-h-32 min-h-32 overflow-y-auto border-[3px] border-zinc-500/50 p-2 rounded-lg bg-zinc-400/10">
           {repo.description || 'No description yet'}
         </p>
       </div>
@@ -51,7 +61,7 @@ const TemplatesCard: React.FC<{ repo: any }> = ({ repo }) => {
         <a
           data-ripple-light="true"
           href={repo.html_url}
-          className="bottom-0 select-none rounded-lg bg-title py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-title/20 transition-all hover:shadow-lg hover:shadow-title/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+          className="bottom-0 select-none rounded-lg bg-title/80 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-title/20 transition-all hover:shadow-lg hover:shadow-title/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
           Github
         </a>
       </div>
