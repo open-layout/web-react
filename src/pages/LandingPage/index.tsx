@@ -65,8 +65,9 @@ function LandingPage() {
       </div>
 
       <AboutUsSection darkMode={darkMode} />
-
-      <DevelopersSection userData={userData} darkMode={darkMode} />
+      {userData.length > 0 && (
+        <DevelopersSection userData={userData} darkMode={darkMode} />
+      )}
     </Layout>
   );
 }
