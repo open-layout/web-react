@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import IconCopy from "@icons/copy.svg";
-import IconTick from "@icons/tick.svg";
+import React, { useState } from 'react';
+import IconCopy from '@icons/copy.svg';
+import IconTick from '@icons/tick.svg';
 
 interface Props {
   npmCommand: string;
@@ -13,14 +13,14 @@ const CopyButton: React.FC<Props> = ({ npmCommand }) => {
     navigator.clipboard
       .writeText(npmCommand)
       .then(() => {
-        console.log("Text copied: " + npmCommand);
+        console.log('Text copied: ' + npmCommand);
         setCopied(true);
         setTimeout(() => {
           setCopied(false);
-        }, 1000);
+        }, 1500);
       })
       .catch((err) => {
-        console.error("Error copying text: ", err);
+        console.error('Error copying text: ', err);
       });
   };
 
@@ -31,16 +31,17 @@ const CopyButton: React.FC<Props> = ({ npmCommand }) => {
           <span className="text-gray-400">$</span> {npmCommand}
           <span className="animate-blink select-none">|</span>
         </p>
-        {copied ? (
-          <img src={IconTick} alt="Copied" className="w-6" />
-        ) : (
+        <div className="relative group">
           <img
-            src={IconCopy}
-            alt="Copy"
+            src={copied ? IconTick : IconCopy}
+            alt={copied ? 'Copied' : 'Copy'}
             className="w-6 transition-transform duration-300 transform hover:scale-110 hover:cursor-pointer"
             onClick={handleClick}
           />
-        )}
+          <span className="mb-2 absolute group bottom-full left-1/2 transform -translate-x-1/2 bg-gray-700 border border-gray-600 text-white text-xs py-1 px-2 rounded-md opacity-0 transition-opacity duration-300 group-hover:opacity-100 select-none">
+            {copied ? 'Copied' : 'Copy'}
+          </span>
+        </div>
       </code>
     </div>
   );
