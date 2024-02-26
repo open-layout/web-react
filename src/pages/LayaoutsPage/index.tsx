@@ -1,6 +1,5 @@
 import React from 'react';
 import Layout from '@/components/Layouts/Template';
-import TemplatesCard from '@/components/ui/templatesCar';
 import DashboardMenu from '@/components/ui/dashboardmenu';
 import LoginButton from '@/components/ui/LoginButton';
 
@@ -14,24 +13,7 @@ const LayaoutsPage: React.FC = () => {
 
         <DashboardMenu />
         <div className="grid grid-cols-3 gap-16 mt-14 mr-10 mb-5">
-          <TemplatesCard />
-          <TemplatesCard />
-          <TemplatesCard />
-          <TemplatesCard />
 
-          <TemplatesCard />
-          <TemplatesCard />
-          <TemplatesCard />
-          <TemplatesCard />
-
-          <TemplatesCard />
-          <TemplatesCard />
-          <TemplatesCard />
-          <TemplatesCard />
-
-          <TemplatesCard />
-          <TemplatesCard />
-          <TemplatesCard />
         </div>
       </div>
     </Layout>

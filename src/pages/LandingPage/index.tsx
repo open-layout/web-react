@@ -54,7 +54,7 @@ function LandingPage() {
           className={`px-8 py-3 ${
             darkMode ? 'bg-white text-black' : 'bg-black text-white'
           } rounded-full shadow-inner-xl font-semibold`}
-          to="/dashboard">
+          to="/">
           Get Started
         </Link>
         <CopyButton npmCommand={npmCommand} />
