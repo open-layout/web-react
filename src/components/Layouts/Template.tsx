@@ -1,7 +1,7 @@
 // TemplatePage.tsx
 import React, { ReactNode, useState, useEffect } from 'react';
 import DynamicIsland from '@/components/ui/dynamicIsland';
-import CustomScrollbar from '@/components/Layouts/Scrollbar';
+// import CustomScrollbar from '@/components/Layouts/Scrollbar';
 
 interface TemplatePageProps {
   children: ReactNode;
@@ -43,7 +43,9 @@ const TemplatePage: React.FC<TemplatePageProps> = ({
         <div className="fixed inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#63e_100%)] "></div>
       )}
       <DynamicIsland isMouseNearDynamicIsland={isMouseNearDynamicIsland} />
-      <CustomScrollbar>{children}</CustomScrollbar>
+      {/* <CustomScrollbar> */}
+      {children}
+      {/* </CustomScrollbar> */}
     </div>
   );
 };

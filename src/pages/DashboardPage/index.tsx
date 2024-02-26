@@ -7,11 +7,17 @@ import Layout from '@/components/Layouts/Template';
 
 import config from '@/config';
 
+type Repository = {
+  html_url: string;
+  full_name: string;
+};
+
 function Dashboard() {
   const authHeader = useAuthHeader();
-  const [repositories, setRepositories] = useState([]);
+  const [repositories, setRepositories] = useState<Repository[]>([]);
+  const [userLayouts, setUserLayouts] = useState<string[]>([]);
 
-  const fetch_repositories = async () => {
+  const fetchRepositories = async () => {
     try {
       const response = await fetch(config.api.baseurl + '/user/repositories', {
         method: 'POST',
@@ -21,27 +27,73 @@ function Dashboard() {
         },
       });
 
-      return await response.json(); // Access the 'url' property from the data object
+      const data = await response.json();
+      if (data.success) {
+        return data.data as Repository[];
+      } else {
+        console.error('Error fetching repositories:', data.message);
+        return [];
+      }
     } catch (error) {
       console.error('[API] ', error);
-      return false;
+      return [];
     }
   };
 
-  const get_repositories = async () => {
-    const response = await fetch_repositories();
+  const getUserLayouts = async () => {
+    try {
+      const response = await fetch(config.api.baseurl + '/user/templates', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: authHeader || '',
+        },
+      });
+      const data = await response.json();
 
-    if (response.success) {
-      setRepositories(response.data);
-      console.log('Repositories:', response.data);
-    } else {
-      console.log('Error fetching repositories:', response.message);
+      if (Array.isArray(data.data)) {
+        setUserLayouts(
+          data.data.map((layout: any) => getLastSegmentOfUrl(layout.repository))
+        );
+      } else {
+        setUserLayouts([]);
+      }
+
+      return data;
+    } catch (error) {
+      console.error('[API] ', error);
+      return [];
     }
+  };
+
+  const getLastSegmentOfUrl = (url: string) => {
+    const segments = url.split('/');
+    return segments.pop() || '';
   };
 
   useEffect(() => {
-    get_repositories();
+    const fetchData = async () => {
+      const repositoriesResponse = await fetchRepositories();
+      console.log(repositoriesResponse);
+
+      setRepositories(repositoriesResponse);
+      await getUserLayouts();
+    };
+
+    fetchData();
   }, []);
+
+  const checkIfAdded = (repo: Repository) => {
+    const repoName = getLastSegmentOfUrl(repo.html_url);
+    return userLayouts.includes(repoName);
+  };
+
+  const generateBannerUrl = (full_name: string) => {
+    return (
+      `https://opengraph.githubassets.com/1/${full_name}` ||
+      `https://opengraph.githubassets.com/${full_name}`
+    );
+  };
 
   return (
     <Layout>
@@ -50,8 +102,13 @@ function Dashboard() {
         <h2 className="text-5xl">Dashboard</h2>
         <div className="grid place-content-center lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-12 mt-14 mr-10 mb-5">
           <DashboardMenu />
-          {repositories.map((repo) => (
-            <TemplatesCard repo={repo} />
+          {repositories.map((repo, index) => (
+            <TemplatesCard
+              key={index}
+              repo={repo}
+              isAdded={checkIfAdded(repo)}
+              banner={generateBannerUrl(repo.full_name)}
+            />
           ))}
         </div>
       </section>
