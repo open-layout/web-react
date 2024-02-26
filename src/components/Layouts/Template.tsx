@@ -14,22 +14,38 @@ const TemplatePage: React.FC<TemplatePageProps> = ({
 }) => {
   const [isMouseNearDynamicIsland, setIsMouseNearDynamicIsland] =
     useState(false);
+   const [isMouseInDefinedArea, setIsMouseInDefinedArea] = useState(false);
+
 
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
       const distanceFromEdge = 200;
-      const edgeBuffer = 10;
 
-      const { clientY } = event;
+      const { clientY, clientX } = event;
 
       // Check mouse position only relative to the top edge of the browser window
-      setIsMouseNearDynamicIsland(clientY <= distanceFromEdge + edgeBuffer);
+      const is_hovering_y = clientY <= distanceFromEdge;
+      const is_hovering_x = clientX >= window.innerWidth / 2 - distanceFromEdge && clientX <= window.innerWidth / 2 + distanceFromEdge;
+      const is_hovering = is_hovering_y && is_hovering_x
+
+      if (is_hovering)
+      setIsMouseNearDynamicIsland(is_hovering);
+      setIsMouseInDefinedArea(is_hovering);
+
+
+      // Check if the mouse was previously within the defined area
+    if (!is_hovering && !isMouseInDefinedArea) {
+        // If the mouse enters the defined area, set a delay before closing the dynamic island
+        setIsMouseInDefinedArea(true);
+        setTimeout(() => {
+          setIsMouseNearDynamicIsland(false);
+        }, 1000);
+      }
     };
 
     document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseleave', () =>
-      setIsMouseNearDynamicIsland(false)
-    );
+    document.addEventListener('mouseleave', () => setTimeout(() => setIsMouseNearDynamicIsland(false), 1000));
+
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
     };
