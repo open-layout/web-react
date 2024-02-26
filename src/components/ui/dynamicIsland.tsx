@@ -13,6 +13,7 @@ const DynamicIsland: React.FC<DynamicIslandProps> = ({
     <nav
       id="dynamic-island"
       className="menu-container grid place-items-center group">
+      <span className={`fixed mt-16 border-b-8 border-dashed duration-300 ease-in-out ${isMouseNearDynamicIsland ? 'w-80' : 'w-36'} border-white`}></span>
       <div
         className={`flex flex-row items-center select-none fixed z-50 top-0 backdrop-blur-md border-gray-700/50 border rounded-full py-1 px-2 mt-3 w-40 duration-300 ease-in-out ${
           isMouseNearDynamicIsland ? 'justify-between w-96' : ''
