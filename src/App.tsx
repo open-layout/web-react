@@ -6,16 +6,16 @@ import RequireAuth from '@auth-kit/react-router/RequireAuth';
 import Form from './components/ui/LayoutsForm';
 
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import LayaoutsPage from './pages/LayaoutsPage/index';
+import LayoutsPage from './pages/LayaoutsPage/index';
 
 function App() {
-  const navigate = useNavigate();
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/auth" element={<AuthPage />} />
-        <Route path="/layouts" element={<LayaoutsPage />} />
+        <Route path="/layouts" element={<LayoutsPage />} />
+        <Route path="/layouts/*" element={<LayoutsPage />} />
         <Route path="/form" element={<Form />} />
         <Route
           path="/dashboard"
