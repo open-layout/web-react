@@ -1,5 +1,6 @@
 import LandingPage from './pages/LandingPage/index';
 import NotFound from './pages/NotFound/index';
+import LayoutDetailsPage from './pages/LayoutsPage/detailsPage';
 import AuthPage from './pages/AuthPage/index';
 import LayoutsPage from './pages/LayoutsPage/index';
 import DashboardPage from './pages/DashboardPage/index';
@@ -15,7 +16,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/layouts" element={<LayoutsPage />} />
-        <Route path="/layouts/*" element={<LayoutsPage />} />
+        <Route path="/layouts/:name" element={<LayoutDetailsPage />} />
         <Route path="/form" element={<Form />} />
         <Route
           path="/dashboard"

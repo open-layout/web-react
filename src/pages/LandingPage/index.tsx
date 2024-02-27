@@ -10,13 +10,12 @@ import ArrowDownIcon from './ArrowDownIcon';
 import { useState } from 'react';
 
 import { UserData } from './interfaces';
-import { Link } from 'react-router-dom';
 import config from '@/config';
 import LoginButton from '@/components/ui/LoginButton';
 
 function LandingPage() {
   const [userData, setUserData] = useState<UserData[]>([]);
-  const [darkMode, setDarkMode] = useState(true); // Modo oscuro activado por defecto
+  const [darkMode, setDarkMode] = useState(true);
 
   const npmCommand = 'npx open-layout';
 
@@ -50,13 +49,13 @@ function LandingPage() {
       <WelcomeSection />
 
       <div className="lg:pt-32 pt-20 flex flex-row gap-5 justify-center">
-        <Link
+        <a
           className={`px-8 py-3 ${
             darkMode ? 'bg-white text-black' : 'bg-black text-white'
           } rounded-full shadow-inner-xl font-semibold`}
-          to="/">
+          href="docs.openlayout.me">
           Get Started
-        </Link>
+        </a>
         <CopyButton npmCommand={npmCommand} />
       </div>
 
