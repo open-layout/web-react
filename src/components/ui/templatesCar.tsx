@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import webicon from '@/assets/web.png';
 import IconGithub from '@icons/github.svg';
 import IconMarkdown from '@/assets/languages/markdown.svg';
 import IconAdd from '@icons/add.svg';
 import IconTrash from '@icons/trash.svg';
+import Form from './LayoutsForm';
+import Quit from '@/assets/icons/quit.svg';
 
 const TemplatesCard: React.FC<{
   repo: object | any;
@@ -21,6 +22,12 @@ const TemplatesCard: React.FC<{
   //   const day = parts[2];
   //   return `${month}-${day}-${year}`;
   // };
+
+  const [isPopupOpen, setIsPopupOpen] = useState(false); // Estado para controlar si la ventana emergente está abierta
+
+  const togglePopup = () => {
+    setIsPopupOpen(!isPopupOpen); // Cambiar el estado para abrir o cerrar la ventana emergente
+  };
 
   useEffect(() => {
     const loadLanguageImage = async () => {
@@ -76,7 +83,7 @@ const TemplatesCard: React.FC<{
           />
         </a>
         {isAdded ? (
-          <a className="bottom-0 flex items-center justify-center w-1/2 group select-none rounded-lg bg-red-400/80 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase shadow-md shadow-red-400/20 transition-all hover:shadow-lg hover:shadow-red-400/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+          <a className="bottom-0 flex items-center justify-center w-1/2 group select-none rounded-lg bg-red-400/80 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase shadow-md shadow-red-400/20 transition-all hover:shadow-lg hover:shadow-red-400/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none " onClick={togglePopup}>
             Delete
             <img
               src={IconTrash}
@@ -85,14 +92,26 @@ const TemplatesCard: React.FC<{
             />
           </a>
         ) : (
-          <a className="bottom-0 flex items-center justify-center w-1/2 group select-none rounded-lg bg-emerald-400/80 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase shadow-md shadow-emerald-400/20 transition-all hover:shadow-lg hover:shadow-emerald-400/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
-            Add
-            <img
-              src={IconAdd}
-              className="w-6 inline-block ml-2"
-              alt="Add Icon"
-            />
-          </a>
+          <div>
+            <a className="bottom-0 flex items-center justify-center w-1/2 group select-none rounded-lg bg-emerald-400/80 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase shadow-md shadow-emerald-400/20 transition-all hover:shadow-lg hover:shadow-emerald-400/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" onClick={togglePopup}>
+              Add
+              <img
+                src={IconAdd}
+                className="w-6 inline-block ml-2"
+                alt="Add Icon"
+              />
+            </a>
+            {isPopupOpen && (
+              <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-50 backdrop-blur-md flex justify-center items-center z-50">
+                <div className="bg-transparent p-8 rounded-lg shadow-md">
+                  <Form target={repo.html_url}/>
+                  <a onClick={togglePopup}>
+                    <img src={Quit} className='w-10 absolute top-0 right-0 mt-12'/>
+                  </a>
+                </div>
+              </div>
+            )}
+          </div>
         )}
       </div>
     </article>

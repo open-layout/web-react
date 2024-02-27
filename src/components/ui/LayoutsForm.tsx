@@ -1,5 +1,5 @@
 // Form.js
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import pencilicon from '@/assets/icons/pencilicon.svg';
 import { HexColorPicker } from "react-colorful";
 
@@ -33,8 +33,18 @@ interface FormData {
     discord?: string;
     x?: string;
 }
+type Repository = {
+    name: string;
+    description: string;
+    author?: string;
+    proglanguage?: string;
 
-const Form = (target?: string) => {
+};
+
+const Form = ({ target }: { target?: string }) => {
+
+    const [description, setDescription] = useState<string>('');
+    const [repository, setRepository] = useState<Repository>();
     const [formData, setFormData] = useState<FormData>({
         name: '',
         description: '',
@@ -52,7 +62,7 @@ const Form = (target?: string) => {
         },
         ide: '',
         images: [],
-        linkRepo: '',
+        linkRepo: target || '',
         linkPreview: '',
         linkReadme: '',
         linkTutorial: '',
@@ -64,13 +74,70 @@ const Form = (target?: string) => {
         x: '',
 
     });
+    const extractGitHubTarget = (url: string) => {
+        const parts = url.split('/');
+        if (parts.length >= 4) {
+            return `${parts[3]}/${parts[4]}`;
+        } else {
+            return null;
+        }
+    };
+
+    const githubTarget = extractGitHubTarget(formData.linkRepo);
+    console.log(githubTarget);
+
+    const fetchGitHubData = async () => {
+        try {
+            const response = await fetch(`https://api.github.com/repos/${githubTarget}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch GitHub data');
+            }
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Error fetching GitHub data:', error);
+            return null;
+        }
+    };
+
+
+    console.log(formData.linkRepo)
+    console.log(repository)
+    console.log(formData.name)
+
+
+    useEffect(() => {
+        if (!target) {
+            setFormData({ ...formData, linkRepo: '' });
+        }
+        const fetchData = async () => {
+            const repositoryResponse = await fetchGitHubData();
+            console.log(repositoryResponse);
     
-    
-    formData.linkRepo = target || '';
-    
+            if (repositoryResponse) {
+                formData.name = repositoryResponse.name || '';
+                setDescription(repositoryResponse.description || '')
+                formData.description = repositoryResponse.description || '';
+                formData.author = repositoryResponse.owner.login || '';
+                formData.progLanguage = repositoryResponse.language || '';
+                const repositoryData: Repository = {
+                    name: repositoryResponse.name,
+                    description: repositoryResponse.description,
+                    author: repositoryResponse.owner.login,
+                    proglanguage: repositoryResponse.language,
+                };
+                console.log(repositoryData);
+                setRepository(repositoryData);
+                
+            }
+        };
+      
+          fetchData();
+    }, [target]);
+
     const [imageUrl, setImageUrl] = useState<string>('');
     const [showColorPicker, setShowColorPicker] = useState(false);
-    const [selectedColor, setSelectedColor] = useState<string>(''); // Estado para almacenar el color seleccionado
+    const [selectedColor, setSelectedColor] = useState<string>('');
 
     const handleColorChange = (color: string) => {
         setSelectedColor(color);
@@ -82,18 +149,16 @@ const Form = (target?: string) => {
     };
 
     const handleAddImage = () => {
-        // Verificar si la URL de la imagen es válida
         const isValidUrl = /^(http|https):\/\/[^ "]+$/.test(imageUrl);
 
-        // Verificar si el número de imágenes es menor que 3 y si la URL es válida
         if ((formData.images?.length ?? 0) < 3 && isValidUrl) {
             setFormData({
                 ...formData,
-                images: [...(formData.images ?? []), imageUrl], // Agregar la URL de la imagen al array de imágenes
+                images: [...(formData.images ?? []), imageUrl], 
 
             });
             console.log(formData.images)
-            setImageUrl(''); // Limpiar la URL de la imagen
+            setImageUrl(''); 
         }
     };
 
@@ -107,16 +172,16 @@ const Form = (target?: string) => {
 
     const handleColorConfirm = () => {
         if (selectedColor) {
-            const newColorIndex = (formData.colors?.length ?? 0) + 1; // Obtener el nuevo índice del color
+            const newColorIndex = (formData.colors?.length ?? 0) + 1; 
             setFormData({
                 ...formData,
-                colors: [...(formData.colors ?? []), selectedColor], // Añadir el color seleccionado al array de colores
+                colors: [...(formData.colors ?? []), selectedColor], 
                 color_palette: {
-                    ...formData.color_palette, // Mantener los colores anteriores
-                    [`color${newColorIndex}`]: selectedColor // Añadir el nuevo color con una clave única
+                    ...formData.color_palette, 
+                    [`color${newColorIndex}`]: selectedColor
                 }
             });
-            setSelectedColor(''); // Limpiar el color seleccionado
+            setSelectedColor('');
             setShowColorPicker(false);
         }
     };
@@ -131,7 +196,6 @@ const Form = (target?: string) => {
     const handleSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         console.log(formData);
-        // Puedes realizar acciones adicionales aquí, como enviar los datos a un servidor
     };
     const toggleAccordion = (accordionId: number) => {
         for (let i = 1; i <= 3; i++) {
@@ -310,8 +374,7 @@ const Form = (target?: string) => {
 
 
     return (
-        <div className="max-w-md mx-auto rounded-lg overflow-hidden shadow-2xl m-4 border-2 border-title  p-4">
-            <div className="fixed inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]"></div>
+        <div className="max-w-md mx-auto rounded-lg overflow-hidden shadow-2xl m-4 border-2 bg-black/90 border-title  p-4">
             <form onSubmit={handleSubmit} className="mt-8">
                 <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
                     <h2 id="accordion-flush-heading-1">
@@ -349,6 +412,7 @@ const Form = (target?: string) => {
                                 name="description"
                                 value={formData.description}
                                 onChange={handleChange}
+                                readOnly={!!description}
                                 required
                                 className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
                                 placeholder='Description of the repository'
@@ -376,6 +440,7 @@ const Form = (target?: string) => {
                                     required
                                     name="author"
                                     value={formData.author}
+                                    readOnly={!!formData.author}
                                     onChange={handleChange}
                                     className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
                                     placeholder='Author'
@@ -430,7 +495,7 @@ const Form = (target?: string) => {
                                         Java
                                     </option>
                                     <option value="Kotlin" className='text-black'>
-                                    Kotlin
+                                        Kotlin
                                     </option>
                                     {/* Agrega más opciones según sea necesario */}
                                 </select>
@@ -445,6 +510,7 @@ const Form = (target?: string) => {
                                 value={formData.linkRepo}
                                 required
                                 onChange={handleChange}
+                                readOnly={!!target}
                                 className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
                                 placeholder='Repository Link'
                             />
