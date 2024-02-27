@@ -15,9 +15,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
 
   const dropdownOptions: string[] = [
     'author:',
-    'layout:',
     'category:',
     'language:',
+    'layout:',
   ];
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,7 +25,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     setSearchTerm(value);
     setAutocompleteTerm('');
     setSelectedOption(null);
-    onSearch(value); // Llamamos a la función de devolución de llamada con el término de búsqueda
+    onSearch(value);
 
     if (value.trim() !== '') {
       const lastWord = value.slice(0, selectionStart).split(' ').pop();
@@ -42,7 +42,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   };
 
   const handleDropdownItemClick = (option: string) => {
-    setSearchTerm(option);
+    setSearchTerm((prevSearchTerm) => prevSearchTerm.trim() + ' ' + option);
     setShowDropdown(false);
     if (searchInputRef.current) {
       searchInputRef.current.focus();
@@ -62,37 +62,36 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   };
 
   return (
-    <nav className="relative flex flex-row justify-center items-center gap-2 w-[80%]">
-      <input
-        ref={searchInputRef}
-        className={`rounded-xl text-xl pl-4 w-full mt-5 h-14 bg-code border border-gray-500 hover:border-gray-400 focus:border-gray-300 focus:outline-none transition-colors duration-200 ease-in-out ${
-          selectedOption ? 'border-yellow-400' : ''
-        }`}
-        value={searchTerm}
-        onChange={handleInputChange}
-        onKeyDown={handleKeyDown}
-      />
-      <img
-        src={IconSearch}
-        className="absolute right-10 top-1/2 transform -translate-y-1/2 w-10 text-gray-400 cursor-pointer"
-        alt="Search"
-      />
-      <img
-        src={IconQuestionMark}
-        alt="Question Mark"
-        className="w-10 cursor-pointer"
-        onClick={handleQuestionMarkClick}
-      />
+    <nav className="relative gap-2 w-[80%]">
+      <div className="flex justify-center w-full mt-5 relative">
+        <input
+          ref={searchInputRef}
+          className={`rounded-xl text-xl pl-4 w-full h-14 bg-code border border-gray-500 hover:border-gray-400 focus:border-gray-300 focus:outline-none transition-colors duration-200 ease-in-out ${
+            selectedOption ? 'border-yellow-400' : ''
+          }`}
+          value={searchTerm}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
+        />
+        <img
+          src={IconSearch}
+          className="absolute right-12 top-2 w-10 text-gray-400 cursor-pointer"
+          alt="Search"
+        />
+        <img
+          src={IconQuestionMark}
+          alt="Question Mark"
+          className="w-10 cursor-pointer"
+          onClick={handleQuestionMarkClick}
+        />
+      </div>
       {autocompleteTerm && (
-        <span
-          className="absolute left-3 top-1/2 -translate-y-1/2 text-xl ml-1 text-gray-300 pointer-events-none"
-          style={{ transform: 'translateY(-50%)' }}>
+        <span className="absolute z-50 left-3 -mt-2 shadow-gray-700 shadow-lg bg-code border border-gray-700 rounded-md px-2 py-1 -translate-y-1/2 text-xl ml-1 text-white pointer-events-none">
           {searchTerm + autocompleteTerm}
         </span>
       )}
-
       {showDropdown && (
-        <div className="absolute z-50 text-white rounded-md mt-10 w-72">
+        <div className="absolute z-50 text-white rounded-md">
           {dropdownOptions.map((option, index) => (
             <div
               key={index}
