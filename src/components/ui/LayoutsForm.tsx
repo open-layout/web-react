@@ -537,7 +537,7 @@ const Form = ({ target }: { target?: string }) => {
                     
 
                         <label htmlFor="color" className="block text-white mb-2">Color Picker</label>
-                        <div className="mb-4 flex items-center">
+                        <div className="mb-4 mt-4 flex items-center">
 
                             <div
                                 className="cursor-pointer w-10 h-10 flex items-center justify-center border border-gray-400 rounded-full mr-3"
