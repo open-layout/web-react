@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import webicon from '@/assets/web.png';
 import IconGithub from '@icons/github.svg';
-import IconMarkdown from '@/assets/languages/markdown.svg';
+import IconMarkdown from '@/assets/languages/md.svg';
 import IconAdd from '@icons/add.svg';
 import IconTrash from '@icons/trash.svg';
 
@@ -26,7 +26,7 @@ const TemplatesCard: React.FC<{
     const loadLanguageImage = async () => {
       try {
         const imageModule = await import(
-          `../../assets/languages/${repo.language.toLowerCase()}.svg`
+          `../../assets/languages/${repo.language})}.svg`
         );
         setLanguageImage(imageModule.default);
       } catch (error) {
