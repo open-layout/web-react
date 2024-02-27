@@ -62,7 +62,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   };
 
   return (
-    <nav className="relative gap-2 w-[80%]">
+    <nav className="relative gap-2 w-full">
       <div className="flex justify-center w-full mt-5 relative">
         <input
           ref={searchInputRef}
