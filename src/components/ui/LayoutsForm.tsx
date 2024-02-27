@@ -10,7 +10,12 @@ interface FormData {
     language: string;
     version: string;
     author: string;
+    node_versions?: {
+        current: string;
+        LTS: string;
+    };
     progLanguage: string;
+    collaborators?: string
     colors?: string[];
     requirements?: string;
     ide?: string;
@@ -21,10 +26,15 @@ interface FormData {
     linkTutorial?: string;
     linkDocs?: string;
     linkDev?: string;
-    linkSocials?: string;
+    color_palette?: {
+        [key: string]: string;
+    };
+    github?: string;
+    discord?: string;
+    x?: string;
 }
 
-const Form = () => {
+const Form = (target?: string) => {
     const [formData, setFormData] = useState<FormData>({
         name: '',
         description: '',
@@ -32,9 +42,14 @@ const Form = () => {
         language: '',
         version: '',
         author: '',
+        collaborators: '',
         colors: [],
         progLanguage: '',
         requirements: '',
+        node_versions: {
+            current: '',
+            LTS: '',
+        },
         ide: '',
         images: [],
         linkRepo: '',
@@ -43,15 +58,19 @@ const Form = () => {
         linkTutorial: '',
         linkDocs: '',
         linkDev: '',
-        linkSocials: '',
+        color_palette: {},
+        github: '',
+        discord: '',
+        x: '',
 
     });
-
+    
+    
+    formData.linkRepo = target || '';
+    
     const [imageUrl, setImageUrl] = useState<string>('');
     const [showColorPicker, setShowColorPicker] = useState(false);
     const [selectedColor, setSelectedColor] = useState<string>(''); // Estado para almacenar el color seleccionado
-
-
 
     const handleColorChange = (color: string) => {
         setSelectedColor(color);
@@ -64,7 +83,7 @@ const Form = () => {
 
     const handleAddImage = () => {
         // Verificar si la URL de la imagen es válida
-        const isValidUrl = /^(ftp|http|https):\/\/[^ "]+$/.test(imageUrl);
+        const isValidUrl = /^(http|https):\/\/[^ "]+$/.test(imageUrl);
 
         // Verificar si el número de imágenes es menor que 3 y si la URL es válida
         if ((formData.images?.length ?? 0) < 3 && isValidUrl) {
@@ -88,14 +107,20 @@ const Form = () => {
 
     const handleColorConfirm = () => {
         if (selectedColor) {
+            const newColorIndex = (formData.colors?.length ?? 0) + 1; // Obtener el nuevo índice del color
             setFormData({
                 ...formData,
-                colors: [...(formData.colors ?? []), selectedColor], // Agregar el color seleccionado al array de colores
+                colors: [...(formData.colors ?? []), selectedColor], // Añadir el color seleccionado al array de colores
+                color_palette: {
+                    ...formData.color_palette, // Mantener los colores anteriores
+                    [`color${newColorIndex}`]: selectedColor // Añadir el nuevo color con una clave única
+                }
             });
             setSelectedColor(''); // Limpiar el color seleccionado
             setShowColorPicker(false);
         }
     };
+
     const handleChange = (e: { target: { name: any; value: any; }; }) => {
         setFormData({
             ...formData,
@@ -128,27 +153,183 @@ const Form = () => {
         }
     };
 
+    const handleDownloadJSON = () => {
+        const colorPalette: { [key: string]: string } = {};
+
+        if (formData.colors) {
+            formData.colors.forEach((color, index) => {
+                colorPalette[`color${index + 1}`] = color;
+            });
+        }
+        // Verificar si todos los campos requeridos están completos
+        if (
+            formData.name &&
+            formData.description &&
+            formData.version &&
+            formData.author &&
+            formData.category &&
+            formData.language &&
+            formData.progLanguage &&
+            formData.linkRepo
+        ) {
+            const requirementsArray = formData.requirements ? formData.requirements.split(',').map((item: string) => item.trim()) : [];
+            const collaboratorsArray = formData.collaborators ? formData.collaborators.split(',').map((item: string) => item.trim()) : [];
+
+            const jsonData: any = {
+                name: formData.name,
+                version: formData.version,
+                description: formData.description,
+                author: formData.author,
+                category: formData.category,
+                language: formData.language,
+                repository: formData.linkRepo,
+                languages: [formData.progLanguage],
+
+
+            };
+            if (colorPalette && Object.keys(colorPalette).length > 0) {
+                jsonData.color_palette = colorPalette;
+            }
+            if (formData.images?.length && formData.images?.length > 0) {
+                jsonData.images = formData.images;
+            }
+
+            if (requirementsArray.length > 0) {
+                jsonData.requirements = requirementsArray;
+            }
+            if (formData.node_versions?.current && formData.node_versions?.LTS) {
+                jsonData.node_versions = {
+                    current: formData.node_versions.current,
+                    LTS: formData.node_versions.LTS,
+                };
+            }
+            if (formData.ide && formData.ide.length > 0) {
+                jsonData.frameworks = [formData.ide];
+            }
+            if (collaboratorsArray.length > 0) {
+                jsonData.collaborators = collaboratorsArray;
+            }
+            if (formData.linkPreview && formData.linkPreview.length > 0) {
+                jsonData.live_preview = formData.linkPreview;
+            }
+            if (formData.linkReadme && formData.linkReadme.length > 0) {
+                jsonData.readme = formData.linkReadme;
+            }
+            if (formData.linkTutorial && formData.linkTutorial.length > 0) {
+                jsonData.tutorial = formData.linkTutorial;
+            }
+            if (formData.linkDocs && formData.linkDocs.length > 0) {
+                jsonData.documentation = formData.linkDocs;
+            }
+            if (formData.linkDev && formData.linkDev.length > 0) {
+                jsonData.website = formData.linkDev;
+            }
+            if (formData.github && formData.github.length > 0 || formData.discord && formData.discord.length > 0 || formData.x && formData.x.length > 0) {
+                jsonData.socials = {
+                    github: formData.github,
+                    discord: formData.discord,
+                    x: formData.x,
+                };
+            }
+
+
+            const json = JSON.stringify(jsonData, null, 2);
+
+
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'form_data.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        } else {
+            alert('Please fill in all required fields before downloading.');
+        }
+    };
+
+    const handleCopyJSON = () => {
+        const colorPalette: { [key: string]: string } = {};
+
+        if (formData.colors) {
+            formData.colors.forEach((color, index) => {
+                colorPalette[`color${index + 1}`] = color;
+            });
+        }
+        // Verificar si todos los campos requeridos están completos
+        if (
+            formData.name &&
+            formData.description &&
+            formData.version &&
+            formData.author &&
+            formData.category &&
+            formData.language &&
+            formData.progLanguage &&
+            formData.linkRepo
+        ) {
+            const requirementsArray = formData.requirements ? formData.requirements.split(',').map((item: string) => item.trim()) : [];
+            const collaboratorsArray = formData.collaborators ? formData.collaborators.split(',').map((item: string) => item.trim()) : [];
+
+            const json = JSON.stringify({
+                name: formData.name,
+                version: formData.version,
+                description: formData.description,
+                author: formData.author,
+                category: formData.category,
+                collaborators: collaboratorsArray,
+                language: formData.language,
+                repository: formData.linkRepo,
+                live_preview: formData.linkPreview,
+                color_palette: colorPalette,
+                node_versions: {
+                    current: formData.node_versions?.current,
+                    LTS: formData.node_versions?.LTS,
+                },
+                requirements: requirementsArray,
+                frameworks: [formData.ide],
+                languages: [formData.progLanguage],
+                readme: formData.linkReadme,
+                images: formData.images,
+                tutorial: formData.linkTutorial,
+                documentation: formData.linkDocs,
+                website: formData.linkDev,
+                socials: {
+                    github: formData.github,
+                    discord: formData.discord,
+                    x: formData.x,
+                },
+            }, null, 2);
+            navigator.clipboard.writeText(json);
+            alert('JSON Copied to Clipboard!');
+        } else {
+            alert('Please fill in all required fields before copying.');
+        }
+    };
+
+
     return (
         <div className="max-w-md mx-auto rounded-lg overflow-hidden shadow-2xl m-4 border-2 border-title  p-4">
             <div className="fixed inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]"></div>
             <form onSubmit={handleSubmit} className="mt-8">
-            <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
-                <h2 id="accordion-flush-heading-1">
-                    <button
-                        type="button"
-                        className="flex items-center justify-between w-full py-5 font-medium rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400 gap-3"
-                        onClick={() => toggleAccordion(1)}
-                        aria-expanded="false"
-                        aria-controls="accordion-flush-body-1"
-                    >
-                        <span className='font-bold text-2xl'>Required Form</span>
-                        <svg data-accordion-icon className="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5 5 1 1 5" />
-                        </svg>
-                    </button>
-                </h2>
-                <div id="accordion-flush-body-1" className="hidden" aria-labelledby="accordion-flush-heading-1">
-                    
+                <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
+                    <h2 id="accordion-flush-heading-1">
+                        <button
+                            type="button"
+                            className="flex items-center justify-between w-full py-5 font-medium rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400 gap-3"
+                            onClick={() => toggleAccordion(1)}
+                            aria-expanded="false"
+                            aria-controls="accordion-flush-body-1"
+                        >
+                            <span className='font-bold text-2xl'>Required Form</span>
+                            <svg data-accordion-icon className="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5 5 1 1 5" />
+                            </svg>
+                        </button>
+                    </h2>
+                    <div id="accordion-flush-body-1" className="hidden" aria-labelledby="accordion-flush-heading-1">
+
                         <div className="relative mt-4">
                             <label className="block mb-2 text-white">Name</label>
                             <input
@@ -213,7 +394,7 @@ const Form = () => {
                                     className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
 
                                 >
-                                    <option value="">Select Category</option>
+                                    <option value=""></option>
                                     <option value="Website" className='text-black'>Website</option>
                                     <option value="Other" className='text-black'>Other</option>
                                     {/* Agrega más opciones según sea necesario */}
@@ -228,7 +409,7 @@ const Form = () => {
                                     required
                                     className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
                                 >
-                                    <option value="">Select Language</option>
+                                    <option value=""></option>
                                     <option value="Es" className='text-black'>Spanish</option>
                                     <option value="En" className='text-black'>English</option>
                                     {/* Agrega más opciones según sea necesario */}
@@ -244,9 +425,13 @@ const Form = () => {
                                     className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
 
                                 >
-                                    <option value="">Select Lang</option>
-                                    <option value="Website" className='text-black'>Java</option>
-                                    <option value="Other" className='text-black'>Kotlin</option>
+                                    <option value=""></option>
+                                    <option value="Java" className='text-black'>
+                                        Java
+                                    </option>
+                                    <option value="Kotlin" className='text-black'>
+                                    Kotlin
+                                    </option>
                                     {/* Agrega más opciones según sea necesario */}
                                 </select>
                             </div>
@@ -266,25 +451,25 @@ const Form = () => {
                             <img src={pencilicon} className="h-5 w-5 text-gray-400 absolute right-2 top-1/2 transform -translate-y-1/2" />
                         </div>
 
-                   
-                </div>
-                <h2 id="accordion-flush-heading-2">
-                    <button
-                        type="button"
-                        className="flex items-center justify-between w-full py-5 font-medium rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400 gap-3"
-                        onClick={() => toggleAccordion(2)}
-                        aria-expanded="false"
-                        aria-controls="accordion-flush-body-2"
-                    >
-                        <span className='font-bold text-xl'>Important Form</span>
-                        <svg data-accordion-icon className="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5 5 1 1 5" />
-                        </svg>
-                    </button>
-                </h2>
-                <div id="accordion-flush-body-2" className="hidden" aria-labelledby="accordion-flush-heading-2">
+
+                    </div>
+                    <h2 id="accordion-flush-heading-2">
+                        <button
+                            type="button"
+                            className="flex items-center justify-between w-full py-5 font-medium rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400 gap-3"
+                            onClick={() => toggleAccordion(2)}
+                            aria-expanded="false"
+                            aria-controls="accordion-flush-body-2"
+                        >
+                            <span className='font-bold text-xl'>Important Form</span>
+                            <svg data-accordion-icon className="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5 5 1 1 5" />
+                            </svg>
+                        </button>
+                    </h2>
+                    <div id="accordion-flush-body-2" className="hidden" aria-labelledby="accordion-flush-heading-2">
                     //important here
-                   
+
                         <label htmlFor="color" className="block text-white mb-2">Color Picker</label>
                         <div className="mb-4 flex items-center">
 
@@ -322,6 +507,19 @@ const Form = () => {
                             )}
 
                         </div>
+                        <div className="mt-4 relative">
+                            <label className="block mb-2 text-white">Node Version</label>
+                            <input
+                                type="text"
+                                required
+                                name="node_versions"
+                                value={formData.node_versions?.current && formData.node_versions?.LTS}
+                                onChange={handleChange}
+                                className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
+                                placeholder='Node Version'
+                            />
+                            <img src={pencilicon} className="h-5 w-5 text-gray-400 absolute right-2 top-1/2 transform -translate-y-1/2" />
+                        </div>
                         {formData.images?.length && formData.images?.length > 0 && (
                             <div className="mt-2 flex justify-between">
                                 <button type="button" onClick={handlePrevImage} className="text-white">&#10094;</button>
@@ -353,7 +551,7 @@ const Form = () => {
                                 Add Image
                             </button>
                         </div>
-                        <div className="mb-4 relative">
+                        <div className="mb-4 relative mt-4">
                             <label htmlFor="requirements" className="block text-white mb-2">Requirements</label>
                             <textarea
                                 name="requirements"
@@ -361,6 +559,17 @@ const Form = () => {
                                 onChange={handleChange}
                                 className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
                                 placeholder='Requirements of the repository'
+                            />
+                            <img src={pencilicon} className="h-5 w-5 text-gray-400 absolute right-2 top-1/2 transform -translate-y-1/2" />
+                        </div>
+                        <div className="mb-4 relative">
+                            <label htmlFor="requirements" className="block text-white mb-2">Collaborators</label>
+                            <textarea
+                                name="collaborators"
+                                value={formData.collaborators}
+                                onChange={handleChange}
+                                className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
+                                placeholder='Collaboratos'
                             />
                             <img src={pencilicon} className="h-5 w-5 text-gray-400 absolute right-2 top-1/2 transform -translate-y-1/2" />
                         </div>
@@ -380,25 +589,25 @@ const Form = () => {
                             </select>
                         </div>
 
-                    
-                </div>
-                <h2 id="accordion-flush-heading-3">
-                    <button
-                        type="button"
-                        className="flex items-center justify-between w-full py-5 font-medium rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400 gap-3"
-                        onClick={() => toggleAccordion(3)}
-                        aria-expanded="false"
-                        aria-controls="accordion-flush-body-3"
-                    >
-                        <span className='font-bold text-lg'>Socials & Links</span>
-                        <svg data-accordion-icon className="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5 5 1 1 5" />
-                        </svg>
-                    </button>
-                </h2>
 
-                <div id="accordion-flush-body-3" className="hidden" aria-labelledby="accordion-flush-heading-3">
-                    
+                    </div>
+                    <h2 id="accordion-flush-heading-3">
+                        <button
+                            type="button"
+                            className="flex items-center justify-between w-full py-5 font-medium rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400 gap-3"
+                            onClick={() => toggleAccordion(3)}
+                            aria-expanded="false"
+                            aria-controls="accordion-flush-body-3"
+                        >
+                            <span className='font-bold text-lg'>Socials & Links</span>
+                            <svg data-accordion-icon className="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5 5 1 1 5" />
+                            </svg>
+                        </button>
+                    </h2>
+
+                    <div id="accordion-flush-body-3" className="hidden" aria-labelledby="accordion-flush-heading-3">
+
                     // Socials here
                         <div className="relative">
                             <label className="block mb-2 text-white">Preview Link</label>
@@ -458,25 +667,52 @@ const Form = () => {
                             />
                             <img src={pencilicon} className="h-5 w-5 text-gray-400 absolute right-2 top-1/2 transform -translate-y-1/2" />
                         </div>
-                        <div className="mt-4 relative">
-                            <label className="block mb-2 text-white">Socials Links</label>
-                            <input
-                                name="linkSocials"
-                                value={formData.linkSocials}
-                                onChange={handleChange}
-                                className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
-                                placeholder='Socials'
-                            />
-                            <img src={pencilicon} className="h-5 w-5 text-gray-400 absolute right-2 top-1/2 transform -translate-y-1/2" />
+                        <div className='flex flex-row gap-4'>
+                            <div className="mt-4 relative">
+                                <label className="block mb-2 text-white">Github</label>
+                                <input
+                                    type="text"
+                                    name="github"
+                                    value={formData.github}
+                                    onChange={handleChange}
+                                    className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
+                                    placeholder='Username'
+                                />
+                            </div>
+                            <div className="mt-4 relative">
+                                <label className="block mb-2 text-white">Discord</label>
+                                <input
+                                    type="text"
+                                    name="discord"
+                                    value={formData.discord}
+                                    onChange={handleChange}
+                                    className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
+                                    placeholder='Username'
+                                />
+                            </div>
+                            <div className="mt-4 relative">
+                                <label className="block mb-2 text-white">X</label>
+                                <input
+                                    type="text"
+                                    name="x"
+                                    value={formData.x}
+                                    onChange={handleChange}
+                                    className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
+                                    placeholder='Username'
+                                />
+                            </div>
                         </div>
-                    
+
+                    </div>
                 </div>
-            </div>
-            <div className="flex justify-center mt-6 ">
-                <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded w-40" >
-                    Submit
-                </button>
-            </div>
+                <div className="flex justify-center mt-6 space-x-4">
+                    <button type="button" onClick={handleDownloadJSON} className="bg-title text-white py-2 px-4 rounded-xl w-40">
+                        Download
+                    </button>
+                    <button type="button" onClick={handleCopyJSON} className="bg-title text-white py-2 px-4 rounded-xl w-40">
+                        Copy
+                    </button>
+                </div>
             </form>
         </div>
     );
