@@ -534,7 +534,7 @@ const Form = ({ target }: { target?: string }) => {
                         </button>
                     </h2>
                     <div id="accordion-flush-body-2" className="hidden" aria-labelledby="accordion-flush-heading-2">
-                    //important here
+                    
 
                         <label htmlFor="color" className="block text-white mb-2">Color Picker</label>
                         <div className="mb-4 flex items-center">
@@ -674,7 +674,7 @@ const Form = ({ target }: { target?: string }) => {
 
                     <div id="accordion-flush-body-3" className="hidden" aria-labelledby="accordion-flush-heading-3">
 
-                    // Socials here
+                    
                         <div className="relative">
                             <label className="block mb-2 text-white">Preview Link</label>
                             <input

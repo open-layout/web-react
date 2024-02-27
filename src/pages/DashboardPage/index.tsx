@@ -5,7 +5,11 @@ import TemplatesCard from '@/components/ui/templatesCar';
 import DashboardMenu from '@/components/ui/dashboardmenu';
 import Layout from '@/components/Layouts/Template';
 
+
 import config from '@/config';
+import Form from '@/components/ui/LayoutsForm';
+import Quit from '@/assets/icons/quit.svg';
+
 
 type Repository = {
   html_url: string;
@@ -16,7 +20,9 @@ function Dashboard() {
   const authHeader = useAuthHeader();
   const [repositories, setRepositories] = useState<Repository[]>([]);
   const [userLayouts, setUserLayouts] = useState<string[]>([]);
+  const [selectedRepoUrl, setSelectedRepoUrl] = useState<string>('');
 
+  
   const fetchRepositories = async () => {
     try {
       const response = await fetch(config.api.baseurl + '/user/repositories', {
@@ -38,6 +44,11 @@ function Dashboard() {
       console.error('[API] ', error);
       return [];
     }
+  };
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const togglePopup = () => {
+    setIsPopupOpen(!isPopupOpen);
   };
 
   const getUserLayouts = async () => {
@@ -85,6 +96,7 @@ function Dashboard() {
 
   const checkIfAdded = (repo: Repository) => {
     const repoName = getLastSegmentOfUrl(repo.html_url);
+    
     return userLayouts.includes(repoName);
   };
 
@@ -93,6 +105,10 @@ function Dashboard() {
       `https://opengraph.githubassets.com/1/${full_name}` ||
       `https://opengraph.githubassets.com/${full_name}`
     );
+  };
+  const openPopupWithRepoUrl = (repoUrl: string) => {
+    setSelectedRepoUrl(repoUrl);
+    setIsPopupOpen(true);
   };
 
   return (
@@ -108,8 +124,19 @@ function Dashboard() {
               repo={repo}
               isAdded={checkIfAdded(repo)}
               banner={generateBannerUrl(repo.full_name)}
+              togglePopup={() => openPopupWithRepoUrl(repo.html_url)}
             />
           ))}
+          {isPopupOpen && (
+            <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-50 backdrop-blur-md flex justify-center items-center z-50">
+              <div className="bg-transparent p-8 rounded-lg shadow-md">
+                <Form target={selectedRepoUrl}/>
+                <a onClick={togglePopup}>
+                  <img src={Quit} className='w-16 absolute top-5 right-5 '/>
+                </a>
+              </div>
+            </div>
+          )}
         </div>
       </section>
     </Layout>
