@@ -22,7 +22,7 @@ function LayoutsPage() {
 
     const timeout = setTimeout(() => {
       setSearchParameters(value);
-    }, 2000);
+    }, 1000);
 
     setTypingTimeout(timeout);
   };
@@ -162,17 +162,12 @@ function LayoutsPage() {
   return (
     <Layout>
       <div className="grid place-items-center lg:mt-32 mt-20 px-1 lg:px-52">
-        <h2 className="dark:text-white text-black text-5xl left-0">Layouts</h2>
+        <h2 className="dark:text-white text-black text-5xl left-0 mb-10 font-bold">Layouts</h2>
         <SearchBar onSearch={handleSearch} />
         <div className="flex flex-row flex-wrap justify-center gap-y-14 mt-12 xl:mr-10 mb-5">
           {loading ? (
             <>
-              <LayoutCardSkeleton />
-              <LayoutCardSkeleton />
-              <LayoutCardSkeleton />
-              <LayoutCardSkeleton />
-              <LayoutCardSkeleton />
-              <LayoutCardSkeleton />
+              {[...Array(6)].map(() => <LayoutCardSkeleton />)}
             </>
           ) : (
             response.map((info, index) => (
