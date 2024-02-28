@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 
 import config from '@/config';
@@ -24,7 +25,7 @@ function Dashboard() {
   const [userLayouts, setUserLayouts] = useState([]);
   const [selectedRepoUrl, setSelectedRepoUrl] = useState('');
   const [searchParameters, setSearchParameters] = useState('');
-  const [typingTimeout, setTypingTimeout] = useState('');
+  const [typingTimeout, setTypingTimeout] = useState(0);
   const [loading, setLoading] = useState(true);
 
   const fetchRepositories = async () => {
@@ -68,7 +69,9 @@ function Dashboard() {
 
       if (Array.isArray(data.data)) {
         setUserLayouts(
-          data.data.map((layout: object | any) => getLastSegmentOfUrl(layout.repository))
+          data.data.map((layout: object | any) =>
+            getLastSegmentOfUrl(layout.repository)
+          )
         );
       } else {
         setUserLayouts([]);
@@ -116,11 +119,11 @@ function Dashboard() {
   };
 
   const handleSearch = (value: string) => {
-    if (typingTimeout) clearTimeout(typingTimeout!);
+    if (typingTimeout) clearTimeout(typingTimeout);
 
     const timeout = setTimeout(() => {
       setSearchParameters(value);
-    }, 2000);
+    }, 1000);
 
     setTypingTimeout(timeout);
   };
@@ -145,17 +148,12 @@ function Dashboard() {
     <Layout>
       <div className="dark:bg-black bg-white h-[100px] fixed z-40 top-0 w-full shadow-lg dark:shadow-black shadow-white"></div>
       <section className="lg:mt-32 mt-14 mb-10 flex flex-col items-center px-5 lg:px-20">
-        <h2 className="text-5xl ld:self-start ml-4">Dashboard</h2>
+        <h2 className="text-5xl ld:self-start ml-4 mb-10 font-bold">Dashboard</h2>
         <SearchBar onSearch={handleSearch} />
         <div className="grid place-content-start lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-12 mt-14 mr-10 mb-5">
           {loading ? ( // Render skeleton cards while data is loading
             <>
-              <DashboardCardSkeleton />
-              <DashboardCardSkeleton />
-              <DashboardCardSkeleton />
-              <DashboardCardSkeleton />
-              <DashboardCardSkeleton />
-              <DashboardCardSkeleton />
+              {[...Array(6)].map(() => <DashboardCardSkeleton />)}
             </>
           ) : (
             filteredRepositories.map((repo, index) => (

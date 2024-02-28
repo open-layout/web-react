@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import IconQuestionMark from '@icons/question-mark.svg';
 import IconSearch from '@icons/search.svg';
 
@@ -10,6 +10,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [autocompleteTerm, setAutocompleteTerm] = useState<string>('');
+  const [randomPlaceholder, setRandomPlaceholder] = useState<string>('');
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -19,6 +20,21 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     'language:',
     'layout:',
   ];
+
+  const random_seach = [
+    'Awesome portfolio layout',
+    'Orbit of imagination layout',
+    'Automatic github portfolio',
+    'Simple star destroyer layout to make at home',
+    'oppen-heimer famous project'
+  ]
+
+  useEffect(() => {
+    const placeholder = random_seach[Math.floor(Math.random() * random_seach.length)];
+
+    if (!randomPlaceholder)
+      setRandomPlaceholder(placeholder);
+  }, [window.location]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, selectionStart } = event.target;
@@ -66,6 +82,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
       <div className="flex justify-center w-full mt-5 relative">
         <input
           ref={searchInputRef}
+          type="text"
+          placeholder={randomPlaceholder}
           className={`rounded-xl text-xl pl-4 w-full h-14 bg-code border border-gray-500 hover:border-gray-400 focus:border-gray-300 focus:outline-none transition-colors duration-200 ease-in-out ${
             selectedOption ? 'border-yellow-400' : ''
           }`}

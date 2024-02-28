@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+
 import config from '@/config';
+
 import Layout from '@/components/layouts/Template';
 import CopyButton from '@/components/ui/CopyButton';
 import github from '@/assets/icons/github.svg';

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import IconGithub from '@icons/github.svg';
 
 const LayoutCardSkeleton: React.FC = () => {
