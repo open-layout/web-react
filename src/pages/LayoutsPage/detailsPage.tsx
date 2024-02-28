@@ -32,13 +32,13 @@ const LayoutDetailsPage: React.FC = () => {
     <Layout>
       <div className="w-full flex flex-col items-center">
         <img
-          src={repoDetails.images[0]}
+          // src={repoDetails?.images[0]}
           alt="Banner"
           className="w-[60%] h-40 object-center rounded-b-xl mb-4"
         />
         <h1>Repository Details for {name}</h1>
         <div>
-          <h2>{repoDetails.name || "No name"}</h2>
+          <h2>{repoDetails.name || 'No name'}</h2>
           <p>Description: {repoDetails.description}</p>
           <p>Author: {repoDetails.author}</p>
         </div>

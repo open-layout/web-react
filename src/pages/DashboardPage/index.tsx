@@ -13,7 +13,8 @@ import Quit from '@/assets/icons/quit.svg';
 
 type Repository = {
   html_url: string;
-  full_name: string;
+  name: string;
+  fullname: string;
 };
 
 function Dashboard() {
@@ -98,7 +99,7 @@ function Dashboard() {
   }, []);
 
   const checkIfAdded = (repo: Repository) => {
-    const repoName = getLastSegmentOfUrl(repo.html_url);
+    const repoName = getLastSegmentOfUrl(repo.url);
 
     return userLayouts.includes(repoName);
   };
@@ -129,7 +130,9 @@ function Dashboard() {
     searchText: string
   ) => {
     return repositories.filter((repo) => {
-      return repo.full_name.toLowerCase().includes(searchText.toLowerCase());
+      // console.log(repo);
+
+      return repo.name.toLowerCase().includes(searchText.toLowerCase());
     });
   };
 
@@ -141,16 +144,16 @@ function Dashboard() {
   return (
     <Layout>
       <div className="bg-black h-[100px] fixed z-40 top-0 w-full shadow-lg shadow-black"></div>
-      <section className="lg:mt-32 mb-10 flex flex-col items-center px-20">
-        <h2 className="text-5xl self-start ml-4">Dashboard</h2>
+      <section className="lg:mt-32 mt-14 mb-10 flex flex-col items-center px-20">
+        <h2 className="text-5xl ld:self-start ml-4">Dashboard</h2>
         <SearchBar onSearch={handleSearch} />
-        <div className="grid place-content-center lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-12 mt-14 mr-10 mb-5">
+        <div className="grid place-content-start lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-12 mt-14 mr-10 mb-5">
           {filteredRepositories.map((repo, index) => (
             <TemplatesCard
               key={index}
               repo={repo}
               isAdded={checkIfAdded(repo)}
-              banner={generateBannerUrl(repo.full_name)}
+              banner={generateBannerUrl(repo.fullname as string)}
               togglePopup={() => openPopupWithRepoUrl(repo.html_url)}
             />
           ))}

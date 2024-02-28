@@ -60,7 +60,6 @@ function LayoutsPage() {
   ) => {
     try {
       const search_query = `?layout=${layout}&author=${author}&language=${language}&category=${category}&query=${query}`;
-      console.log('Search query:', search_query);
 
       const response = await fetch(
         config.api.baseurl + '/templates/find' + search_query,
