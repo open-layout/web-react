@@ -35,7 +35,7 @@ const LayoutCard: React.FC<{ layout: object | any }> = ({ layout }) => {
   };
 
   return (
-    <article className="relative flex group w-[27rem] flex-col rounded-xl bg-zinc-800/40 backdrop-blur-lg text-white shadow-md border-[3px] border-zinc-700/50">
+    <article className="relative flex group mx-4 w-[22rem] 2xl:w-[27rem] flex-col rounded-xl bg-zinc-800/40 backdrop-blur-lg text-white shadow-md border-[3px] border-zinc-700/50">
       <div className="flex justify-center relative mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r bg-code">
         <img
           src={layout.images[0]}

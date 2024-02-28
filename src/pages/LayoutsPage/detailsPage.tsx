@@ -11,7 +11,16 @@ const LayoutDetailsPage: React.FC = () => {
     const fetchRepoDetails = async () => {
       try {
         const response = await fetch(
-          `${config.api.baseurl}/templates/find?name=${name}`
+          `${config.api.baseurl}/templates/layout`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              name: name,
+            }),
+          },
         );
         const data = await response.json();
         setRepoDetails(data.results[0]);

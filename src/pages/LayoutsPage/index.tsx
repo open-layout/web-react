@@ -161,11 +161,11 @@ function LayoutsPage() {
 
   return (
     <Layout>
-      <div className="grid place-items-center lg:mt-32 mt-20 px-5 lg:px-52">
+      <div className="grid place-items-center lg:mt-32 mt-20 px-1 lg:px-52">
         <div className="fixed inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]"></div>
         <h2 className="text-white text-5xl left-0">Layouts</h2>
         <SearchBar onSearch={handleSearch} />
-        <div className="grid grid-cols-1 2xl:grid-cols-3 lg:grid-cols-2 gap-16 mt-14 mr-10 mb-5">
+        <div className="flex flex-row flex-wrap justify-center gap-y-14 mt-12 xl:mr-10 mb-5">
           {loading ? (
             <>
               <LayoutCardSkeleton />

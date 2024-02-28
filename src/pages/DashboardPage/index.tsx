@@ -5,6 +5,7 @@ import config from '@/config';
 
 import TemplatesCard from '@/components/ui/templatesCar';
 import DashboardMenu from '@/components/ui/dashboardmenu';
+import DashboardCardSkeleton from '@/components/skeleton/DashboardCardSkeleton';
 import Layout from '@/components/Layouts/Template';
 import SearchBar from '@/components/ui/SearchBar';
 import Form from '@/components/ui/LayoutsForm';
@@ -26,6 +27,7 @@ function Dashboard() {
   const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(
     null
   );
+  const [loading, setLoading] = useState(true);
 
   const fetchRepositories = async () => {
     try {
@@ -88,10 +90,10 @@ function Dashboard() {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true); // Set loading to true when fetching data
       const repositoriesResponse = await fetchRepositories();
-      console.log(repositoriesResponse);
-
       setRepositories(repositoriesResponse);
+      setLoading(false); // Set loading to false when data is fetched
       await getUserLayouts();
     };
 
@@ -144,19 +146,30 @@ function Dashboard() {
   return (
     <Layout>
       <div className="bg-black h-[100px] fixed z-40 top-0 w-full shadow-lg shadow-black"></div>
-      <section className="lg:mt-32 mt-14 mb-10 flex flex-col items-center px-20">
+      <section className="lg:mt-32 mt-14 mb-10 flex flex-col items-center px-5 lg:px-20">
         <h2 className="text-5xl ld:self-start ml-4">Dashboard</h2>
         <SearchBar onSearch={handleSearch} />
         <div className="grid place-content-start lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-12 mt-14 mr-10 mb-5">
-          {filteredRepositories.map((repo, index) => (
-            <TemplatesCard
-              key={index}
-              repo={repo}
-              isAdded={checkIfAdded(repo)}
-              banner={generateBannerUrl(repo.fullname as string)}
-              togglePopup={() => openPopupWithRepoUrl(repo.html_url)}
-            />
-          ))}
+          {loading ? ( // Render skeleton cards while data is loading
+            <>
+              <DashboardCardSkeleton />
+              <DashboardCardSkeleton />
+              <DashboardCardSkeleton />
+              <DashboardCardSkeleton />
+              <DashboardCardSkeleton />
+              <DashboardCardSkeleton />
+            </>
+          ) : (
+            filteredRepositories.map((repo, index) => (
+              <TemplatesCard
+                key={index}
+                repo={repo}
+                isAdded={checkIfAdded(repo)}
+                banner={generateBannerUrl(repo.fullname as string)}
+                togglePopup={() => openPopupWithRepoUrl(repo.html_url)}
+              />
+            ))
+          )}
           {isPopupOpen && (
             <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-50 backdrop-blur-md flex justify-center items-center z-50">
               <div className="bg-transparent p-8 rounded-lg shadow-md">

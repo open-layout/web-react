@@ -89,6 +89,8 @@ function AuthPage() {
         'An error occurred while logging in in the client. Please try again later'
       );
 
+        localStorage.setItem("ol_user", JSON.stringify(result.user));
+
     setAuthPhase('Successfully logged in... Redirecting...');
 
     await sleep(3000);
