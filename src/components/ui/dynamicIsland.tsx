@@ -20,17 +20,17 @@ const DynamicIsland = ({
   return (
     <nav
       id="dynamic-island"
-      className="menu-container grid place-items-center group text-white">
+      className="menu-container flex justify-center group text-white">
       <div
-        className={`flex flex-row items-center select-none fixed z-50 top-0 backdrop-blur-md border-gray-700/50 border rounded-full py-1 px-5 mt-3 w-40 duration-300 ease-in-out ${
+        className={`flex flex-row items-center justify-cemter select-none fixed z-50 top-0 backdrop-blur-md border-gray-700/50 border rounded-full py-1 px-2 mt-3 w-40 duration-300 ease-in-out ${
           isMouseNearDynamicIsland ? 'justify-between w-96' : ''
         }`}>
         {isAuthenticated() ? (
-          <Link to="/dashboard" className="ml-1 flex flex-row items-center">
+          <Link to="/dashboard" className="flex flex-row gap-2 items-center">
             <img
               src={getUserFromLocalstorage()?.avatar}
               alt=""
-              className="w-8 m-1 mr-2 border-2 border-green-400 rounded-full"
+              className="w-8 my-1 border-2 border-green-400 rounded-full"
             />
             {getUserFromLocalstorage()?.username}
           </Link>

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import IconQuestionMark from '@icons/question-mark.svg';
 import IconSearch from '@icons/search.svg';
 
@@ -9,6 +9,8 @@ const DashboardMenu: React.FC<DashboardMenuProps> = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [autocompleteTerm, setAutocompleteTerm] = useState<string>('');
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [logoutMessageVisible, setLogoutMessageVisible] =
+    useState<boolean>(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const dropdownOptions: string[] = [
@@ -50,6 +52,15 @@ const DashboardMenu: React.FC<DashboardMenuProps> = () => {
     setShowDropdown(!showDropdown);
   };
 
+  const handleLogout = () => {
+    localStorage.clear();
+    setLogoutMessageVisible(true);
+    setTimeout(() => {
+      setLogoutMessageVisible(false);
+      window.location.href = '/';
+    }, 2000);
+  };
+
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Tab' && autocompleteTerm !== '') {
       event.preventDefault();
@@ -58,58 +69,45 @@ const DashboardMenu: React.FC<DashboardMenuProps> = () => {
     }
   };
 
-  return (
-    <nav className="2xl:fixed left-10 top-60 menu-container grid place-items-center">
-      <div className="flex flex-col items-center select-none text-white gap-5 p-4">
-        <div className="flex flex-row relative">
-          <div className="relative flex flex-row gap-2">
-            <input
-              ref={searchInputRef}
-              className={`rounded-md w-72 pl-1 bg-code border border-gray-600 hover:border-gray-500 focus:border-gray-400 focus:outline-none transition-colors duration-200 ease-in-out ${
-                selectedOption ? 'border-yellow-400' : ''
-              }`}
-              value={searchTerm}
-              onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
-            />
-            <img
-              src={IconSearch}
-              className="absolute right-7 top-1/2 transform -translate-y-1/2 w-5 h-6 text-gray-400 cursor-pointer"
-              alt="Search"
-            />
-            <img
-              src={IconQuestionMark}
-              alt="Question Mark"
-              className="w-4 cursor-pointer"
-              onClick={handleQuestionMarkClick}
-            />
-            {autocompleteTerm && (
-              <span className="absolute top-0 left-0 ml-1 text-gray-400">
-                {searchTerm + autocompleteTerm}
-              </span>
-            )}
-          </div>
-          {showDropdown && (
-            <div className="absolute top-full left-0  text-white rounded-md mt-1 w-72">
-              {dropdownOptions.map((option, index) => (
-                <div
-                  key={index}
-                  className={`cursor-pointer px-3 my-1 border border-gray-400 mx-1 py-1 bg-title/80 rounded-md hover:bg-title transition-colors duration-200 ease-in-out ${
-                    selectedOption === option ? 'bg-black' : ''
-                  }`}
-                  onClick={() => handleDropdownItemClick(option)}>
-                  {option}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+  useEffect(() => {
+    if (logoutMessageVisible) {
+      setTimeout(() => {
+        setLogoutMessageVisible(false);
+        window.location.href = '/';
+      }, 2000);
+    }
+  }, [logoutMessageVisible]);
 
-        <a href="#" className="ml-1 pr-1">
-          Filter
-        </a>
-        <a href="#" className="ml-1 pr-1">
-          Order
+  const getUserFromLocalstorage = () => {
+    try {
+      return JSON.parse(localStorage.getItem('ol_user') as string);
+    } catch (e) {
+      return null;
+    }
+  };
+
+  return (
+    <nav className="2xl:fixed left-16 top-72 menu-container grid place-items-center">
+      <div className="notification-container">
+        {logoutMessageVisible && (
+          <div className="notification bg-green-500 text-white py-2 px-4 mb-2 rounded-md">
+            Log out successful
+          </div>
+        )}
+      </div>
+      <div className="flex flex-col items-center select-none w-52 h-52 bg-gray-700 border rounded-xl border-gray-600 text-white gap-5 p-4">
+        <div className=" flex flex-row items-center self-start gap-1">
+          <img
+            src={getUserFromLocalstorage()?.avatar}
+            alt="Pfp"
+            className="w-10 rounded-md "
+          />
+          <p>{getUserFromLocalstorage()?.username}</p>
+        </div>
+        <a
+          className="bg-red-500 px-2 py-1 border border-red-700 rounded-lg"
+          onClick={handleLogout}>
+          Log out
         </a>
       </div>
     </nav>

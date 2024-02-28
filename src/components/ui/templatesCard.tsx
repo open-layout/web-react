@@ -38,12 +38,14 @@ const TemplatesCard: React.FC<{
     <article className="relative flex w-[22rem] flex-col rounded-xl bg-zinc-800/40 backdrop-blur-lg text-white shadow-md border-[3px] border-zinc-700/50">
       <div className="flex justify-center relative mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r bg-title">
         <img src={banner} alt="" className="h-full aspect-[22/9]" />
-        <img
-          src={repo.owner === repo.name ? IconMarkdown : languageImage}
-          className="absolute right-0 w-9 h-9 bg-code/30 backdrop-blur-xl m-1 py-1 px-2 rounded-md border border-gray-500"
-          alt={`${repo.language}`}
-          title={`${repo.language || 'Markdown'}`}
-        />
+        {repo.language && (
+          <img
+            src={repo.owner === repo.name ? IconMarkdown : languageImage}
+            className="absolute right-0 w-9 h-9 bg-code/30 backdrop-blur-xl m-1 py-1 px-2 rounded-md border border-gray-500"
+            alt={`${repo.language}`}
+            title={`${repo.language || 'Markdown'}`}
+          />
+        )}
       </div>
       <div className="p-6">
         <h5 className="mb-2 block font-sans text-xl font-bold leading-snug tracking-normal text-blue-gray-900 antialiased">

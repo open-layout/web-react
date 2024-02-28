@@ -149,6 +149,7 @@ function Dashboard() {
       <section className="lg:mt-32 mt-14 mb-10 flex flex-col items-center px-5 lg:px-20">
         <h2 className="text-5xl ld:self-start ml-4">Dashboard</h2>
         <SearchBar onSearch={handleSearch} />
+        <DashboardMenu />
         <div className="grid place-content-start lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-12 mt-14 mr-10 mb-5">
           {loading ? ( // Render skeleton cards while data is loading
             <>
