@@ -68,7 +68,7 @@ const LayoutDetailsPage: React.FC = () => {
               <div className="mt-2 relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                 <img
                   src={repoDetails.images?.[currentImageIndex]}
-                  alt="Preview" 
+                  alt="Preview"  
                   className="block mx-auto"
                   style={{ maxWidth: '100%', maxHeight: '300px' }} // Ajusta la altura máxima según sea necesario
                 />
@@ -121,13 +121,13 @@ const LayoutDetailsPage: React.FC = () => {
           {repoDetails.description && (
             <div className='flex flex-col gap-8'>
               <div className='border border-zinc-500/50 bg-zinc-400/10 p-4 h-48 rounded-xl'>
-                <p className="mb-4">Descripción:</p>
+                <p className="mb-4">Description:</p>
                 <p className='text-white'>{repoDetails.description}<a className='text-blue-500 hover:cursor-pointer' href={repoDetails.docs}> watch docs...</a></p>
               </div>
               <div className='flex flex-row gap-8 w-full ' >
                 {repoDetails.category && (
                   <div className='border border-zinc-500/50 bg-zinc-400/10 p-4 rounded-xl w-full '>
-                    <p>Categoria:</p>
+                    <p>Category:</p>
                     <p className='text-center mt-2'>{repoDetails.category}</p>
                   </div>
                 )}
@@ -140,7 +140,7 @@ const LayoutDetailsPage: React.FC = () => {
               </div>
               {repoDetails.requirements && (
                 <div className='border border-zinc-500/50 bg-zinc-400/10 p-4 h-32 rounded-xl'>
-                  <p>Requerimientos:</p>
+                  <p>Requirements:</p>
                   <p className='text-left mt-2'>{repoDetails.requirements}</p>
                 </div>
               )}
