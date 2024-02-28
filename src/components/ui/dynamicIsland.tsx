@@ -12,7 +12,7 @@ const DynamicIsland = ({
 
   const getUserFromLocalstorage = () => {
     try {
-      return JSON.parse(localStorage.getItem('ol_user'));
+      return JSON.parse(localStorage.getItem('ol_user') as string);
     } catch (e) {
       return null;
     }
