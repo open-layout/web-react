@@ -3,7 +3,7 @@ import IconGithub from '@icons/github.svg';
 
 const LayoutCardSkeleton: React.FC = () => {
   return (
-    <article className="relative flex group w-[27rem] flex-col rounded-xl bg-zinc-800/40 backdrop-blur-lg text-code shadow-md border-[3px] border-zinc-700/50">
+    <article className="relative flex group w-[22rem] 2xl:w-[27rem] flex-col rounded-xl bg-zinc-800/40 backdrop-blur-lg text-code shadow-md border-[3px] border-zinc-700/50">
       <div className="flex justify-center relative mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-code shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r bg-code">
         <div className=" animate-pulse aspect-[22/9] group-hover:scale-110 delay-75 duration-300 transition-transform bg-gray-500"></div>
       </div>

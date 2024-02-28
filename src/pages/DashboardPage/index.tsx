@@ -3,7 +3,7 @@ import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 
 import config from '@/config';
 
-import TemplatesCard from '@/components/ui/templatesCar';
+import TemplatesCard from '@/components/ui/templatesCard';
 import DashboardMenu from '@/components/ui/dashboardmenu';
 import DashboardCardSkeleton from '@/components/skeleton/DashboardCardSkeleton';
 import Layout from '@/components/Layouts/Template';

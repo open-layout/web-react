@@ -30,7 +30,7 @@ const DynamicIsland = ({
             <img
               src={getUserFromLocalstorage()?.avatar}
               alt=""
-              className="w-8 p-1"
+              className="w-8 m-1 mr-2 border-2 border-green-400 rounded-full"
             />
             {getUserFromLocalstorage()?.username}
           </Link>
@@ -47,7 +47,9 @@ const DynamicIsland = ({
           }`}>
           <Link to="/">Home</Link>
           <Link to="/layouts">Layouts</Link>
-          <Link to="/form">Docs</Link>
+          <a href="https://docs.openlayout.me" target="_blank">
+            Docs
+          </a>
         </div>
       </div>
     </nav>

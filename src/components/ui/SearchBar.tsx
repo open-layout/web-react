@@ -86,7 +86,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
         />
       </div>
       {autocompleteTerm && (
-        <span className="absolute z-50 left-3 -mt-2 shadow-gray-700 shadow-lg bg-code border border-gray-700 rounded-md px-2 py-1 -translate-y-1/2 text-xl ml-1 text-white pointer-events-none">
+        <span className="absolute z-50 left-3 mt-2 shadow-gray-700 shadow-lg bg-code border border-gray-700 rounded-md px-2 py-1 -translate-y-1/2 text-xl ml-1 text-white pointer-events-none">
           {searchTerm + autocompleteTerm}
         </span>
       )}

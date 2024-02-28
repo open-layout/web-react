@@ -23,7 +23,7 @@ const LayoutDetailsPage: React.FC = () => {
           },
         );
         const data = await response.json();
-        setRepoDetails(data.results[0]);
+        setRepoDetails(data.data);
         console.log('Repository details:', data);
       } catch (error) {
         console.error('Error fetching repository details:', error);
