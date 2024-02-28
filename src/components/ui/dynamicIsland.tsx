@@ -25,8 +25,9 @@ const DynamicIsland = () => {
       const { clientY, clientX } = event;
 
       const is_hovering_y = clientY <= distanceFromEdge;
-      const is_hovering_x = clientX >= window.innerWidth / 2 - distanceFromEdge * 2  // We double the edges to make it a smoother transition
-        && clientX <= window.innerWidth / 2 + distanceFromEdge * 2;
+      const is_hovering_x =
+        clientX >= window.innerWidth / 2 - distanceFromEdge * 2 && // We double the edges to make it a smoother transition
+        clientX <= window.innerWidth / 2 + distanceFromEdge * 2;
       const is_hovering = is_hovering_y && is_hovering_x;
 
       setMouseNear(is_hovering);
@@ -49,16 +50,18 @@ const DynamicIsland = () => {
     };
 
     document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseleave', () => setTimeout(() => setMouseNear(false), 1000));
+    document.addEventListener('mouseleave', () =>
+      setTimeout(() => setMouseNear(false), 1000)
+    );
 
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
 
-
   const handleLogout = () => {
     signOut();
+    localStorage.clear();
 
     setTimeout(() => {
       window.location.href = '/';
@@ -78,12 +81,13 @@ const DynamicIsland = () => {
       id="dynamic-island"
       className="menu-container flex justify-center group dark:text-white text-black">
       <div
-        className={`flex flex-row items-center justify-cemter select-none fixed z-50 top-0 backdrop-blur-md border-gray-700/50 border rounded-full py-1 px-2 mt-3 w-40 duration-300 ease-in-out ${mouseNear ? 'justify-between w-96' : ''
-          }`}>
+        className={`flex flex-row items-center select-none fixed z-50 top-0 h-10 backdrop-blur-md border-gray-700/50 border rounded-full py-1 px-2 mt-3 w-40 duration-300 ease-in-out ${
+          mouseNear ? `justify-between w-96` : ''
+        }`}>
         {isAuthenticated() ? (
           <div className="flex flex-row gap-2 items-center">
             {mouseNear ? (
-              <a onClick={handleLogout} className='w-7 my-1 cursor-pointer'>
+              <a onClick={handleLogout} className="w-7 my-1 cursor-pointer">
                 <img
                   src={IconLogout}
                   alt=""
@@ -111,8 +115,9 @@ const DynamicIsland = () => {
         )}
 
         <div
-          className={`duration-200 ease-in-out opacity-0 flex flex-row gap-2 pr-2 ${mouseNear ? 'opacity-100 duration-500' : ''
-            }`}>
+          className={`duration-200 ease-in-out opacity-0 flex flex-row gap-2 pr-2 ${
+            mouseNear ? 'opacity-100 duration-500' : ''
+          }`}>
           <Link to="/">Home</Link>
           <Link to="/layouts">Layouts</Link>
           <a href="https://docs.openlayout.me" target="_blank">
