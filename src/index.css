@@ -22,13 +22,24 @@
 
 body {
   background-color: var(--olayout-blue);
-  scrollbar-color: white black;
 }
 
 /* Chrome, Edge, and Safari */
-*::-webkit-scrollbar {
-  width: 0px;
+::-webkit-scrollbar {
+  scroll-behavior: smooth;
+  width: 5px;
 }
+
+::-webkit-scrollbar-track {
+  background: #120024;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #4c00ff;
+  border-radius: 7px;
+  border: 1px solid rgb(93 93 255 / 0.5);
+}
+
 
 @keyframes blink {
   0% {

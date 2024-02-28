@@ -12,6 +12,7 @@ import Form from '@/components/ui/LayoutsForm';
 import Quit from '@/assets/icons/quit.svg';
 
 type Repository = {
+  url: string;
   html_url: string;
   name: string;
   fullname: string;
@@ -20,12 +21,10 @@ type Repository = {
 function Dashboard() {
   const authHeader = useAuthHeader();
   const [repositories, setRepositories] = useState<Repository[]>([]);
-  const [userLayouts, setUserLayouts] = useState<string[]>([]);
-  const [selectedRepoUrl, setSelectedRepoUrl] = useState<string>('');
+  const [userLayouts, setUserLayouts] = useState([]);
+  const [selectedRepoUrl, setSelectedRepoUrl] = useState('');
   const [searchParameters, setSearchParameters] = useState('');
-  const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(
-    null
-  );
+  const [typingTimeout, setTypingTimeout] = useState('');
   const [loading, setLoading] = useState(true);
 
   const fetchRepositories = async () => {
@@ -69,7 +68,7 @@ function Dashboard() {
 
       if (Array.isArray(data.data)) {
         setUserLayouts(
-          data.data.map((layout: any) => getLastSegmentOfUrl(layout.repository))
+          data.data.map((layout: object | any) => getLastSegmentOfUrl(layout.repository))
         );
       } else {
         setUserLayouts([]);

@@ -2,8 +2,12 @@
 import favicon from '@/assets/favicon.svg';
 import { Link } from 'react-router-dom';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
-import { useEffect, useState } from 'react';
+import useSignOut from 'react-auth-kit/hooks/useIsAuthenticated';
+
 import IconLogout from '@icons/logout.svg';
+import Logo from '@/assets/favicon.svg';
+import config from '@/config';
+
 
 const DynamicIsland = ({
   isMouseNearDynamicIsland,
@@ -11,28 +15,20 @@ const DynamicIsland = ({
   isMouseNearDynamicIsland: boolean;
 }) => {
   const isAuthenticated = useIsAuthenticated();
-
-  const [logoutMessageVisible, setLogoutMessageVisible] =
-    useState<boolean>(false);
+  const singOut = useSignOut();
 
   const handleLogout = () => {
-    localStorage.clear();
-    setLogoutMessageVisible(true);
-    window.location.href = '/';
+    singOut()
+
+    setTimeout(() => {
+      window.location.href = '/';
+    }, 2000);
   };
 
-  useEffect(() => {
-    if (logoutMessageVisible) {
-      setTimeout(() => {
-        setLogoutMessageVisible(false);
-        window.location.href = '/';
-      }, 2000);
-    }
-  }, [logoutMessageVisible]);
-
-  const getUserFromLocalstorage = () => {
+  const getUser = () => {
+    const user_data = localStorage.getItem('ol_user') as string;
     try {
-      return JSON.parse(localStorage.getItem('ol_user') as string);
+      return JSON.parse(user_data);
     } catch (e) {
       return null;
     }
@@ -52,18 +48,18 @@ const DynamicIsland = ({
                 <img
                   src={IconLogout}
                   alt=""
-                  className="w-8 my-1 rounded-full"
+                  className="w-7 my-1 rounded-full"
                 />
               </a>
             ) : (
               <img
-                src={getUserFromLocalstorage()?.avatar}
+                src={getUser()?.avatar || Logo}
                 alt=""
-                className="w-8 my-1 border-2 border-green-400 rounded-full"
+                className={`w-7 my-1 ${getUser() ? 'border-2 border-green-400' : ''}  rounded-full`}
               />
             )}
             <Link to="/dashboard" className="flex flex-row gap-2 items-center">
-              {getUserFromLocalstorage()?.username}
+              {getUser()?.username || config.name}
             </Link>
           </div>
         ) : (
