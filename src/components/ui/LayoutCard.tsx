@@ -74,7 +74,7 @@ const LayoutCard: React.FC<{ layout: object | any }> = ({ layout }) => {
           data-ripple-light="true"
           href={`https://github.com/${layout.author}`}
           target="_blank"
-          className="cursor-pointer px-6 py-2 pb-5 self-end text-md text-gray-400 font-bold flex flex-row-reverse gap-2">
+          className="cursor-pointer px-6 py-2 pb-5 self-end text-md dark:text-gray-400 text-gray-600 font-bold flex flex-row-reverse gap-2">
           {`@${layout.author}` || 'Unknown'}
           <img
             src={IconGithub}

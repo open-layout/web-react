@@ -3,7 +3,7 @@ import CopyButton from '@/components/ui/CopyButton';
 import WelcomeSection from './WelcomeSection';
 import DevelopersSection from './DevelopersSection';
 import AboutUsSection from './AboutUsSection';
-import Layout from '@/components/Layouts/Template';
+import Layout from '@/components/layouts/Template';
 import IconSun from '@icons/sun.svg';
 import IconMoon from '@icons/moon.svg';
 import ArrowDownIcon from './ArrowDownIcon';
@@ -11,7 +11,6 @@ import { useState } from 'react';
 
 import { UserData } from './interfaces';
 import config from '@/config';
-import LoginButton from '@/components/ui/LoginButton';
 
 function LandingPage() {
   const [userData, setUserData] = useState<UserData[]>([]);
@@ -35,25 +34,30 @@ function LandingPage() {
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
+
+    const element = document.querySelector('html');
+
+    if (!darkMode) {
+      element?.classList.add('dark');
+    } else {
+      element?.classList.remove('dark');
+    }
   };
 
   return (
-    <Layout darkMode={darkMode}>
+    <Layout>
       <a
         className="absolute top-0 left-10 mt-8 px-3 py-1 rounded-full "
         onClick={toggleDarkMode}>
         <img src={darkMode ? IconSun : IconMoon} alt="" className="w-12" />
       </a>
 
-      <LoginButton />
       <WelcomeSection />
 
       <div className="lg:pt-32 pt-20 flex flex-row gap-5 justify-center">
         <a
-          className={`px-8 py-3 ${
-            darkMode ? 'bg-white text-black' : 'bg-black text-white'
-          } rounded-full shadow-inner-xl font-semibold`}
-          href="docs.openlayout.me">
+          className="px-8 py-3 dark:bg-white dark:text-black bg-black text-white rounded-full shadow-inner-xl font-semibold"
+          href="https://docs.openlayout.me">
           Get Started
         </a>
         <CopyButton npmCommand={npmCommand} />
@@ -63,7 +67,7 @@ function LandingPage() {
         <ArrowDownIcon darkMode={darkMode} />
       </div>
 
-      <AboutUsSection darkMode={darkMode} />
+      <AboutUsSection />
       {userData.length > 0 && (
         <DevelopersSection userData={userData} darkMode={darkMode} />
       )}

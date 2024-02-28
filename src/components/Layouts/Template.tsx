@@ -1,17 +1,13 @@
 // TemplatePage.tsx
 import React, { ReactNode, useState, useEffect } from 'react';
-import DynamicIsland from '@/components/ui/dynamicIsland';
-// import CustomScrollbar from '@/components/Layouts/Scrollbar';
+import DynamicIsland from '@/components/ui/DynamicIsland';
 
 interface TemplatePageProps {
   children: ReactNode;
   darkMode?: boolean;
 }
 
-const TemplatePage: React.FC<TemplatePageProps> = ({
-  children,
-  darkMode = true,
-}) => {
+const TemplatePage: React.FC<TemplatePageProps> = ({ children }) => {
   const [isMouseNearDynamicIsland, setIsMouseNearDynamicIsland] =
     useState(false);
   const [isMouseInDefinedArea, setIsMouseInDefinedArea] = useState(false);
@@ -53,16 +49,10 @@ const TemplatePage: React.FC<TemplatePageProps> = ({
   }, []);
 
   return (
-    <div className={`${darkMode ? 'text-white' : 'text-black'}`}>
-      {darkMode ? (
-        <div className="fixed inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]"></div>
-      ) : (
-        <div className="fixed inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#63e_100%)] "></div>
-      )}
+    <div className={'text-black dark:text-white'}>
+      <div className="fixed inset-0 -z-10 h-full w-full items-center px-5 py-24 dark:[background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)] [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#63e_100%)]"></div>
       <DynamicIsland isMouseNearDynamicIsland={isMouseNearDynamicIsland} />
-      {/* <CustomScrollbar> */}
       {children}
-      {/* </CustomScrollbar> */}
     </div>
   );
 };

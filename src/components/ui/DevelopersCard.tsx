@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PresentationCardProps } from '@/pages/LandingPage/interfaces';
+import { PresentationCardProps } from '@/pages/landing/interfaces';
 
 const PresentationCard: React.FC<PresentationCardProps> = ({
   name,

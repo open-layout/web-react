@@ -1,9 +1,9 @@
-import LandingPage from './pages/LandingPage/index';
-import NotFound from './pages/NotFound/index';
-import LayoutDetailsPage from './pages/LayoutsPage/detailsPage';
-import AuthPage from './pages/AuthPage/index';
-import LayoutsPage from './pages/LayoutsPage/index';
-import DashboardPage from './pages/DashboardPage/index';
+import LandingPage from './pages/landing/index';
+import NotFound from './pages/notFound/index';
+import LayoutDetailsPage from './pages/layouts/detailsPage';
+import AuthPage from './pages/auth/index';
+import LayoutsPage from './pages/layouts/index';
+import DashboardPage from './pages/dashboard/index';
 import RequireAuth from '@auth-kit/react-router/RequireAuth';
 import Form from './components/ui/LayoutsForm';
 

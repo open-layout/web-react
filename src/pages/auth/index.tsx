@@ -3,7 +3,7 @@ import logo from '@/assets/favicon.svg';
 import banner from '@/assets/banner.svg';
 import config from '@/config';
 
-import Layout from '@/components/Layouts/Template';
+import Layout from '@/components/layouts/Template';
 
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
@@ -89,7 +89,7 @@ function AuthPage() {
         'An error occurred while logging in in the client. Please try again later'
       );
 
-        localStorage.setItem("ol_user", JSON.stringify(result.user));
+    localStorage.setItem('ol_user', JSON.stringify(result.user));
 
     setAuthPhase('Successfully logged in... Redirecting...');
 
@@ -113,8 +113,6 @@ function AuthPage() {
 
   return (
     <Layout>
-      <div className="fixed inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]"></div>
-
       <div className="flex h-screen">
         {/* Left Block */}
         <div className="hidden lg:flex w-0 lg:w-2/3 flex-col justify-center items-center">
@@ -129,8 +127,10 @@ function AuthPage() {
           }>
           <div className="flex flex-col items-center text-center select-none">
             <img src={logo} alt="Ollogo" className="w-60" />
-            <h1 className="text-white text-7xl font-bold mb-8">Login</h1>
-            <p className="text-gray-500 mb-8 mx-2">
+            <h1 className="text-gray-300 dark:text-white text-7xl font-bold mb-8">
+              Login
+            </h1>
+            <p className="text-gray-300 dark:text-gray-500 mb-8 mx-2">
               {isAuth
                 ? 'Authenticating... Please do not exist this page until we are finish'
                 : 'Click the button below to log in with your GitHub account.'}
@@ -159,11 +159,11 @@ function AuthPage() {
                     </span>
                   </span>
                 </button>
-                <div className="mt-2 text-gray-500 text-sm">
+                <div className="mt-2 text-gray-300 dark:text-gray-500 text-sm">
                   I don want to log-in,{' '}
                   <span
                     onClick={() => history.back()}
-                    className="text-indigo-600 font-extrabold hover:underline">
+                    className="dark:text-indigo-600 text-indigo-900 font-extrabold hover:underline">
                     go back
                   </span>
                 </div>

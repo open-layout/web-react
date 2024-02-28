@@ -1,4 +1,4 @@
-import Layout from '@/components/Layouts/Template';
+import Layout from '@/components/layouts/Template';
 import Favicon from '@/assets/favicon.svg';
 import { useEffect, useState } from 'react';
 

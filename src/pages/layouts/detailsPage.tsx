@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import config from '@/config';
-import Layout from '@/components/Layouts/Template';
+import Layout from '@/components/layouts/Template';
 
 const LayoutDetailsPage: React.FC = () => {
   const { name } = useParams<{ name: string }>();
@@ -10,18 +10,15 @@ const LayoutDetailsPage: React.FC = () => {
   useEffect(() => {
     const fetchRepoDetails = async () => {
       try {
-        const response = await fetch(
-          `${config.api.baseurl}/templates/layout`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              name: name,
-            }),
+        const response = await fetch(`${config.api.baseurl}/templates/layout`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
           },
-        );
+          body: JSON.stringify({
+            name: name,
+          }),
+        });
         const data = await response.json();
         setRepoDetails(data.data);
         console.log('Repository details:', data);

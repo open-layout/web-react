@@ -1,6 +1,4 @@
-import React from 'react';
-
-const WelcomeSection: React.FC = () => {
+const WelcomeSection = () => {
   return (
     <section className="grid place-items-center xl:mt-60 mt-32">
       <div>

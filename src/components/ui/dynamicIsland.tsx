@@ -2,6 +2,8 @@
 import favicon from '@/assets/favicon.svg';
 import { Link } from 'react-router-dom';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
+import { useEffect, useState } from 'react';
+import IconLogout from '@icons/logout.svg';
 
 const DynamicIsland = ({
   isMouseNearDynamicIsland,
@@ -9,6 +11,24 @@ const DynamicIsland = ({
   isMouseNearDynamicIsland: boolean;
 }) => {
   const isAuthenticated = useIsAuthenticated();
+
+  const [logoutMessageVisible, setLogoutMessageVisible] =
+    useState<boolean>(false);
+
+  const handleLogout = () => {
+    localStorage.clear();
+    setLogoutMessageVisible(true);
+    window.location.href = '/';
+  };
+
+  useEffect(() => {
+    if (logoutMessageVisible) {
+      setTimeout(() => {
+        setLogoutMessageVisible(false);
+        window.location.href = '/';
+      }, 2000);
+    }
+  }, [logoutMessageVisible]);
 
   const getUserFromLocalstorage = () => {
     try {
@@ -20,20 +40,32 @@ const DynamicIsland = ({
   return (
     <nav
       id="dynamic-island"
-      className="menu-container flex justify-center group text-white">
+      className="menu-container flex justify-center group dark:text-white text-black">
       <div
         className={`flex flex-row items-center justify-cemter select-none fixed z-50 top-0 backdrop-blur-md border-gray-700/50 border rounded-full py-1 px-2 mt-3 w-40 duration-300 ease-in-out ${
           isMouseNearDynamicIsland ? 'justify-between w-96' : ''
         }`}>
         {isAuthenticated() ? (
-          <Link to="/dashboard" className="flex flex-row gap-2 items-center">
-            <img
-              src={getUserFromLocalstorage()?.avatar}
-              alt=""
-              className="w-8 my-1 border-2 border-green-400 rounded-full"
-            />
-            {getUserFromLocalstorage()?.username}
-          </Link>
+          <div className="flex flex-row gap-2 items-center">
+            {isMouseNearDynamicIsland ? (
+              <a onClick={handleLogout} className='w-7 my-1 cursor-pointer'>
+                <img
+                  src={IconLogout}
+                  alt=""
+                  className="w-8 my-1 rounded-full"
+                />
+              </a>
+            ) : (
+              <img
+                src={getUserFromLocalstorage()?.avatar}
+                alt=""
+                className="w-8 my-1 border-2 border-green-400 rounded-full"
+              />
+            )}
+            <Link to="/dashboard" className="flex flex-row gap-2 items-center">
+              {getUserFromLocalstorage()?.username}
+            </Link>
+          </div>
         ) : (
           <Link to="/auth" className="ml-1 flex flex-row items-center">
             <img src={favicon} alt="" className="w-8 p-1" />

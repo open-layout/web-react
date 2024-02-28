@@ -3,10 +3,9 @@ import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 
 import config from '@/config';
 
-import TemplatesCard from '@/components/ui/templatesCard';
-import DashboardMenu from '@/components/ui/dashboardmenu';
+import TemplatesCard from '@/components/ui/DashboardCard';
 import DashboardCardSkeleton from '@/components/skeleton/DashboardCardSkeleton';
-import Layout from '@/components/Layouts/Template';
+import Layout from '@/components/layouts/Template';
 import SearchBar from '@/components/ui/SearchBar';
 import Form from '@/components/ui/LayoutsForm';
 
@@ -145,11 +144,10 @@ function Dashboard() {
 
   return (
     <Layout>
-      <div className="bg-black h-[100px] fixed z-40 top-0 w-full shadow-lg shadow-black"></div>
+      <div className="dark:bg-black bg-white h-[100px] fixed z-40 top-0 w-full shadow-lg dark:shadow-black shadow-white"></div>
       <section className="lg:mt-32 mt-14 mb-10 flex flex-col items-center px-5 lg:px-20">
         <h2 className="text-5xl ld:self-start ml-4">Dashboard</h2>
         <SearchBar onSearch={handleSearch} />
-        <DashboardMenu />
         <div className="grid place-content-start lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-12 mt-14 mr-10 mb-5">
           {loading ? ( // Render skeleton cards while data is loading
             <>

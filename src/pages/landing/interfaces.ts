@@ -35,14 +35,9 @@ interface DevelopersProps {
   darkMode: boolean;
 }
 
-interface AboutUsProps {
-  darkMode: boolean;
-}
-
 export type {
   UserData,
   PresentationCardProps,
   DevelopersProps,
-  AboutUsProps,
   TemplatesCardProps,
 };

@@ -37,7 +37,11 @@ const TemplatesCard: React.FC<{
   return (
     <article className="relative flex w-[22rem] flex-col rounded-xl bg-zinc-800/40 backdrop-blur-lg text-white shadow-md border-[3px] border-zinc-700/50">
       <div className="flex justify-center relative mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r bg-title">
-        <img src={banner} alt="" className="h-full aspect-[22/9]" />
+        <img
+          src={banner}
+          alt=""
+          className="h-full aspect-[22/9] dark:border-none border border-zinc-700/50 rounded-xl"
+        />
         {repo.language && (
           <img
             src={repo.owner === repo.name ? IconMarkdown : languageImage}

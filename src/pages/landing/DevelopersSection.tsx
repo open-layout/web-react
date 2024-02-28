@@ -1,5 +1,5 @@
 import React from 'react';
-import PresentationCard from '@/components/ui/presentationCard';
+import PresentationCard from '@/components/ui/DevelopersCard';
 import { DevelopersProps } from './interfaces';
 
 const DevelopersSection: React.FC<DevelopersProps> = ({
