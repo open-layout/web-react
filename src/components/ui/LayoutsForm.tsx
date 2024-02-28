@@ -44,6 +44,7 @@ type Repository = {
 const Form = ({ target }: { target?: string }) => {
 
     const [description, setDescription] = useState<string>('');
+    const [author, setAuthor] = useState<string>('');
     const [repository, setRepository] = useState<Repository>();
     const [formData, setFormData] = useState<FormData>({
         name: '',
@@ -117,6 +118,7 @@ const Form = ({ target }: { target?: string }) => {
             if (repositoryResponse) {
                 formData.name = repositoryResponse.name || '';
                 setDescription(repositoryResponse.description || '')
+                setAuthor(repositoryResponse.owner.login || '');
                 formData.description = repositoryResponse.description || '';
                 formData.author = repositoryResponse.owner.login || '';
                 formData.progLanguage = repositoryResponse.language || '';
@@ -304,11 +306,14 @@ const Form = ({ target }: { target?: string }) => {
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'form_data.json';
+            a.download = 'manifest.json';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
+
+            window.location.href = '';
+            
         } else {
             alert('Please fill in all required fields before downloading.');
         }
@@ -374,8 +379,25 @@ const Form = ({ target }: { target?: string }) => {
 
 
     return (
-        <div className="max-w-md mx-auto rounded-lg overflow-hidden shadow-2xl m-4 border-2 bg-black/90 border-title  p-4">
-            <form onSubmit={handleSubmit} className="mt-8">
+        <div className="max-w-3xl mx-auto rounded-lg overflow-hidden shadow-2xl m-4 border-2 bg-black/90 border-title  p-4">
+            <form onSubmit={handleSubmit} className="   ">
+                 <div className="relative">
+                            <label className="block mb-2 text-white text-xl">Repository Link</label>
+                            <input
+                                type="text"
+                                name="linkRepo"
+                                value={formData.linkRepo}
+                                required
+                                onChange={handleChange}
+                                readOnly={!!target}
+                                className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
+                                placeholder='Link'
+                            />
+                            {!target && (
+                                <img src={pencilicon} className="h-5 w-5 text-gray-400 absolute right-2 top-1/2 transform -translate-y-1/2" />
+                            )} 
+                            
+                        </div>  
                 <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
                     <h2 id="accordion-flush-heading-1">
                         <button
@@ -414,7 +436,7 @@ const Form = ({ target }: { target?: string }) => {
                                 onChange={handleChange}
                                 readOnly={!!description}
                                 required
-                                className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
+                                className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent overflow-auto resize-none"
                                 placeholder='Description of the repository'
                             />
                             <img src={pencilicon} className="h-5 w-5 text-gray-400 absolute right-2 top-1/2 transform -translate-y-1/2" />
@@ -440,7 +462,7 @@ const Form = ({ target }: { target?: string }) => {
                                     required
                                     name="author"
                                     value={formData.author}
-                                    readOnly={!!formData.author}
+                                    readOnly={!!author}
                                     onChange={handleChange}
                                     className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
                                     placeholder='Author'
@@ -460,9 +482,8 @@ const Form = ({ target }: { target?: string }) => {
 
                                 >
                                     <option value=""></option>
-                                    <option value="Website" className='text-black'>Website</option>
-                                    <option value="Other" className='text-black'>Other</option>
-                                    {/* Agrega más opciones según sea necesario */}
+                                    <option value="website" className='text-black'>Website</option>
+                                    <option value="other" className='text-black'>Other</option>
                                 </select>
                             </div>
                             <div className="relative w-full">
@@ -475,9 +496,8 @@ const Form = ({ target }: { target?: string }) => {
                                     className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
                                 >
                                     <option value=""></option>
-                                    <option value="Es" className='text-black'>Spanish</option>
-                                    <option value="En" className='text-black'>English</option>
-                                    {/* Agrega más opciones según sea necesario */}
+                                    <option value="es" className='text-black'>Spanish</option>
+                                    <option value="en" className='text-black'>English</option>
                                 </select>
                             </div>
                             <div className="relative w-full">
@@ -491,31 +511,17 @@ const Form = ({ target }: { target?: string }) => {
 
                                 >
                                     <option value=""></option>
-                                    <option value="Java" className='text-black'>
+                                    <option value="java" className='text-black'>
                                         Java
                                     </option>
-                                    <option value="Kotlin" className='text-black'>
+                                    <option value="kotlin" className='text-black'>
                                         Kotlin
                                     </option>
-                                    {/* Agrega más opciones según sea necesario */}
                                 </select>
                             </div>
                         </div>
 
-                        <div className="relative mt-4">
-                            <label className="block mb-2 text-white">Link Repo</label>
-                            <input
-                                type="text"
-                                name="linkRepo"
-                                value={formData.linkRepo}
-                                required
-                                onChange={handleChange}
-                                readOnly={!!target}
-                                className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
-                                placeholder='Repository Link'
-                            />
-                            <img src={pencilicon} className="h-5 w-5 text-gray-400 absolute right-2 top-1/2 transform -translate-y-1/2" />
-                        </div>
+                       
 
 
                     </div>
@@ -634,7 +640,7 @@ const Form = ({ target }: { target?: string }) => {
                                 name="collaborators"
                                 value={formData.collaborators}
                                 onChange={handleChange}
-                                className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
+                                className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent overflow-auto resize-none"
                                 placeholder='Collaboratos'
                             />
                             <img src={pencilicon} className="h-5 w-5 text-gray-400 absolute right-2 top-1/2 transform -translate-y-1/2" />
@@ -649,8 +655,8 @@ const Form = ({ target }: { target?: string }) => {
 
                             >
                                 <option value="">Select Ide</option>
-                                <option value="Website" className='text-black'>Eclipse</option>
-                                <option value="Other" className='text-black'>InteliJ</option>
+                                <option value="eclipse" className='text-black'>Eclipse</option>
+                                <option value="intelij" className='text-black'>InteliJ</option>
                                 {/* Agrega más opciones según sea necesario */}
                             </select>
                         </div>
