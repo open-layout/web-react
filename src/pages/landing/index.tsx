@@ -1,16 +1,20 @@
 // LandingPage.tsx
-import CopyButton from '@/components/ui/CopyButton';
-import WelcomeSection from './WelcomeSection';
-import DevelopersSection from './DevelopersSection';
-import AboutUsSection from './AboutUsSection';
-import Layout from '@/components/layouts/Template';
-import IconSun from '@icons/sun.svg';
-import IconMoon from '@icons/moon.svg';
-import ArrowDownIcon from './ArrowDownIcon';
 import { useState } from 'react';
 
 import { UserData } from './interfaces';
+
 import config from '@/config';
+
+import Layout from '@/components/layouts/Template';
+
+import WelcomeSection from './WelcomeSection';
+import CopyButton from '@/components/ui/CopyButton';
+import AboutUsSection from './AboutUsSection';
+import DevelopersSection from './DevelopersSection';
+
+import IconSun from '@icons/sun.svg';
+import IconMoon from '@icons/moon.svg';
+import ArrowDownIcon from './ArrowDownIcon';
 
 function LandingPage() {
   const [userData, setUserData] = useState<UserData[]>([]);

@@ -1,7 +1,9 @@
 // Form.js
 import { useEffect, useState } from 'react';
-import pencilicon from '@/assets/icons/pencilicon.svg';
+
 import { HexColorPicker } from "react-colorful";
+
+import pencilicon from '@/assets/icons/pencilicon.svg';
 
 interface FormData {
     name: string;

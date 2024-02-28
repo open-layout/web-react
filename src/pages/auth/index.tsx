@@ -1,14 +1,16 @@
-import github from '@icons/github.svg';
-import logo from '@/assets/favicon.svg';
-import banner from '@/assets/banner.svg';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+
+import useSignIn from 'react-auth-kit/hooks/useSignIn';
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
+
 import config from '@/config';
 
 import Layout from '@/components/layouts/Template';
 
-import useSignIn from 'react-auth-kit/hooks/useSignIn';
-import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import github from '@icons/github.svg';
+import logo from '@/assets/favicon.svg';
+import banner from '@/assets/banner.svg';
 
 function AuthPage() {
   const isAuthenticated = useIsAuthenticated();

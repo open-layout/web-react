@@ -1,11 +1,13 @@
+import RequireAuth from '@auth-kit/react-router/RequireAuth';
+
+import Form from './components/ui/LayoutsForm';
+
 import LandingPage from './pages/landing/index';
 import NotFound from './pages/notFound/index';
 import LayoutDetailsPage from './pages/layouts/detailsPage';
 import AuthPage from './pages/auth/index';
 import LayoutsPage from './pages/layouts/index';
 import DashboardPage from './pages/dashboard/index';
-import RequireAuth from '@auth-kit/react-router/RequireAuth';
-import Form from './components/ui/LayoutsForm';
 
 import { Routes, Route } from 'react-router-dom';
 

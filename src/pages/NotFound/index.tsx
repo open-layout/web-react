@@ -1,6 +1,8 @@
-import Layout from '@/components/layouts/Template';
-import Favicon from '@/assets/favicon.svg';
 import { useEffect, useState } from 'react';
+
+import Layout from '@/components/layouts/Template';
+
+import Favicon from '@/assets/favicon.svg';
 
 function LandingPage() {
   const [timeLeft, setTimeLeft] = useState(10);

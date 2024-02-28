@@ -1,18 +1,19 @@
 // DynamicIsland.tsx
-import favicon from '@/assets/favicon.svg';
 import { Link } from 'react-router-dom';
+
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import useSignOut from 'react-auth-kit/hooks/useIsAuthenticated';
 import { useEffect, useState } from 'react';
 
-import IconLogout from '@icons/logout.svg';
-import Logo from '@/assets/favicon.svg';
 import config from '@/config';
 
+import favicon from '@/assets/favicon.svg';
+import IconLogout from '@icons/logout.svg';
+import Logo from '@/assets/favicon.svg';
 
 const DynamicIsland = () => {
   const isAuthenticated = useIsAuthenticated();
-  const singOut = useSignOut();
+  const signOut = useSignOut();
 
   const [mouseNear, setMouseNear] = useState(false);
   const [lastHoverTimeout, setLastHoverTimeout] = useState(0);
@@ -57,7 +58,7 @@ const DynamicIsland = () => {
 
 
   const handleLogout = () => {
-    singOut()
+    signOut();
 
     setTimeout(() => {
       window.location.href = '/';
@@ -93,7 +94,9 @@ const DynamicIsland = () => {
               <img
                 src={getUser()?.avatar || Logo}
                 alt=""
-                className={`w-7 my-1 ${getUser() ? 'border-2 border-green-400' : ''}  rounded-full`}
+                className={`w-7 my-1 ${
+                  getUser() ? 'border-2 border-green-400' : ''
+                }  rounded-full`}
               />
             )}
             <Link to="/dashboard" className="flex flex-row gap-2 items-center">

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 
 import config from '@/config';
@@ -68,7 +69,9 @@ function Dashboard() {
 
       if (Array.isArray(data.data)) {
         setUserLayouts(
-          data.data.map((layout: object | any) => getLastSegmentOfUrl(layout.repository))
+          data.data.map((layout: object | any) =>
+            getLastSegmentOfUrl(layout.repository)
+          )
         );
       } else {
         setUserLayouts([]);
