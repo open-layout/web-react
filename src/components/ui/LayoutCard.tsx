@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+
 import Banner from '@/assets/banner.svg';
 import Logo from '@/assets/favicon.svg';
 import IconGithub from '@icons/github.svg';

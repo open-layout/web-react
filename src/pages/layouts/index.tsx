@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import Layout from '@/components/layouts/Template';
-import LayoutCard from '@/components/ui/LayoutCard';
-import config from '@/config';
-import SearchBar from '@/components/ui/SearchBar';
-import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
-import LayoutCardSkeleton from '@/components/skeleton/LayoutCardSkeleton';
 import { Link } from 'react-router-dom';
+
+import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
+
+import config from '@/config';
+
+import Layout from '@/components/layouts/Template';
+
+import LayoutCard from '@/components/ui/LayoutCard';
+import SearchBar from '@/components/ui/SearchBar';
+import LayoutCardSkeleton from '@/components/skeleton/LayoutCardSkeleton';
 
 function LayoutsPage() {
   const authHeader = useAuthHeader();

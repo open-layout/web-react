@@ -1,5 +1,6 @@
 // TemplatePage.tsx
 import React, { ReactNode, useState, useEffect } from 'react';
+
 import DynamicIsland from '@/components/ui/DynamicIsland';
 
 interface TemplatePageProps {
