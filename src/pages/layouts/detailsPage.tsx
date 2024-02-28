@@ -28,10 +28,7 @@ const LayoutDetailsPage: React.FC = () => {
         });
         const data = await response.json();
         setRepoDetails(data.data);
-        if (repoDetails && repoDetails.color_palette) {
-          setColorArray(Object.values(repoDetails.color_palette).map(color => ({ color })));
-          console.log('Color array:', colorArray);
-        }
+        
         console.log('Repository details:', data);
       } catch (error) {
         console.error('Error fetching repository details:', error);
@@ -40,6 +37,13 @@ const LayoutDetailsPage: React.FC = () => {
 
     fetchRepoDetails();
   }, [name]);
+
+  useEffect(() => {
+    if (repoDetails && repoDetails.color_palette) {
+      setColorArray(Object.values(repoDetails.color_palette).map(color => ({ color })));
+      console.log('Color array:', colorArray);
+    }
+  }, [repoDetails]);  
 
   const handleNextImage = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % (repoDetails.images?.length ?? 0));
