@@ -57,19 +57,19 @@ const LayoutCard: React.FC<{ layout: object | any }> = ({ layout }) => {
         </p>
       </div>
       <div className="mx-5 mb-2 flex flex-row justify-between items-center">
-        <div className="px-2 py-1 border-[3px] border-zinc-500/50 bg-zinc-400/10 flex flex-row gap-1 rounded-md">
-          {languageImages.map((languageImage, index) => (
-            <img
-              key={index}
-              src={languageImage.image}
-              onError={(e) => {
-                e.currentTarget.src = Logo;
-              }}
-              alt={languageImage.language}
-              className="w-7 h-7"
-            />
-          ))}
-        </div>
+          <div className={`${languageImages.length == 0 ? 'invisible' : ''} px-2 py-1 border-[3px] border-zinc-500/50 bg-zinc-400/10 flex flex-row gap-1 rounded-md`}>
+            {languageImages.map((languageImage, index) => (
+              <img
+                key={index}
+                src={languageImage.image}
+                onError={(e) => {
+                  e.currentTarget.src = Logo;
+                }}
+                alt={languageImage.language}
+                className="w-7 h-7"
+              />
+            ))}
+          </div>
 
         <a
           data-ripple-light="true"

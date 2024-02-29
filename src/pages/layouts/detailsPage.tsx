@@ -66,7 +66,7 @@ const LayoutDetailsPage: React.FC = () => {
       <div className="w-full flex flex-col items-start p-20 ">
         <h1 className="text-2xl font-bold mb-4">{repoDetails.name}</h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-28 w-full">
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-28 w-full">
           <div>
             {repoDetails.images?.length && repoDetails.images?.length > 0 && (
               <div className="mt-2 relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
@@ -158,7 +158,7 @@ const LayoutDetailsPage: React.FC = () => {
           )}
 
           {repoDetails.tutorial && (
-            <div className="md:col-start-3 md:col-span-1 flex flex-col gap-20">
+            <div className="xl:col-start-3 xl:col-span-1 flex flex-col gap-20">
               <div>
                 <video className="w-full h-auto object-center rounded-md mb-4" src={repoDetails.tutorial} controls />
               </div>

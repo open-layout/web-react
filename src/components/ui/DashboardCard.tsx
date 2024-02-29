@@ -43,7 +43,7 @@ const TemplatesCard: React.FC<{
           alt=""
           className="h-full aspect-[22/9] dark:border-none border border-zinc-700/50 rounded-xl"
         />
-        {repo.language && (
+        {repo.language && languageImage && (
           <img
             src={repo.owner === repo.name ? IconMarkdown : languageImage}
             className="absolute right-0 w-9 h-9 bg-code/30 backdrop-blur-xl m-1 py-1 px-2 rounded-md border border-gray-500"

@@ -16,7 +16,7 @@ const DynamicIsland = () => {
   const signOut = useSignOut();
 
   const [mouseNear, setMouseNear] = useState(false);
-  const [lastHoverTimeout, setLastHoverTimeout] = useState(0);
+  // const [lastHoverTimeout, setLastHoverTimeout] = useState(0);
 
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {

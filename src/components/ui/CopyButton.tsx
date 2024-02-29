@@ -27,10 +27,10 @@ const CopyButton: React.FC<Props> = ({ npmCommand }) => {
 
   return (
     <div className="relative hidden lg:block">
-      <code className="bg-code text-white rounded-lg py-3 pl-5 pr-2 w-64 border border-title flex justify-between flex-row items-center">
+      <code className="bg-code text-white rounded-lg py-3 pl-5 pr-2 w-fit border border-title flex justify-between flex-row items-center">
         <p>
           <span className="text-gray-400">$</span> {npmCommand}
-          <span className="animate-blink select-none">|</span>
+          <span className="animate-blink select-none pr-2">|</span>
         </p>
         <div className="relative group">
           <img
