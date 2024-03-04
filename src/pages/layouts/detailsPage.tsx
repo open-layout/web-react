@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import config from '@/config';
 
-import Layout from '@/components/layouts/Template';
+import Layout from '@/components/Layouts/Template';
 import CopyButton from '@/components/ui/CopyButton';
 import github from '@/assets/icons/github.svg';
 

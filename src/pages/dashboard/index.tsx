@@ -6,7 +6,7 @@ import config from '@/config';
 
 import TemplatesCard from '@/components/ui/DashboardCard';
 import DashboardCardSkeleton from '@/components/skeleton/DashboardCardSkeleton';
-import Layout from '@/components/layouts/Template';
+import Layout from '@/components/Layouts/Template';
 import SearchBar from '@/components/ui/SearchBar';
 import Form from '@/components/ui/LayoutsForm';
 
@@ -102,7 +102,7 @@ function Dashboard() {
   }, []);
 
   const checkIfAdded = (repo: Repository) => {
-    const repoName = getLastSegmentOfUrl(repo.url);
+    const repoName = getLastSegmentOfUrl(repo.url) as never;
 
     return userLayouts.includes(repoName);
   };
@@ -162,7 +162,7 @@ function Dashboard() {
                 repo={repo}
                 isAdded={checkIfAdded(repo)}
                 banner={generateBannerUrl(repo.fullname as string)}
-                togglePopup={() => openPopupWithRepoUrl(repo.html_url)}
+                togglePopup={() => openPopupWithRepoUrl(repo.url)}
               />
             ))
           )}

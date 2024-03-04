@@ -1,5 +1,5 @@
 // TemplatePage.tsx
-import React, { ReactNode, useState, useEffect } from 'react';
+import React, { ReactNode } from 'react';
 import DynamicIsland from '@/components/ui/DynamicIsland';
 import config from '@/config';
 

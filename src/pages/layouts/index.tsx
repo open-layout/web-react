@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 
 import config from '@/config';
 
-import Layout from '@/components/layouts/Template';
+import Layout from '@/components/Layouts/Template';
 
 import LayoutCard from '@/components/ui/LayoutCard';
 import SearchBar from '@/components/ui/SearchBar';
@@ -14,10 +14,10 @@ import LayoutCardSkeleton from '@/components/skeleton/LayoutCardSkeleton';
 function LayoutsPage() {
   const authHeader = useAuthHeader();
   const [loading, setLoading] = useState(true);
-  const [response, setResponse] = useState<object[]>([]);
+  const [response, setResponse] = useState<Array<object | unknown>>([]);
   const [exploreCache, setExploreCache] = useState<object[]>([]);
   const [searchParameters, setSearchParameters] = useState('');
-  const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(
+  const [typingTimeout, setTypingTimeout] = useState<number | null>(
     null
   );
 
@@ -212,7 +212,7 @@ function LayoutsPage() {
               ))}
             </>
           ) : (
-            response.map((info, index) => (
+            response.map((info: any, index: number) => (
               <Link to={`/layouts/${info.name}`} key={index}>
                 <LayoutCard layout={info} />
               </Link>

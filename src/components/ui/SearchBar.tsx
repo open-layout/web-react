@@ -44,7 +44,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     onSearch(value);
 
     if (value.trim() !== '') {
-      const lastWord = value.slice(0, selectionStart).split(' ').pop();
+      const lastWord = value.slice(0, selectionStart as number).split(' ').pop();
       if (lastWord) {
         const matchedOption = dropdownOptions.find((option) =>
           option.toLowerCase().startsWith(lastWord.toLowerCase())
