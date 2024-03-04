@@ -22,10 +22,12 @@ type Repository = {
 function Dashboard() {
   const authHeader = useAuthHeader();
   const [repositories, setRepositories] = useState<Repository[]>([]);
-  const [userLayouts, setUserLayouts] = useState([]);
+  const [userLayouts, setUserLayouts] = useState<string[]>([]);
   const [selectedRepoUrl, setSelectedRepoUrl] = useState('');
   const [searchParameters, setSearchParameters] = useState('');
-  const [typingTimeout, setTypingTimeout] = useState(0);
+  const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(
+    null
+  );
   const [loading, setLoading] = useState(true);
 
   const fetchRepositories = async () => {
@@ -84,9 +86,14 @@ function Dashboard() {
     }
   };
 
-  const getLastSegmentOfUrl = (url: string) => {
+  const getLastSegmentOfUrl = (url: string): string => {
     const segments = url.split('/');
-    return segments.pop() || '';
+    const lastSegment = segments.pop();
+    if (lastSegment) {
+      return lastSegment;
+    } else {
+      throw new Error('No segments found in URL');
+    }
   };
 
   useEffect(() => {
@@ -102,8 +109,10 @@ function Dashboard() {
   }, []);
 
   const checkIfAdded = (repo: Repository) => {
-    const repoName = getLastSegmentOfUrl(repo.url);
-
+    const repoName =
+      typeof repo.url === 'string'
+        ? getLastSegmentOfUrl(repo.url as string)
+        : '';
     return userLayouts.includes(repoName);
   };
 
@@ -148,12 +157,16 @@ function Dashboard() {
     <Layout>
       <div className="dark:bg-black bg-white h-[100px] fixed z-40 top-0 w-full shadow-lg dark:shadow-black shadow-white"></div>
       <section className="lg:mt-32 mt-14 mb-10 flex flex-col items-center px-5 lg:px-20">
-        <h2 className="text-5xl ld:self-start ml-4 mb-10 font-bold">Dashboard</h2>
+        <h2 className="text-5xl ld:self-start ml-4 mb-10 font-bold">
+          Dashboard
+        </h2>
         <SearchBar onSearch={handleSearch} />
         <div className="grid place-content-start lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-12 mt-14 mr-10 mb-5">
           {loading ? ( // Render skeleton cards while data is loading
             <>
-              {[...Array(6)].map(() => <DashboardCardSkeleton />)}
+              {[...Array(6)].map(() => (
+                <DashboardCardSkeleton />
+              ))}
             </>
           ) : (
             filteredRepositories.map((repo, index) => (

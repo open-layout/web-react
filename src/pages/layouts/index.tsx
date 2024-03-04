@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
@@ -212,7 +212,7 @@ function LayoutsPage() {
               ))}
             </>
           ) : (
-            response.map((info, index) => (
+            response.map((info: object | any, index) => (
               <Link to={`/layouts/${info.name}`} key={index}>
                 <LayoutCard layout={info} />
               </Link>
