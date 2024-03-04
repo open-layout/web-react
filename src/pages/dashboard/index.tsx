@@ -25,7 +25,7 @@ function Dashboard() {
   const [userLayouts, setUserLayouts] = useState<string[]>([]);
   const [selectedRepoUrl, setSelectedRepoUrl] = useState('');
   const [searchParameters, setSearchParameters] = useState('');
-  const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(
+  const [typingTimeout, setTypingTimeout] = useState<number | null>(
     null
   );
   const [loading, setLoading] = useState(true);
@@ -71,6 +71,7 @@ function Dashboard() {
 
       if (Array.isArray(data.data)) {
         setUserLayouts(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           data.data.map((layout: object | any) =>
             getLastSegmentOfUrl(layout.repository)
           )

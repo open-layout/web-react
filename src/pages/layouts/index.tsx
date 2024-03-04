@@ -212,6 +212,7 @@ function LayoutsPage() {
               ))}
             </>
           ) : (
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             response.map((info: object | any, index) => (
               <Link to={`/layouts/${info.name}`} key={index}>
                 <LayoutCard layout={info} />
