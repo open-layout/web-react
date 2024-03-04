@@ -212,7 +212,7 @@ function LayoutsPage() {
               ))}
             </>
           ) : (
-            response.map((info: any, index: number) => (
+            response.map((info: object | any, index) => (
               <Link to={`/layouts/${info.name}`} key={index}>
                 <LayoutCard layout={info} />
               </Link>

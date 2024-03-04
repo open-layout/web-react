@@ -7,7 +7,6 @@ const PresentationCard: React.FC<PresentationCardProps> = ({
   description,
   image,
   link,
-  // date,
   badges,
 }) => {
   const [, setBadgeUrls] = useState<string[]>([]);
