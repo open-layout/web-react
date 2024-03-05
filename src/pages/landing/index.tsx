@@ -49,14 +49,14 @@ function LandingPage() {
   };
 
   return (
-    <Layout>
+    <Layout className={'snap-y'}>
       <a
         className="absolute top-0 left-10 mt-8 px-3 py-1 rounded-full "
         onClick={toggleDarkMode}>
         <img src={darkMode ? IconSun : IconMoon} alt="" className="w-12" />
       </a>
 
-      <WelcomeSection />
+      <WelcomeSection /> {/* has snap-center */}
 
       <div className="lg:pt-32 pt-20 flex flex-row gap-5 justify-center">
         <a
@@ -71,9 +71,9 @@ function LandingPage() {
         <ArrowDownIcon darkMode={darkMode} />
       </div>
 
-      <AboutUsSection />
+      <AboutUsSection />  {/* has snap-center */}
       {userData.length > 0 && (
-        <DevelopersSection userData={userData} darkMode={darkMode} />
+        <DevelopersSection userData={userData} darkMode={darkMode} />  /* has snap-center */
       )}
     </Layout>
   );

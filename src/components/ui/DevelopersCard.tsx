@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { PresentationCardProps } from '@/pages/landing/interfaces';
+import GitHubIcon from '@icons/github.svg';
 
 const PresentationCard: React.FC<PresentationCardProps> = ({
   name,
@@ -26,7 +27,7 @@ const PresentationCard: React.FC<PresentationCardProps> = ({
   }, [badges]);
 
   return (
-    <div className="select-none group flex flex-col justify-start items-start gap-2 w-96 h-56 duration-500 relative rounded-lg p-4 bg-black/60 border-2 border-gray-900  backdrop-blur-xl hover:-translate-y-2 hover:shadow-xl shadow-gray-800">
+    <div className="select-none group flex flex-col justify-start items-start gap-2 w-96 h-56 duration-500 relative rounded-xl p-4 bg-gray-800/50 border-2 border-gray-700  backdrop-blur-xl hover:-translate-y-2 hover:shadow-xl shadow-gray-800">
       <img
         src={image}
         alt={`${name}'s pfp`}
@@ -40,8 +41,9 @@ const PresentationCard: React.FC<PresentationCardProps> = ({
       <a
         href={link}
         target="_blank"
-        className="hover:bg-gray-800 bg-gray-900 text-gray-100 transition-colors duration-200 mt-6 rounded p-2 px-6 absolute bottom-5 left-5">
-        Github
+        className="flex gap-2 items-center group/gh hover:bg-gray-800 bg-gray-900 border border-gray-700 text-gray-100 transition-colors duration-200 mt-6 rounded-lg p-2 px-6 absolute bottom-5 left-5">
+          <img src={GitHubIcon} alt="github" className='w-8 transition duration-300 delay-75 group-hover/gh:translate-x-6' />
+          <span className='transition duration-200 group-hover/gh:-translate-x-5 group-hover/gh:scale-50 group-hover/gh:opacity-0'>Github</span>
       </a>
     </div>
   );

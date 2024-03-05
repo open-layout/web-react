@@ -4,6 +4,7 @@ import Banner from '@/assets/banner.svg';
 import Logo from '@/assets/favicon.svg';
 import IconGithub from '@icons/github.svg';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const LayoutCard: React.FC<{ layout: object | any }> = ({ layout }) => {
   const [languageImages, setLanguageImages] = useState<
     { language: string; image: string }[]

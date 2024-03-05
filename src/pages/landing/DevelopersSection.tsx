@@ -10,8 +10,8 @@ const DevelopersSection: React.FC<DevelopersProps> = ({
 }) => {
   // console.log('userData:', userData); // Add this line to log userData
   return (
-    <section className="grid place-items-center mt-24">
-      <h2 className={`text-3xl ${darkMode ? 'text-white' : 'text-black'}`}>
+    <section className="grid place-items-center mt-24 snap-center">
+      <h2 className={`text-3xl text-black dark:text-white font-bold`}>
         Developers
       </h2>
       <div className="flex flex-row flex-wrap justify-around gap-10 my-16">
