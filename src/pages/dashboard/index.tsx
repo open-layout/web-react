@@ -162,7 +162,7 @@ function Dashboard() {
                 repo={repo}
                 isAdded={checkIfAdded(repo)}
                 banner={generateBannerUrl(repo.fullname as string)}
-                togglePopup={() => openPopupWithRepoUrl(repo.html_url)}
+                togglePopup={() => openPopupWithRepoUrl(repo.url)}
               />
             ))
           )}

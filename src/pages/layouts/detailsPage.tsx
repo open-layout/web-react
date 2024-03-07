@@ -6,6 +6,7 @@ import config from '@/config';
 import Layout from '@/components/layouts/Template';
 import CopyButton from '@/components/ui/CopyButton';
 import github from '@/assets/icons/github.svg';
+import preview from '@/assets/icons/preview.svg';
 
 const LayoutDetailsPage: React.FC = () => {
   const { name } = useParams<{ name: string }>();
@@ -64,8 +65,10 @@ const LayoutDetailsPage: React.FC = () => {
   return (
     <Layout>
       <div className="w-full flex flex-col items-start p-20 ">
+        <div className="flex flex-row gap-8 mb-8">
         <h1 className="text-2xl font-bold mb-4">{repoDetails.name}</h1>
-
+        <h1 className="text-2xl font-bold mb-4">v {repoDetails.version}</h1>
+        </div>
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-28 w-full">
           <div>
             {repoDetails.images?.length && repoDetails.images?.length > 0 && (
@@ -80,7 +83,9 @@ const LayoutDetailsPage: React.FC = () => {
                   <button type="button" onClick={handlePrevImage} className="text-white ml-5 text-4xl">&#10094;</button>
                   <button type="button" onClick={handleNextImage} className="text-white mr-5 text-4xl">&#10095;</button>
                   <div className={`absolute bottom-0 left-0 mb-5 ml-5  ${isHovered ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}>
-                    <button type="button" className="text-white text-md bg-title px-4 py-2 rounded-xl">{repoDetails.live_preview}</button>
+                    <a type="button" href={repoDetails.live_preview} className="text-white text-md bg-transparent px-1 py-1 rounded-xl">
+                      <img src={preview} alt="preview" className="w-8 h-8 inline-block" />
+                    </a>
                   </div>
                   <div className={`absolute bottom-0 right-0 mb-5 mr-5  ${isHovered ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}>
 

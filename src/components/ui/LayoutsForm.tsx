@@ -116,7 +116,7 @@ const Form = ({ target }: { target?: string }) => {
         const fetchData = async () => {
             const repositoryResponse = await fetchGitHubData();
             console.log(repositoryResponse);
-    
+
             if (repositoryResponse) {
                 formData.name = repositoryResponse.name || '';
                 setDescription(repositoryResponse.description || '')
@@ -132,11 +132,11 @@ const Form = ({ target }: { target?: string }) => {
                 };
                 console.log(repositoryData);
                 setRepository(repositoryData);
-                
+
             }
         };
-      
-          fetchData();
+
+        fetchData();
     }, [target]);
 
     const [imageUrl, setImageUrl] = useState<string>('');
@@ -158,11 +158,11 @@ const Form = ({ target }: { target?: string }) => {
         if ((formData.images?.length ?? 0) < 3 && isValidUrl) {
             setFormData({
                 ...formData,
-                images: [...(formData.images ?? []), imageUrl], 
+                images: [...(formData.images ?? []), imageUrl],
 
             });
             console.log(formData.images)
-            setImageUrl(''); 
+            setImageUrl('');
         }
     };
 
@@ -176,12 +176,12 @@ const Form = ({ target }: { target?: string }) => {
 
     const handleColorConfirm = () => {
         if (selectedColor) {
-            const newColorIndex = (formData.colors?.length ?? 0) + 1; 
+            const newColorIndex = (formData.colors?.length ?? 0) + 1;
             setFormData({
                 ...formData,
-                colors: [...(formData.colors ?? []), selectedColor], 
+                colors: [...(formData.colors ?? []), selectedColor],
                 color_palette: {
-                    ...formData.color_palette, 
+                    ...formData.color_palette,
                     [`color${newColorIndex}`]: selectedColor
                 }
             });
@@ -315,7 +315,7 @@ const Form = ({ target }: { target?: string }) => {
             URL.revokeObjectURL(url);
 
             window.location.href = '';
-            
+
         } else {
             alert('Please fill in all required fields before downloading.');
         }
@@ -378,28 +378,46 @@ const Form = ({ target }: { target?: string }) => {
             alert('Please fill in all required fields before copying.');
         }
     };
+    const handleChangeVersion = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const inputValue = e.target.value;
+        const regex = /^(\d+(\.\d*)?|\.\d+)$/;
+
+
+        if (regex.test(inputValue) || inputValue === '') {
+            setFormData({ ...formData, version: inputValue }); 
+        }
+    };
+
+
+    const handleBlurVersion = () => {
+
+        if (formData.version === '') {
+            setFormData({ ...formData, version: '1.0' });
+        }
+    };
 
 
     return (
         <div className="max-w-3xl mx-auto rounded-lg overflow-hidden shadow-2xl m-4 border-2 bg-black/90 border-title  p-4">
-            <form onSubmit={handleSubmit} className="   ">
-                 <div className="relative">
-                            <label className="block mb-2 text-white text-xl">Repository Link</label>
-                            <input
-                                type="text"
-                                name="linkRepo"
-                                value={formData.linkRepo}
-                                required
-                                onChange={handleChange}
-                                readOnly={!!target}
-                                className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
-                                placeholder='Link'
-                            />
-                            {!target && (
-                                <img src={pencilicon} className="h-5 w-5 text-gray-400 absolute right-2 top-1/2 transform -translate-y-1/2" />
-                            )} 
-                            
-                        </div>  
+            <form onSubmit={handleSubmit} className="   " autoComplete='off'>
+                <div className="relative">
+                    <label className="block mb-2 text-white text-xl">Repository Link</label>
+                    <input
+                        type="text"
+                        name="linkRepo"
+                        value={formData.linkRepo}
+                        required
+                        
+                        onChange={handleChange}
+                        readOnly={!!target}
+                        className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
+                        placeholder='Link'
+                    />
+                    {!target && (
+                        <img src={pencilicon} className="h-5 w-5 text-gray-400 absolute right-2 top-1/2 transform -translate-y-1/2" />
+                    )}
+
+                </div>
                 <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
                     <h2 id="accordion-flush-heading-1">
                         <button
@@ -424,6 +442,8 @@ const Form = ({ target }: { target?: string }) => {
                                 name="name"
                                 value={formData.name}
                                 required
+                                autoComplete='off'
+                                maxLength={30}
                                 onChange={handleChange}
                                 className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
                                 placeholder='Repository name'
@@ -438,6 +458,7 @@ const Form = ({ target }: { target?: string }) => {
                                 onChange={handleChange}
                                 readOnly={!!description}
                                 required
+                                maxLength={200}
                                 className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent overflow-auto resize-none"
                                 placeholder='Description of the repository'
                             />
@@ -451,7 +472,8 @@ const Form = ({ target }: { target?: string }) => {
                                     name="version"
                                     required
                                     value={formData.version}
-                                    onChange={handleChange}
+                                    onChange={handleChangeVersion}
+                                    onBlur={handleBlurVersion}
                                     className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
                                     placeholder='Version'
                                 />
@@ -466,6 +488,7 @@ const Form = ({ target }: { target?: string }) => {
                                     value={formData.author}
                                     readOnly={!!author}
                                     onChange={handleChange}
+                                    maxLength={24}
                                     className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
                                     placeholder='Author'
                                 />
@@ -523,7 +546,7 @@ const Form = ({ target }: { target?: string }) => {
                             </div>
                         </div>
 
-                       
+
 
 
                     </div>
@@ -542,7 +565,7 @@ const Form = ({ target }: { target?: string }) => {
                         </button>
                     </h2>
                     <div id="accordion-flush-body-2" className="hidden" aria-labelledby="accordion-flush-heading-2">
-                    
+
 
                         <label htmlFor="color" className="block text-white mb-2">Color Picker</label>
                         <div className="mb-4 mt-4 flex items-center">
@@ -589,6 +612,7 @@ const Form = ({ target }: { target?: string }) => {
                                 name="node_versions"
                                 value={formData.node_versions?.current && formData.node_versions?.LTS}
                                 onChange={handleChange}
+                                maxLength={20}
                                 className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
                                 placeholder='Node Version'
                             />
@@ -631,6 +655,7 @@ const Form = ({ target }: { target?: string }) => {
                                 name="requirements"
                                 value={formData.requirements}
                                 onChange={handleChange}
+                                maxLength={200}
                                 className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent"
                                 placeholder='Requirements of the repository'
                             />
@@ -642,6 +667,7 @@ const Form = ({ target }: { target?: string }) => {
                                 name="collaborators"
                                 value={formData.collaborators}
                                 onChange={handleChange}
+                                maxLength={100}
                                 className="block w-full p-2 pr-8 border-b border-gray-400 focus:outline-none focus:border-blue-500 text-white bg-transparent overflow-auto resize-none"
                                 placeholder='Collaboratos'
                             />
@@ -682,7 +708,7 @@ const Form = ({ target }: { target?: string }) => {
 
                     <div id="accordion-flush-body-3" className="hidden" aria-labelledby="accordion-flush-heading-3">
 
-                    
+
                         <div className="relative">
                             <label className="block mb-2 text-white">Preview Link</label>
                             <input
