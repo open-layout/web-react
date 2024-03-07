@@ -150,10 +150,17 @@ const DetailsLayout: React.FC<{ layout: object | any }> = ({ layout }) => {
                                 layout.tutorial.endsWith('.webmp')) ? (
                                     <video className="w-full h-auto object-center rounded-md mb-4" src={layout.tutorial} controls />
                                 ) : (
-                                    <>
-                                    <iframe allowFullScreen={true} src={layout.tutorial} allowTransparency={true}/>
-                                    {/* <img className="w-full h-auto object-center rounded-md mb-4" src={layout.tutorial} alt="tutorial" /> */}
-                                    </>
+                                        layout.tutorial.includes('youtu.be') || 
+                                        layout.tutorial.includes('youtube.com')) && (
+                                    <iframe 
+                                        allowFullScreen={true} 
+                                        src={
+                                            layout.tutorial
+                                                .replace('watch?v=', 'embed/')
+                                                .replace('youtu.be', 'youtube.com/embed')
+                                        } 
+                                        allowTransparency={true}
+                                        />
                                 )
                             }
                         </div>
