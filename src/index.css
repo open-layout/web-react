@@ -104,5 +104,5 @@ body {
 
 .animate-gradient-x {
   background-size: 200% 200%;
-  animation: gradient-x 10s ease-in-out infinite;
+  animation: gradient-x 5s ease-in-out infinite;
 }

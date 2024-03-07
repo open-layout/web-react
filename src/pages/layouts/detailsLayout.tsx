@@ -34,10 +34,10 @@ const DetailsLayout: React.FC<{ layout: object | any }> = ({ layout }) => {
     };
 
     return (
-        <div className="w-full flex flex-col items-start p-20 ">
+        <div className="w-full flex flex-col items-start p-20">
             <h1 className="text-2xl font-bold mb-4">{layout.name}</h1>
 
-            <div className="grid grid-cols-1 xl:grid-cols-3 gap-28 w-full">
+            <div className="grid grid-cols-1 xl:grid-cols-3 gap-10 w-full">
                 <div>
                     {layout.images?.length && layout.images?.length > 0 && (
                         <div className="mt-2 relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
@@ -77,29 +77,42 @@ const DetailsLayout: React.FC<{ layout: object | any }> = ({ layout }) => {
                         </div>
                     )}
                     {colorArray && colorArray.length > 0 && (
-
                         <div>
                             <p className="mt-8 mb-4">Color Palette:</p>
-                            <div className='border border-zinc-500/50 bg-zinc-400/10 p-4 rounded flex flex-row'>
+                            <div className='border border-zinc-500/50 bg-zinc-400/10 p-4 rounded-xl flex flex-row'>
 
                                 {colorArray?.map((color: { color: string; }, index: React.Key | null | undefined) => (
-                                    <div
-                                        key={index}
-                                        className="w-10 h-10 flex items-center justify-center border border-gray-400 rounded-full mr-3"
-                                        style={{ backgroundColor: color.color as string }}
-                                    />
+                                    <>
+                                        <div
+                                            key={index}
+                                            className="w-10 h-10 flex items-center justify-center border border-gray-400 rounded-full mr-3 group/color"
+                                            onClick={(e) => {
+                                                navigator.clipboard.writeText(color.color);
+
+                                                const firstChild = e.currentTarget.firstChild;
+
+                                                if (firstChild) {
+                                                    firstChild.textContent = 'Copied!';
+                                                    setTimeout(() => { firstChild.textContent = color.color.toString() }, 1000);
+                                                }
+                                            }}
+                                            style={{ backgroundColor: color.color as string }}
+                                        >
+                                            <p className="hidden text-white text-xs group-hover/color:block -translate-y-8 bg-gray-800/50 px-2 rounded-md border" style={{ borderColor: color.color }}>{color.color}</p>
+                                        </div>
+                                    </>
                                 ))}
                             </div>
                         </div>
                     )}
                 </div>
                 {layout.description && (
-                    <div className='flex flex-col gap-8'>
+                    <div className='flex flex-col gap-5'>
                         <div className='border border-zinc-500/50 bg-zinc-400/10 p-4 h-48 rounded-xl'>
                             <p className="mb-4">Description:</p>
                             <p className='text-white'>{layout.description}<a className='text-blue-500 hover:cursor-pointer' href={layout.docs}> watch docs...</a></p>
                         </div>
-                        <div className='flex flex-row gap-8 w-full ' >
+                        <div className='flex flex-row gap-5 w-full ' >
                             {layout.category && (
                                 <div className='border border-zinc-500/50 bg-zinc-400/10 p-4 rounded-xl w-full '>
                                     <p>Category:</p>
@@ -128,46 +141,46 @@ const DetailsLayout: React.FC<{ layout: object | any }> = ({ layout }) => {
                     </div>
                 )}
 
-                {layout.tutorial && (
-                    <div className="xl:col-start-3 xl:col-span-1 flex flex-col gap-20">
+                <div className="xl:col-start-3 xl:col-span-1 flex flex-col gap-5">
+                    {layout.tutorial && (
                         <div>
-                            <video className="w-full h-auto object-center rounded-md mb-4" src={layout.tutorial} controls />
+                            {
+                                (layout.tutorial.endsWith('.mp4') || 
+                                layout.tutorial.endsWith('.gif') ||
+                                layout.tutorial.endsWith('.webmp')) ? (
+                                    <video className="w-full h-auto object-center rounded-md mb-4" src={layout.tutorial} controls />
+                                ) : (
+                                    <>
+                                    <iframe allowFullScreen={true} src={layout.tutorial} allowTransparency={true}/>
+                                    {/* <img className="w-full h-auto object-center rounded-md mb-4" src={layout.tutorial} alt="tutorial" /> */}
+                                    </>
+                                )
+                            }
                         </div>
-                        <div className='flex flex-col gap-2 w-full rounded-xl border border-zinc-500/50 bg-zinc-400/10 ' >
-                            <h2 className='text-center text-2xl'>Socials</h2>
+                    )}
+
+                    <div className='flex flex-col gap-2 w-full rounded-xl border border-zinc-500/50 bg-zinc-400/10 p-2 legen' >
+                        <h2 className='text-center text-2xl'>Socials</h2>
+                        {layout.socials?.github && (
                             <div className='  px-4 rounded-xl w-full '>
-                                {layout.socials?.github && (
-                                    <div>
-                                        <p>Github:</p>
-                                        <button type="button" className="bg-title text-white py-2 px-4 rounded-xl w-32 ">
-                                            {layout.socials?.github}
-                                        </button>
-                                    </div>
-                                )}
+                                <div className='flex gap-2 content-center items-center py-1'>
+                                    <img src={github} alt="gh logo" className='w-6' />
+                                    Github: <a href={layout.socials?.github} className="text-indigo-600 underline font-bold hover:text-indigo-400">{layout.socials?.github}</a>
+                                </div>
                             </div>
-                            <div className='  px-4 rounded-xl w-full '>
-                                {layout.socials?.discord && (
-                                    <div>
-                                        <p>Discord:</p>
-                                        <button type="button" className="bg-title text-white py-2 px-4 rounded-xl w-32 ">
-                                            {layout.socials?.discord}
-                                        </button>
-                                    </div>
-                                )}
+                        )}
+                        {layout.socials?.discord && (
+                            <div className='px-4 rounded-xl w-full '>
+                                Discord: <span className="text-indigo-600 underline font-bold hover:text-indigo-400">{layout.socials?.discord}</span>
                             </div>
+                        )}
+                        {layout.socials?.x && (
                             <div className='  px-4 rounded-xl w-full mb-8 '>
-                                {layout.socials?.x && (
-                                    <div>
-                                        <p>X:</p>
-                                        <button type="button" className="bg-title text-white py-2 px-4 rounded-xl w-32">
-                                            {layout.socials?.x}
-                                        </button>
-                                    </div>
-                                )}
+                                X (Twitter): <a href={layout.socials?.x} className="text-indigo-600 underline font-bold hover:text-indigo-400">{layout.socials?.x}</a>
                             </div>
-                        </div>
+                        )}
                     </div>
-                )}
+                </div>
             </div>
         </div>
     );

@@ -6,7 +6,6 @@ import PresentationCard from '@/components/ui/DevelopersCard';
 
 const DevelopersSection: React.FC<DevelopersProps> = ({
   userData,
-  darkMode,
 }) => {
   // console.log('userData:', userData); // Add this line to log userData
   return (

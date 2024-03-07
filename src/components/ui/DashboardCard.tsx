@@ -6,6 +6,7 @@ import IconAdd from '@icons/add.svg';
 import IconTrash from '@icons/trash.svg';
 
 const TemplatesCard: React.FC<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   repo: object | any;
   isAdded: boolean;
   banner: string;
@@ -40,6 +41,10 @@ const TemplatesCard: React.FC<{
       <div className="flex justify-center relative mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r bg-title">
         <img
           src={banner}
+          onError={(e) => {
+            e.currentTarget.src = IconGithub;
+            e.currentTarget.style.filter = 'blur(4px)';
+          }}
           alt=""
           className="h-full aspect-[22/9] dark:border-none border border-zinc-700/50 rounded-xl"
         />

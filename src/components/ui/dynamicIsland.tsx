@@ -32,6 +32,7 @@ const DynamicIsland = () => {
       const is_hovering = is_hovering_y && is_hovering_x;
 
       setMouseNear(is_hovering);
+
       /**
        * TODO: Fix this shit
        
@@ -51,9 +52,7 @@ const DynamicIsland = () => {
     };
 
     document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseleave', () =>
-      setTimeout(() => setMouseNear(false), 1000)
-    );
+    // document.addEventListener('mouseleave', () => setTimeout(() => handleMouseMove, 1000));
 
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
