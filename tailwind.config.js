@@ -4,6 +4,9 @@ export default {
   content: ['./src/**/*.{html,js,jsx,md,mdx,ts,tsx}'],
   theme: {
     extend: {
+      transitionProperty: {
+        'width': 'width'
+      },
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],
         raleway: ['Raleway', 'Helvetica'],

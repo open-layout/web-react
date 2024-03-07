@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 
 import config from '@/config';
 
-import Layout from '@/components/layouts/Template';
+import Layout from '@/components/Layouts/Template';
 
 import LayoutCard from '@/components/ui/LayoutCard';
 import SearchBar from '@/components/ui/SearchBar';
@@ -14,12 +14,14 @@ import LayoutCardSkeleton from '@/components/skeleton/LayoutCardSkeleton';
 function LayoutsPage() {
   const authHeader = useAuthHeader();
   const [loading, setLoading] = useState(true);
-  const [response, setResponse] = useState<object[]>([]);
+  const [response, setResponse] = useState<Array<object | unknown>>([]);
   const [exploreCache, setExploreCache] = useState<object[]>([]);
   const [searchParameters, setSearchParameters] = useState('');
-  const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(
+  const [typingTimeout, setTypingTimeout] = useState<number | null>(
     null
   );
+
+  const navigate = useNavigate();
 
   // Function to handle search input
   const handleSearch = (value: string) => {
@@ -197,6 +199,19 @@ function LayoutsPage() {
     }
   }, [searchParameters]);
 
+  
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const layoutClick = (e: object | any, layout: string | any) => {
+    if (
+      // e.target.tagName === 'IMG' || 
+      e.target.tagName === 'A' || 
+      e.target.tagName === 'BUTTON'
+    ) 
+      return;
+
+    navigate(`/layouts/${layout.name}`)
+  }
+
   return (
     <Layout>
       <div className="grid place-items-center lg:mt-32 mt-20 px-1 lg:px-52">
@@ -212,10 +227,14 @@ function LayoutsPage() {
               ))}
             </>
           ) : (
-            response.map((info, index) => (
-              <Link to={`/layouts/${info.name}`} key={index}>
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            response.map((info: object | any, index) => (
+              <div 
+                onClick={(e) => layoutClick(e, info)} 
+                className='cursor-alias' 
+                key={index}>
                 <LayoutCard layout={info} />
-              </Link>
+              </div>
             ))
           )}
         </div>

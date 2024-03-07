@@ -64,3 +64,45 @@ body {
 .glow-white:hover {
   filter: drop-shadow(0 0 10px white);
 }
+
+
+/* Dynamic Iland animation */
+@keyframes increaseWidth {
+  0% { width: 10rem/* 160px */ }
+  50% { width: 25rem }
+  100% { width: 24rem/* 384px */ }
+}
+
+@keyframes decreaseWidth {
+  0% { width: 24rem/* 384px */ }
+  50% { width: 9rem }
+  100% { width: 10rem/* 160px */ }
+}
+
+/* Apply animation to the element */
+.increase-width {
+  animation: increaseWidth 0.5s forwards;
+}
+
+.decrease-width {
+  animation: decreaseWidth 0.5s forwards;
+}
+
+@keyframes gradient-x {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradient-x 5s ease-in-out infinite;
+}

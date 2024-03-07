@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom';
 
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
-import useSignOut from 'react-auth-kit/hooks/useIsAuthenticated';
+import useSignOut from 'react-auth-kit/hooks/useSignOut';
 import { useEffect, useState } from 'react';
 
 import config from '@/config';
@@ -16,6 +16,7 @@ const DynamicIsland = () => {
   const signOut = useSignOut();
 
   const [mouseNear, setMouseNear] = useState(false);
+  const [logOutHover, setLogOutHover] = useState(false);
   // const [lastHoverTimeout, setLastHoverTimeout] = useState(0);
 
   useEffect(() => {
@@ -31,6 +32,7 @@ const DynamicIsland = () => {
       const is_hovering = is_hovering_y && is_hovering_x;
 
       setMouseNear(is_hovering);
+
       /**
        * TODO: Fix this shit
        
@@ -50,9 +52,7 @@ const DynamicIsland = () => {
     };
 
     document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseleave', () =>
-      setTimeout(() => setMouseNear(false), 1000)
-    );
+    // document.addEventListener('mouseleave', () => setTimeout(() => handleMouseMove, 1000));
 
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
@@ -61,7 +61,7 @@ const DynamicIsland = () => {
 
   const handleLogout = () => {
     signOut();
-    localStorage.clear();
+
 
     setTimeout(() => {
       window.location.href = '/';
@@ -81,29 +81,21 @@ const DynamicIsland = () => {
       id="dynamic-island"
       className="menu-container flex justify-center group dark:text-white text-black">
       <div
-        className={`flex flex-row items-center select-none fixed z-50 top-0 h-10 backdrop-blur-md border-gray-700/50 border rounded-full py-1 px-2 mt-3 w-40 duration-300 ease-in-out ${
-          mouseNear ? `justify-between w-96` : ''
-        }`}>
+        // Animation done through vanilla css in index.css file
+        className={`flex flex-row items-center select-none fixed z-50 top-0 h-10 backdrop-blur-md border-gray-700/50 border rounded-full py-1 px-2 mt-3 w-40 duration-300 ease-in-out ${mouseNear ? `justify-between increase-width` : 'decrease-width'
+          }`}>
         {isAuthenticated() ? (
-          <div className="flex flex-row gap-2 items-center">
-            {mouseNear ? (
-              <a onClick={handleLogout} className="w-7 my-1 cursor-pointer">
-                <img
-                  src={IconLogout}
-                  alt=""
-                  className="w-7 my-1 rounded-full"
-                />
-              </a>
-            ) : (
-              <img
-                src={getUser()?.avatar || Logo}
-                alt=""
-                className={`w-7 my-1 ${
-                  getUser() ? 'border-2 border-green-400' : ''
-                }  rounded-full`}
-              />
-            )}
-            <Link to="/dashboard" className="flex flex-row gap-2 items-center">
+          <div className="flex flex-row gap-2 items-center w-full">
+            <img
+              src={(logOutHover) ? IconLogout : getUser()?.avatar || Logo}
+              onMouseEnter={() => setLogOutHover(true)}
+              onMouseLeave={() => setLogOutHover(false)}
+              onClick={logOutHover ? handleLogout : () => { }}
+              alt=""
+              className={`w-7 my-1 select-none transition duration-200 ${(getUser() && !logOutHover) ? 'border-2 border-green-400 animate-border-pulse' : 'rotate-full scale-125'
+                } rounded-full`}
+            />
+            <Link to="/dashboard" className={`${!mouseNear && 'mx-auto'} truncate font-semibold transition duration-300 hover:scale-105 hover:translate-x-1 hover:text-white text-transparent bg-gradient-to-r from-violet-600 to-indigo-700 bg-clip-text animate-gradient-x select-none`}>
               {getUser()?.username || config.name}
             </Link>
           </div>
@@ -115,14 +107,11 @@ const DynamicIsland = () => {
         )}
 
         <div
-          className={`duration-200 ease-in-out opacity-0 flex flex-row gap-2 pr-2 ${
-            mouseNear ? 'opacity-100 duration-500' : ''
-          }`}>
-          <Link to="/">Home</Link>
-          <Link to="/layouts">Layouts</Link>
-          <a href="https://docs.openlayout.me" target="_blank">
-            Docs
-          </a>
+          className={`duration-200 ease-in-out opacity-0 flex flex-row gap-2 pr-2 ${mouseNear ? 'opacity-100' : 'w-0 -translate-x-10'
+            }`}>
+          <Link to="/" className='transition duration-300 text-gray-600 hover:text-white hover:scale-105 hover:-translate-y-1'>Home</Link>
+          <Link to="/layouts" className='transition duration-300 text-gray-600 hover:text-white hover:scale-105 hover:-translate-y-1'>Layouts</Link>
+          <a href="https://docs.openlayout.me" target="_blank" className='transition duration-300 text-gray-600 te hover:text-white hover:scale-105 hover:-translate-y-1'>Docs</a>
         </div>
       </div>
     </nav>

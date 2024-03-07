@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import Layout from '@/components/layouts/Template';
+import Layout from '@/components/Layouts/Template';
 
 import Favicon from '@/assets/favicon.svg';
 

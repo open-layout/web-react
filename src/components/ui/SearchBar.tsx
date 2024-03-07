@@ -26,14 +26,14 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     'Orbit of imagination layout',
     'Automatic github portfolio',
     'Simple star destroyer layout to make at home',
-    'oppen-heimer famous project'
-  ]
+    'oppen-heimer famous project',
+  ];
 
   useEffect(() => {
-    const placeholder = random_seach[Math.floor(Math.random() * random_seach.length)];
+    const placeholder =
+      random_seach[Math.floor(Math.random() * random_seach.length)];
 
-    if (!randomPlaceholder)
-      setRandomPlaceholder(placeholder);
+    if (!randomPlaceholder) setRandomPlaceholder(placeholder);
   }, [window.location]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +44,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     onSearch(value);
 
     if (value.trim() !== '') {
-      const lastWord = value.slice(0, selectionStart).split(' ').pop();
+      const lastWord = value
+        .slice(0, selectionStart ?? undefined)
+        ?.split(' ')
+        .pop();
       if (lastWord) {
         const matchedOption = dropdownOptions.find((option) =>
           option.toLowerCase().startsWith(lastWord.toLowerCase())

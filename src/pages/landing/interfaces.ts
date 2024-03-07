@@ -32,7 +32,6 @@ interface TemplatesCardProps {
 
 interface DevelopersProps {
   userData: UserData[];
-  darkMode: boolean;
 }
 
 export type {
