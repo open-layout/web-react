@@ -163,7 +163,7 @@ function Dashboard() {
         <div className="grid place-content-start lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-12 mt-14 mr-10 mb-5">
           {loading ? ( // Render skeleton cards while data is loading
             <>
-              {[...Array(6)].map((a: null, i: number) => (
+              {[...Array(6)].map((_a: null, i: number) => (
                 <DashboardCardSkeleton key={i} />
               ))}
             </>

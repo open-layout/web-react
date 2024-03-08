@@ -222,7 +222,7 @@ function LayoutsPage() {
         <div className="flex flex-row flex-wrap justify-center gap-y-14 mt-12 mb-5">
           {(loading && !response) ? (
             <>
-              {[...Array(6)].map((a: null, i: number) => (
+              {[...Array(6)].map((_a: null, i: number) => (
                 <LayoutCardSkeleton key={i} />
               ))}
             </>
