@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       transitionProperty: {
-        'width': 'width'
+        multiple: "width , height , backgroundColor , border-radius"
       },
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],
