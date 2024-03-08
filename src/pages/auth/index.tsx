@@ -6,7 +6,7 @@ import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 
 import config from '@/config';
 
-import Layout from '@/components/Layouts/Template';
+import Layout from '@/components/ui/Template';
 
 import github from '@icons/github.svg';
 import logo from '@/assets/favicon.svg';
@@ -27,7 +27,13 @@ function AuthPage() {
 
   const get_auth_url = async () => {
     try {
-      const response = await fetch(config.api.baseurl + '/auth/geturl');
+      const response = await fetch(config.api.baseurl + '/auth/geturl', {
+        method: 'GET',
+        headers: {
+          ...config.api.headers,
+          'Content-Type': 'application/json',
+        },
+      });
       const { url } = await response.json(); // Access the 'url' property from the data object
 
       setAuthUrl(url);
@@ -42,6 +48,7 @@ function AuthPage() {
       const response = await fetch(config.api.baseurl + '/auth/authenticate', {
         method: 'POST',
         headers: {
+          ...config.api.headers,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ code: oath }),

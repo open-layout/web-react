@@ -190,6 +190,7 @@ const Form = ({ target }: { target?: string }) => {
         }
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleChange = (e: { target: { name: any; value: any; }; }) => {
         setFormData({
             ...formData,
@@ -243,6 +244,7 @@ const Form = ({ target }: { target?: string }) => {
             const requirementsArray = formData.requirements ? formData.requirements.split(',').map((item: string) => item.trim()) : [];
             const collaboratorsArray = formData.collaborators ? formData.collaborators.split(',').map((item: string) => item.trim()) : [];
 
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const jsonData: any = {
                 name: formData.name,
                 version: formData.version,

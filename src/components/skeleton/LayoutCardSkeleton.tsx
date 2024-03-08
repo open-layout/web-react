@@ -27,7 +27,7 @@ const LayoutCardSkeleton: React.FC = () => {
           <p className="animate-pulse bg-gray-500 w-24 rounded-md">hola</p>
           <img
             src={IconGithub}
-            className="w-6 inline-block ml-2"
+            className="animate-pulse filter grayscale w-6 inline-block ml-2"
             alt="Github Icon"
           />
         </div>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import Layout from '@/components/Layouts/Template';
+import Layout from '@/components/ui/Template';
 
 import Favicon from '@/assets/favicon.svg';
 
@@ -32,7 +32,7 @@ function LandingPage() {
     }, 1000); // Ejecutar cada 1 segundo
 
     return () => clearInterval(interval);
-  }, []);
+  });
 
   return (
     <Layout>

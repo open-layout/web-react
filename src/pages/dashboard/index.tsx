@@ -6,7 +6,7 @@ import config from '@/config';
 
 import TemplatesCard from '@/components/ui/DashboardCard';
 import DashboardCardSkeleton from '@/components/skeleton/DashboardCardSkeleton';
-import Layout from '@/components/Layouts/Template';
+import Layout from '@/components/ui/Template';
 import SearchBar from '@/components/ui/SearchBar';
 import Form from '@/components/ui/LayoutsForm';
 
@@ -25,9 +25,7 @@ function Dashboard() {
   const [userLayouts, setUserLayouts] = useState<string[]>([]);
   const [selectedRepoUrl, setSelectedRepoUrl] = useState('');
   const [searchParameters, setSearchParameters] = useState('');
-  const [typingTimeout, setTypingTimeout] = useState<number | null>(
-    null
-  );
+  const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(null);
   const [loading, setLoading] = useState(true);
 
   const fetchRepositories = async () => {
@@ -35,6 +33,7 @@ function Dashboard() {
       const response = await fetch(config.api.baseurl + '/user/repositories', {
         method: 'POST',
         headers: {
+          ...config.api.headers,
           'Content-Type': 'application/json',
           Authorization: authHeader || '',
         },
@@ -63,6 +62,7 @@ function Dashboard() {
       const response = await fetch(config.api.baseurl + '/user/templates', {
         method: 'POST',
         headers: {
+          ...config.api.headers,
           'Content-Type': 'application/json',
           Authorization: authHeader || '',
         },
@@ -165,8 +165,8 @@ function Dashboard() {
         <div className="grid place-content-start lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-12 mt-14 mr-10 mb-5">
           {loading ? ( // Render skeleton cards while data is loading
             <>
-              {[...Array(6)].map(() => (
-                <DashboardCardSkeleton />
+              {[...Array(6)].map((_a: null, i: number) => (
+                <DashboardCardSkeleton key={i} />
               ))}
             </>
           ) : (

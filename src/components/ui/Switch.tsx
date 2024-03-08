@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
-const Switch = () => {
+const Switch: React.FC = () => {
   const [uploaded, setUploaded] = useState(true);
 
   const handleToggle = () => {
