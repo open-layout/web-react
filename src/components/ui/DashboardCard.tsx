@@ -23,7 +23,8 @@ const TemplatesCard: React.FC<{
 
         setLanguageImage(imageModule.default);
       } catch (error) {
-        console.error('Error loading language image:', error);
+        // console.error('Error loading language image:', error);
+        console.error('Error loading language image:', repo.language);
       }
     };
 

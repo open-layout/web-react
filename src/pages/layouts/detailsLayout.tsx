@@ -11,10 +11,8 @@ const DetailsLayout: React.FC<{ layout: object | any }> = ({ layout }) => {
     const [isHovered, setIsHovered] = useState(false);
 
     useEffect(() => {
-        if (layout && layout.color_palette) {
+        if (layout && layout.color_palette) 
             setColorArray(Object.values(layout.color_palette).map(color => ({ color })));
-            console.log('Color array:', colorArray);
-        }
     }, [layout]);
 
     const handleNextImage = () => {
@@ -45,7 +43,7 @@ const DetailsLayout: React.FC<{ layout: object | any }> = ({ layout }) => {
                                 src={layout.images?.[currentImageIndex]}
                                 alt="Preview"
                                 className="block mx-auto"
-                                style={{ maxWidth: '100%', maxHeight: '300px' }} // Ajusta la altura máxima según sea necesario
+                                style={{ maxWidth: '100%', maxHeight: '300px' }}
                             />
                             <div className="absolute top-0 left-0 right-0 bottom-0 flex justify-between items-center">
                                 <button type="button" onClick={handlePrevImage} className="text-white ml-5 text-4xl">&#10094;</button>

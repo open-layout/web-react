@@ -12,30 +12,32 @@ const LayoutDetailsPage: React.FC = () => {
   const [repoDetails, setRepoDetails] = useState({});
   const [loading, setLoading] = useState(true);
 
-  const fetchRepoDetails = async () => {
-    try {
-      const response = await fetch(`${config.api.baseurl}/templates/layout`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: name,
-        }),
-      });
-      const data = await response.json();
-      setRepoDetails(data.data);
-
-      console.log('Repository details:', data);
-    } catch (error) {
-      console.error('Error fetching repository details:', error);
-    }
-
-    setLoading(false);
-  };
-
+  
   useEffect(() => {
-    fetchRepoDetails();
+    const fetchRepoDetails = async () => {
+      try {
+        const response = await fetch(`${config.api.baseurl}/templates/layout`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: name,
+          }),
+        });
+        const data = await response.json();
+        setRepoDetails(data.data);
+  
+        console.log('Repository details:', data);
+      } catch (error) {
+        console.error('Error fetching repository details:', error);
+      }
+  
+      setLoading(false);
+    };
+    
+    if (name)
+      fetchRepoDetails();
   }, [name]);
 
   return (

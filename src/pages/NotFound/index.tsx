@@ -32,7 +32,7 @@ function LandingPage() {
     }, 1000); // Ejecutar cada 1 segundo
 
     return () => clearInterval(interval);
-  }, []);
+  });
 
   return (
     <Layout>

@@ -59,70 +59,11 @@ function LayoutsPage() {
     }
   };
 
-  // Function to fetch search results
-  const fetchSearch = async (
-    query: string = '',
-    layout: string = '',
-    author: string = '',
-    language: string = '',
-    category: string = ''
-  ) => {
-    try {
-      if (query && !layout && !author && !language && !category) {
-        const response = await fetch(
-          config.api.baseurl + '/templates/find' + `?query=${query}`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: authHeader || '',
-            },
-          }
-        );
-
-        const data = await response.json();
-
-        if (!data.success) {
-          console.error('Error fetching repositories:', data.message);
-          return [];
-        }
-
-        return data.results;
-      } else {
-        const search_query = `?name=${layout}&author=${author}&language=${language}&category=${category}`;
-        console.log(search_query);
-
-        const response = await fetch(
-          config.api.baseurl + '/templates/find' + search_query,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: authHeader || '',
-            },
-          }
-        );
-
-        const data = await response.json();
-
-        if (!data.success) {
-          console.error('Error fetching repositories:', data.message);
-          return [];
-        }
-
-        return data.results;
-      }
-    } catch (error) {
-      console.error('[API] ', error);
-      return [];
-    }
-  };
-
   useEffect(() => {
     // Fetch repositories data on component mount
     const fetchData = async () => {
       const repositoriesResponse = await fetchRepositories();
-      console.log(repositoriesResponse);
+      // console.log(repositoriesResponse);
 
       setResponse(repositoriesResponse);
       setExploreCache(repositoriesResponse);
@@ -140,6 +81,65 @@ function LayoutsPage() {
   }, []);
 
   useEffect(() => {
+
+    const fetchSearch = async (
+      query: string = '',
+      layout: string = '',
+      author: string = '',
+      language: string = '',
+      category: string = ''
+    ) => {
+      try {
+        if (query && !layout && !author && !language && !category) {
+          const response = await fetch(
+            config.api.baseurl + '/templates/find' + `?query=${query}`,
+            {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: authHeader || '',
+              },
+            }
+          );
+  
+          const data = await response.json();
+  
+          if (!data.success) {
+            console.error('Error fetching repositories:', data.message);
+            return [];
+          }
+  
+          return data.results;
+        } else {
+          const search_query = `?name=${layout}&author=${author}&language=${language}&category=${category}`;
+          console.log(search_query);
+  
+          const response = await fetch(
+            config.api.baseurl + '/templates/find' + search_query,
+            {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: authHeader || '',
+              },
+            }
+          );
+  
+          const data = await response.json();
+  
+          if (!data.success) {
+            console.error('Error fetching repositories:', data.message);
+            return [];
+          }
+  
+          return data.results;
+        }
+      } catch (error) {
+        console.error('[API] ', error);
+        return [];
+      }
+    };
+
     // Fetch search results when search parameters change
     const fetchData = async () => {
       let repositoriesResponse;
@@ -182,7 +182,7 @@ function LayoutsPage() {
         );
       }
 
-      console.log(repositoriesResponse);
+      // console.log(repositoriesResponse);
 
       setResponse(repositoriesResponse);
       const getSuccess = repositoriesResponse.length === 0;
@@ -197,7 +197,7 @@ function LayoutsPage() {
       setResponse(exploreCache);
       setLoading(false);
     }
-  }, [searchParameters]);
+  }, [authHeader, exploreCache, searchParameters]);
 
   
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -219,14 +219,14 @@ function LayoutsPage() {
           Layouts
         </h2>
         <SearchBar onSearch={handleSearch} />
-        <div className="flex flex-row flex-wrap justify-center gap-y-14 mt-12 xl:mr-10 mb-5">
-          {loading ? (
+        <div className="flex flex-row flex-wrap justify-center gap-y-14 mt-12 mb-5">
+          {(loading && !response) ? (
             <>
-              {[...Array(6)].map(() => (
-                <LayoutCardSkeleton />
+              {[...Array(6)].map((a: null, i: number) => (
+                <LayoutCardSkeleton key={i} />
               ))}
             </>
-          ) : (
+          ) : (!loading && response.length > 0) ? (
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             response.map((info: object | any, index) => (
               <div 
@@ -235,7 +235,17 @@ function LayoutsPage() {
                 key={index}>
                 <LayoutCard layout={info} />
               </div>
-            ))
+            ))) : (
+              <p className="text-2xl w-full font-bold text-center mt-4">
+                 No layouts found with <span className='font-bold text-red-600/70 line-through'>{searchParameters}</span> you might want to explore another universe.
+                 <img 
+                    loading='lazy'
+                    className='mx-auto rounded-lg mt-8 w-96' 
+                    src={config.not_found.img_api} 
+                    alt="404 Not Found" 
+                  />
+
+              </p>
           )}
         </div>
       </div>
