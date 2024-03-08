@@ -1,7 +1,7 @@
 // TemplatePage.tsx
 import React, { ReactNode, useEffect, useState } from 'react';
 // import DynamicIsland from '@/components/ui/DynamicIsland'; // src/components/Layouts/Template.tsx(3,27): error TS2307: Cannot find module '@/components/ui/DynamicIsland' or its corresponding type declarations.
-import DynamicIsland from '../ui/DynamicIsland';
+import DynamicIsland from '../ui/DynamicIsland.tsx';
 import config from '@/config';
 
 interface TemplatePageProps {
