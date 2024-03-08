@@ -6,7 +6,7 @@ import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 
 import config from '@/config';
 
-import Layout from '@/components/layouts/Template';
+import Layout from '@/components/ui/Template';
 
 import github from '@icons/github.svg';
 import logo from '@/assets/favicon.svg';

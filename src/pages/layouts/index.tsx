@@ -5,7 +5,7 @@ import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 
 import config from '@/config';
 
-import Layout from '@/components/layouts/Template';
+import Layout from '@/components/ui/Template';
 
 import LayoutCard from '@/components/ui/LayoutCard';
 import SearchBar from '@/components/ui/SearchBar';

@@ -4,7 +4,7 @@ import DetailsLayout from '@/pages/layouts/detailsLayout';
 
 import config from '@/config';
 
-import Layout from '@/components/layouts/Template';
+import Layout from '@/components/ui/Template';
 
 const LayoutDetailsPage: React.FC = () => {
   const { name } = useParams<{ name: string }>();

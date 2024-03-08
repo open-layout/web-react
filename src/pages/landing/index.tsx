@@ -5,7 +5,7 @@ import { UserData } from './interfaces';
 
 import config from '@/config';
 
-import Layout from '@/components/layouts/Template';
+import Layout from '@/components/ui/Template';
 
 import WelcomeSection from './WelcomeSection';
 import CopyButton from '@/components/ui/CopyButton';
