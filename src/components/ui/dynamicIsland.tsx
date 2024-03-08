@@ -1,9 +1,9 @@
 // DynamicIsland.tsx
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import useSignOut from 'react-auth-kit/hooks/useSignOut';
-import { useEffect, useState } from 'react';
 
 import config from '@/config';
 
@@ -11,7 +11,7 @@ import favicon from '@/assets/favicon.svg';
 import IconLogout from '@icons/logout.svg';
 import Logo from '@/assets/favicon.svg';
 
-const DynamicIsland = () => {
+const DynamicIsland: React.FC = () => {
   const isAuthenticated = useIsAuthenticated();
   const signOut = useSignOut();
 
