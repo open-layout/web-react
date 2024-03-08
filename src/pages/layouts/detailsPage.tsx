@@ -19,6 +19,7 @@ const LayoutDetailsPage: React.FC = () => {
         const response = await fetch(`${config.api.baseurl}/templates/layout`, {
           method: 'POST',
           headers: {
+            ...config.api.headers,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({

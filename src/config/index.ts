@@ -4,7 +4,7 @@ export default {
   // Api utilities
   api: {
     baseurl: 'https://api.openlayout.me/v0',
-    header: 'loquesea',
+    headers: { 'x-ol-client': 'open-layout-react-web' },
   },
   badges: {
     fullpath: '@/assets/badges/',

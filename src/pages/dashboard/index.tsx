@@ -33,6 +33,7 @@ function Dashboard() {
       const response = await fetch(config.api.baseurl + '/user/repositories', {
         method: 'POST',
         headers: {
+          ...config.api.headers,
           'Content-Type': 'application/json',
           Authorization: authHeader || '',
         },
@@ -61,6 +62,7 @@ function Dashboard() {
       const response = await fetch(config.api.baseurl + '/user/templates', {
         method: 'POST',
         headers: {
+          ...config.api.headers,
           'Content-Type': 'application/json',
           Authorization: authHeader || '',
         },

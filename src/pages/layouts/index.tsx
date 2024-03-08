@@ -40,6 +40,7 @@ function LayoutsPage() {
       const response = await fetch(config.api.baseurl + '/templates/explore', {
         method: 'GET',
         headers: {
+          ...config.api.headers,
           'Content-Type': 'application/json',
           Authorization: authHeader || '',
         },
@@ -96,6 +97,7 @@ function LayoutsPage() {
             {
               method: 'GET',
               headers: {
+                ...config.api.headers,
                 'Content-Type': 'application/json',
                 Authorization: authHeader || '',
               },
@@ -119,6 +121,7 @@ function LayoutsPage() {
             {
               method: 'GET',
               headers: {
+                ...config.api.headers,
                 'Content-Type': 'application/json',
                 Authorization: authHeader || '',
               },
