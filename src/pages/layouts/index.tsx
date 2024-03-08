@@ -17,7 +17,7 @@ function LayoutsPage() {
   const [response, setResponse] = useState<Array<object | unknown>>([]);
   const [exploreCache, setExploreCache] = useState<object[]>([]);
   const [searchParameters, setSearchParameters] = useState('');
-  const [typingTimeout, setTypingTimeout] = useState<number | null>(
+  const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(
     null
   );
 

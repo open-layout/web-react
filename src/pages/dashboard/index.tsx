@@ -25,7 +25,7 @@ function Dashboard() {
   const [userLayouts, setUserLayouts] = useState<string[]>([]);
   const [selectedRepoUrl, setSelectedRepoUrl] = useState('');
   const [searchParameters, setSearchParameters] = useState('');
-  const [typingTimeout, setTypingTimeout] = useState<number | null>(
+  const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(
     null
   );
   const [loading, setLoading] = useState(true);
