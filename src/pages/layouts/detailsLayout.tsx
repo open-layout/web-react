@@ -46,43 +46,39 @@ const DetailsLayout: React.FC<{ layout: object | any }> = ({ layout }) => {
                                 src={layout.images?.[currentImageIndex]}
                                 alt="Preview"
                                 className="block mx-auto"
-                                style={{ maxWidth: '100%', maxHeight: '300px' }} // Ajusta la altura máxima según sea necesario
+                                style={{ maxWidth: '100%', maxHeight: '300px' }}
                             />
                             <div className="absolute top-0 left-0 right-0 bottom-0 flex justify-between items-center">
                                 <button type="button" onClick={handlePrevImage} className="text-white ml-5 text-4xl">&#10094;</button>
                                 <button type="button" onClick={handleNextImage} className="text-white mr-5 text-4xl">&#10095;</button>
-                            {layout.live_preview && (
-                                <div className={`absolute bottom-0 left-0 mb-5 ml-10  ${isHovered ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}>
-                                <a type="button" href={layout?.live_preview} className="text-white text-md  rounded-xl">
-                                        <img src={preview} alt="github" className="w-8 h-8 inline-block" />
+                            </div>
+                            <div className={`absolute border border-zinc-500/50 bg-zinc-400/20 p-2 rounded-xl gap-2 bottom-0 right-0 mr-10 ${isHovered ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300 flex justify-between items-center`}>
+                                {layout.live_preview && (
+                                    <div>
+                                        <a type="button" href={layout?.live_preview} className="text-white text-md  rounded-xl">
+                                            <img src={preview} alt="Preview" className="w-8 h-8 inline-block" />
+                                        </a>
+                                    </div>
+                                )}
 
-                                    </a>
-                                </div>
-                            )}
-                                
-                                <div className={`absolute bottom-0 right-0 mb-5 mr-10  ${isHovered ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}>
+
+                                <div>
 
                                     <a type="button" href={layout?.repository} className="text-white text-md  rounded-xl">
-                                        <img src={github} alt="github" className="w-8 h-8 inline-block" />
+                                        <img src={github} alt="Github" className="w-8 h-8 inline-block" />
 
                                     </a>
                                 </div>
-                            </div>
 
+
+                            </div>
                         </div>
 
                     )}
                     <div className={` mb-5 mt-5`}>
                         <CopyButton npmCommand={`npx open-layout get ${layout.name}`} />
                     </div>
-                    {layout.readme && (
-                        <div>
-                            <p>Readme:</p>
-                            <a type="button" href={layout?.repository+"/blob/main/README.md"} className="bg-title text-white py-2 px-4 rounded-xl w-32  ">
-                                readme
-                            </a>
-                        </div>
-                    )}
+
                     {colorArray && colorArray.length > 0 && (
                         <div>
                             <p className="mt-8 mb-4">Color Palette:</p>
@@ -152,22 +148,22 @@ const DetailsLayout: React.FC<{ layout: object | any }> = ({ layout }) => {
                     {layout.tutorial && (
                         <div>
                             {
-                                (layout.tutorial.endsWith('.mp4') || 
-                                layout.tutorial.endsWith('.gif') ||
-                                layout.tutorial.endsWith('.webmp')) ? (
+                                (layout.tutorial.endsWith('.mp4') ||
+                                    layout.tutorial.endsWith('.gif') ||
+                                    layout.tutorial.endsWith('.webmp')) ? (
                                     <video className="w-full h-auto object-center rounded-md mb-4" src={layout.tutorial} controls />
                                 ) : (
-                                        layout.tutorial.includes('youtu.be') || 
-                                        layout.tutorial.includes('youtube.com')) && (
-                                    <iframe 
-                                        allowFullScreen={true} 
+                                    layout.tutorial.includes('youtu.be') ||
+                                    layout.tutorial.includes('youtube.com')) && (
+                                    <iframe
+                                        allowFullScreen={true}
                                         src={
                                             layout.tutorial
                                                 .replace('watch?v=', 'embed/')
                                                 .replace('youtu.be', 'youtube.com/embed')
-                                        } 
+                                        }
                                         allowTransparency={true}
-                                        />
+                                    />
                                 )
                             }
                         </div>
