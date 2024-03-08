@@ -21,20 +21,21 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     'layout:',
   ];
 
-  const random_seach = [
-    'Awesome portfolio layout',
-    'Orbit of imagination layout',
-    'Automatic github portfolio',
-    'Simple star destroyer layout to make at home',
-    'oppen-heimer famous project',
-  ];
-
+  
   useEffect(() => {
+    const random_seach = [
+      'Awesome portfolio layout',
+      'Orbit of imagination layout',
+      'Automatic github portfolio',
+      'Simple star destroyer layout to make at home',
+      'oppen-heimer famous project',
+    ];
+    
     const placeholder =
       random_seach[Math.floor(Math.random() * random_seach.length)];
 
     if (!randomPlaceholder) setRandomPlaceholder(placeholder);
-  }, [window.location]);
+  }, [randomPlaceholder]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, selectionStart } = event.target;

@@ -5,7 +5,7 @@ import { UserData } from './interfaces';
 
 import config from '@/config';
 
-import Layout from '@/components/Layouts/Template';
+import Layout from '@/components/ui/Template';
 
 import WelcomeSection from './WelcomeSection';
 import CopyButton from '@/components/ui/CopyButton';
@@ -84,6 +84,7 @@ function LandingPage() {
       <div className="lg:pt-32 pt-20 flex flex-row gap-5 justify-center">
         <a
           className="px-8 py-3 dark:bg-white dark:text-black bg-black text-white rounded-full shadow-inner-xl font-semibold"
+          target='_blank'
           href="https://docs.openlayout.me">
           Get Started
         </a>

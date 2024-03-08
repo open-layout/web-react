@@ -10,13 +10,14 @@ const PresentationCard: React.FC<PresentationCardProps> = ({
   link,
   badges,
 }) => {
-  const [, setBadgeUrls] = useState<string[]>([]);
+  const [badgeUrls, setBadgeUrls] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchBadgeUrls = async () => {
       const urls = await Promise.all(
         badges.map(async (badge) => {
-          const badgeUrl = await import(`../../assets/badges/${badge.id}.svg`);
+          const badgeUrl = await import(`../../assets/badges/${badge.id}.svg`).catch(() => { console.error('Could not load badge:', badge.id) });
+          if (!badgeUrl) return '';
           return badgeUrl.default;
         })
       );
@@ -35,7 +36,10 @@ const PresentationCard: React.FC<PresentationCardProps> = ({
       />
 
       <div className="">
-        <h2 className="text-2xl font-bold mb-2 text-gray-100">{name}</h2>
+        <div className='flex justify-between'>
+          <h2 className="text-2xl font-bold mb-2 text-gray-100">{name}</h2>
+          {badgeUrls.map((badgeUrl, index) => (<img key={index} src={badgeUrl} alt="badge" className="w-6 h-6" />))}
+        </div>
         <p className="text-gray-200 line-clamp-3">{description}</p>
       </div>
       <a

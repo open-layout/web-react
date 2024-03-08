@@ -12,10 +12,8 @@ const DetailsLayout: React.FC<{ layout: object | any }> = ({ layout }) => {
     const [isHovered, setIsHovered] = useState(false);
 
     useEffect(() => {
-        if (layout && layout.color_palette) {
+        if (layout && layout.color_palette) 
             setColorArray(Object.values(layout.color_palette).map(color => ({ color })));
-            console.log('Color array:', colorArray);
-        }
     }, [layout]);
 
     const handleNextImage = () => {

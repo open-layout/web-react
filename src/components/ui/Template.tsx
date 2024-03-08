@@ -1,4 +1,3 @@
-// TemplatePage.tsx
 import React, { ReactNode, useEffect, useState } from 'react';
 import DynamicIsland from '@/components/ui/DynamicIsland';
 import config from '@/config';
