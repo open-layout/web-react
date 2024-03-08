@@ -4,7 +4,7 @@ import DetailsLayout from '@/pages/layouts/detailsLayout';
 
 import config from '@/config';
 
-import Layout from '@/components/Layouts/Template';
+import Layout from '@/components/layouts/Template';
 
 const LayoutDetailsPage: React.FC = () => {
   const { name } = useParams<{ name: string }>();
@@ -35,7 +35,7 @@ const LayoutDetailsPage: React.FC = () => {
   
       setLoading(false);
     };
-    
+
     if (name)
       fetchRepoDetails();
   }, [name]);
