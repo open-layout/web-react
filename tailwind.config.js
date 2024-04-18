@@ -1,3 +1,4 @@
+import typography from '@tailwindcss/typography';
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: 'class',
@@ -5,7 +6,8 @@ export default {
   theme: {
     extend: {
       transitionProperty: {
-        multiple: "width , height , backgroundColor , border-radius"
+        multiple: "width , height , backgroundColor , border-radius",
+        width: "width",
       },
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],
@@ -29,6 +31,6 @@ export default {
         xs: '1px',
       },
     },
-  },
-  plugins: [],
+  }, 
+  plugins: [typography],
 };

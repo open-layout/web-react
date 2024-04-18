@@ -81,8 +81,17 @@ const DynamicIsland: React.FC = () => {
       className="menu-container flex justify-center group dark:text-white text-black">
       <div
         // Animation done through vanilla css in index.css file
-        className={`flex flex-row items-center select-none fixed z-50 top-0 h-10 backdrop-blur-md border-gray-700/50 border rounded-full py-1 px-2 mt-3 w-40 duration-300 ease-in-out ${mouseNear ? `justify-between increase-width` : 'decrease-width'
-          }`}>
+        className={`flex flex-row items-center select-none fixed z-50 top-0 h-10 backdrop-blur-md border-gray-700/50 border rounded-full py-1 px-2 mt-3 w-40 transition duration-300 ease-in-out ${mouseNear ? `justify-between increase-width` : 'delay-1000 decrease-width'
+          }`}
+        // onMouseEnter={(e: React.MouseEvent<HTMLDivElement>) => {
+        //   (e.target as HTMLDivElement).style.transitionDelay = '0s';
+        //   console.log('enter', e.target);
+        // }}
+        onMouseLeave={(e: React.MouseEvent<HTMLDivElement>) => {
+          // (e.target as HTMLDivElement).style.transitionDelay = '1s';
+          console.log('leave', e.target);
+        }}
+      >
         {isAuthenticated() ? (
           <div className="flex flex-row gap-2 items-center w-full">
             <img

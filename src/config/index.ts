@@ -3,7 +3,7 @@ export default {
   impotant_message: "This site is under development",
   // Api utilities
   api: {
-    baseurl: 'https://api.openlayout.me/v0',
+    baseurl: process.env.NODE_ENV === 'development' ? 'http://localhost:4553/v0' : 'https://api.openlayout.me/v0',
     headers: { 'x-ol-client': 'open-layout-react-web' },
   },
   badges: {

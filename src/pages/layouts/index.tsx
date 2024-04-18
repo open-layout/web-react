@@ -61,21 +61,26 @@ function LayoutsPage() {
   };
 
   useEffect(() => {
-    // Fetch repositories data on component mount
+    let failed_attempts = 0;
     const fetchData = async () => {
+      setLoading(true);
       const repositoriesResponse = await fetchRepositories();
-      // console.log(repositoriesResponse);
 
       setResponse(repositoriesResponse);
       setExploreCache(repositoriesResponse);
       const error = repositoriesResponse.length === 0;
 
       setLoading(error);
-      if (!error) return;
 
-      setTimeout(() => {
-        fetchData();
-      }, 2000);
+      if (!error) // If there are no errors don't continue
+        return;
+
+      failed_attempts++;
+
+      if (failed_attempts >= 3) // If there are 3 failed attempts don't continue
+        return;
+
+      setTimeout(fetchData, 2000);
     };
 
     fetchData();
@@ -171,6 +176,7 @@ function LayoutsPage() {
       // Check if all individual parameters are empty
       const allEmpty = !author && !layout && !category && !language;
 
+      setLoading(true);
       if (allEmpty) {
         // If all parameters are empty, perform search based on complete query
         repositoriesResponse = await fetchSearch(searchParameters);

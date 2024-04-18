@@ -88,6 +88,15 @@ body {
   animation: decreaseWidth 0.5s forwards;
 }
 
+/* Delay the exit animation */
+.decrease-width {
+  transition-delay: 0s;
+}
+
+.decrease-width:hover {
+  transition-delay: 1s; /* Delay after finishing hover animation */
+}
+
 @keyframes gradient-x {
   0% {
     background-position: 0% 50%;

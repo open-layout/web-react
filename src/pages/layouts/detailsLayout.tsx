@@ -7,8 +7,6 @@ import banner from '@/assets/banner.svg';
 import Logo from '@/assets/favicon.svg';
 import Markdown from 'markdown-to-jsx';
 
-
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const DetailsLayout: React.FC<{ layout: object | any }> = ({ layout }) => {
 
@@ -22,8 +20,8 @@ const DetailsLayout: React.FC<{ layout: object | any }> = ({ layout }) => {
     
     useEffect(() => {
         const fetchReadme = async () => {
-            try {
-                const response = await fetch("https://corsproxy.io/?https://raw.githubusercontent.com/" + layout.author + "/" + layout.name + "/main/README.md", {
+            try {                           // Just for testing
+                const response = await fetch("https://corsproxy.io/?https://raw.githubusercontent.com/" + layout.author + "/" + layout.name + "/main/README.md", { // https://corsproxy.io/?
                     method: 'GET',
                     headers: {
                       'Content-Type': 'application/json'
@@ -48,13 +46,13 @@ const DetailsLayout: React.FC<{ layout: object | any }> = ({ layout }) => {
     }, [layout]);
 
 
-    const handleMouseEnter = (index: number) => {
-        setCurrentImageIndex(index);
-    };
+    // const handleMouseEnter = (index: number) => {
+    //     setCurrentImageIndex(index);
+    // };
 
-    const handleMouseLeave = () => {
-        setCurrentImageIndex(-1);
-    };
+    // const handleMouseLeave = () => {
+    //     setCurrentImageIndex(-1);
+    // };
     const [languageImages, setLanguageImages] = useState<
         { language: string; image: string }[]
     >([]);
@@ -125,13 +123,13 @@ const DetailsLayout: React.FC<{ layout: object | any }> = ({ layout }) => {
                 <div className={`absolute border border-zinc-500/50 bg-zinc-400/20 p-2 rounded-xl gap-2 left-0  mr-10 flex justify-between items-center `}>
                     {layout.live_preview && (
                         <div>
-                            <a type="button" href={layout.live_preview} className="text-white text-md  rounded-xl">
+                            <a type="button" href={layout.live_preview} target="_blank" rel="noopener noreferrer" className="text-white text-md  rounded-xl">
                                 <img src={preview} alt="Preview" className="w-8 h-8 inline-block" />
                             </a>
                         </div>
                     )}
                     <div>
-                        <a type="button" href={layout.repository} className="text-white text-md  rounded-xl">
+                        <a type="button" href={layout.repository} target="_blank" rel="noopener noreferrer" className="text-white text-md  rounded-xl">
                             <img src={github} alt="Github" className="w-8 h-8 inline-block" />
                         </a>
                     </div>
@@ -154,29 +152,29 @@ const DetailsLayout: React.FC<{ layout: object | any }> = ({ layout }) => {
                 </div>
             </div>
 
-            <div className="grid grid-cols-3 grid-flow-col xl:grid-cols-2 gap-10 w-full mt-5">
+            <div className="grid lg:grid-cols-3 grid-flow-row lg:grid-flow-col xl:grid-cols-2 gap-10 w-full mt-5">
                 
                 <div className='border border-zinc-500/50 bg-zinc-400/20 rounded-xl p-4 col-span-2'>
-                    <Markdown>{readmeContent}</Markdown>
+                    <Markdown options={{ wrapper: 'article', forceWrapper: true, disableParsingRawHTML: true }} className="prose prose-invert prose-indigo xl:prose-xl text-white max-h-screen overflow-auto">
+                        {readmeContent}
+                    </Markdown>
                 </div>
 
                 <div className='border border-zinc-500/50 bg-zinc-400/20 rounded-xl p-4'>
-                    <div className='flex flex-row gap-5 items-center border border-zinc-500/50 bg-zinc-400/10 p-4 rounded-xl'>
-                        <h2 className=' items-center'>
-                            Author:
-                        </h2>
-                        <a>
+                    <div className='flex flex-row gap-2 items-start border border-zinc-500/50 bg-zinc-400/10 p-4 rounded-xl'>
+                        Author:
+                        <a href={"https://github.com" + layout.author} target="_blank" rel="noopener noreferrer" className='text-sm text-zinc-300 my-auto'>
                             {layout.author}
                         </a>
                     </div>
                     {colorArray && colorArray.length > 0 && (
                         <div>
-                            <div className='border border-zinc-500/50 bg-zinc-400/10 p-4 rounded-xl flex flex-row mt-5'>
+                            <div className='border border-zinc-500/50 bg-zinc-400/10 p-4 rounded-xl flex flex-row  mt-5'>
 
                                 {colorArray?.map((color: { color: string; }, index: number) => (
                                     <div
                                         key={index}
-                                        className="w-10 h-10 flex items-center justify-center border border-gray-400 rounded-full mr-3 group/color"
+                                        className="w-10 h-10 mx-auto flex items-center justify-center border border-gray-400 rounded-full group/color"
                                         onClick={(e) => {
                                             navigator.clipboard.writeText(color.color);
 
@@ -197,61 +195,58 @@ const DetailsLayout: React.FC<{ layout: object | any }> = ({ layout }) => {
                     )}
                     <div className='border border-zinc-500/50 bg-zinc-400/10 rounded-xl p-4 mt-5 '>
                         <h2 className=" text-center font-bold">Description</h2>
-                        <p>{layout.description}</p>
+                        <p className='text-sm text-zinc-300'>{layout.description}</p>
                     </div>
                     <div className='flex flex-col '>
                         {layout.category && (
-                            <div className='border border-zinc-500/50 bg-zinc-400/10 p-4 rounded-xl w-full flex flex-row gap-5 mt-5 '>
+                            <div className='border border-zinc-500/50 bg-zinc-400/10 p-4 rounded-xl w-full flex flex-row gap-2 mt-5 '>
                                 <h2 className='font-bold'>Category:</h2>
-                                <p className='text-center'>{layout.category}</p>
+                                <p className='text-center text-sm text-zinc-300 my-auto'>{layout.category}</p>
                             </div>
                         )}
 
-
                         {layout.frameworks && (
-                            <div className='border border-zinc-500/50 bg-zinc-400/10 p-4 rounded-xl w-full flex flex-row gap-5 mt-5'>
-                                <h2 className='font-bold'>Framework:</h2>
-                                <p className='text-center '>{layout.frameworks}</p>
+                            <div className='border border-zinc-500/50 bg-zinc-400/10 p-4 rounded-xl w-full flex flex-row gap-2 mt-5'>
+                                <h2 className='font-bold'>Framework/s:</h2>
+                                <p className='text-center text-sm text-zinc-300 uppercase my-auto'>{layout.frameworks}</p>
                             </div>
                         )}
 
                         {layout.requirements && (
-                            <div className='border border-zinc-500/50 bg-zinc-400/10 p-4  rounded-xl mt-5'>
+                            <div className='border border-zinc-500/50 bg-zinc-400/10 flex gap-2 p-4 rounded-xl mt-5'>
                                 <h2 className='font-bold'>Requirements:</h2>
-                                <ul className='list-disc list-inside'>
-                                    {layout.requirements.map((req: string, i: number) => (
-                                        <li key={i}>{req}</li>
-                                    ))}
-                                </ul>
+                                <p className='text-sm text-zinc-300 my-auto truncate'>
+                                    {layout.requirements.join(', ')}
+                                </p>
                             </div>
                         )}
                         {layout.collaborators && (
                             <div className='border border-zinc-500/50 bg-zinc-400/10 p-4  rounded-xl mt-5'>
                                 <h2 className='font-bold'>Collaborators:</h2>
                                 <ul className='list-disc list-inside'>
-                                    {layout.collaborators.map((collaborators: string, i: number) => (
-                                        <li key={i}>{collaborators}</li>
+                                    {layout.collaborators.map((collaborator: string, i: number) => (
+                                        <li key={i} className='text-sm text-zinc-300'><a href={"https://github.com/" + collaborator} target="_blank" rel="noopener noreferrer">{collaborator}</a></li>
                                     ))}
                                 </ul>
                             </div>
                         )}
-                        <div className='flex flex-col gap-2 w-full rounded-xl border border-zinc-500/50 bg-zinc-400/10 p-2 legen mt-5' >
+                        <div className='flex flex-col gap-2 w-full rounded-xl border border-zinc-500/50 bg-zinc-400/10 p-4 legen mt-5'>
                             <h2 className='text-center font-bold'>Socials</h2>
                             {layout.socials?.github && (
-                                <div className='px-4 rounded-xl w-full'>
-                                    <div className='flex gap-2 content-center items-center py-1'>
-                                        <img src={github} alt="gh logo" className='w-6' />
-                                        Github: <a href={layout.socials?.github} className="text-indigo-600 underline font-bold hover:text-indigo-400">{layout.socials?.github}</a>
+                                <div className='rounded-xl w-full'>
+                                    <div className='flex gap-2 content-center items-start py-1'>
+                                        <img src={github} alt="gh logo" className='w-6 h-6' />
+                                        Github: <a href={layout.socials?.github} className="text-indigo-600 underline font-bold hover:text-indigo-400 truncate">{layout.socials?.github}</a>
                                     </div>
                                 </div>
                             )}
                             {layout.socials?.discord && (
-                                <div className='px-4 rounded-xl w-full'>
+                                <div className='rounded-xl w-full'>
                                     Discord: <span className="text-indigo-600 underline font-bold hover:text-indigo-400">{layout.socials?.discord}</span>
                                 </div>
                             )}
                             {layout.socials?.x && (
-                                <div className='px-4 rounded-xl w-full'>
+                                <div className='rounded-xl w-full'>
                                     X (Twitter): <a href={layout.socials?.x} className="text-indigo-600 underline font-bold hover:text-indigo-400">{layout.socials?.x}</a>
                                 </div>
                             )}
