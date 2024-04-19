@@ -13,7 +13,7 @@ const DevelopersSection: React.FC<DevelopersProps> = ({
       <h2 className={`text-3xl text-black dark:text-white font-bold`}>
         Developers
       </h2>
-      <div className="flex flex-row flex-wrap justify-around gap-10 my-16">
+      <div className="flex flex-row flex-wrap justify-around gap-10 my-16 mx-10">
         {userData.map((user) => (
           <PresentationCard
             key={user.username}

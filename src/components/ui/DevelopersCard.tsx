@@ -28,7 +28,7 @@ const PresentationCard: React.FC<PresentationCardProps> = ({
   }, [badges]);
 
   return (
-    <div className="select-none group flex flex-col justify-start items-start gap-2 w-96 h-56 duration-500 relative rounded-xl p-4 bg-gray-800/50 border-2 border-gray-700  backdrop-blur-xl hover:-translate-y-2 hover:shadow-xl shadow-gray-800">
+    <div className="select-none group flex flex-col justify-start items-start gap-2 w-full max-w-96 h-56 duration-500 relative rounded-xl p-4 bg-gray-800/50 border-2 border-gray-700  backdrop-blur-xl hover:-translate-y-2 hover:shadow-xl shadow-gray-800">
       <img
         src={image}
         alt={`${name}'s pfp`}

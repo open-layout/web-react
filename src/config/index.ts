@@ -1,6 +1,7 @@
 export default {
   name: 'OpenLayouts',
   impotant_message: "This site is under development",
+  npm_command: 'npx install open-layout',
   // Api utilities
   api: {
     baseurl: process.env.NODE_ENV === 'development' ? 'http://localhost:4553/v0' : 'https://api.openlayout.me/v0',
